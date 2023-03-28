@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Expierify</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Greeting">Hello User</string>
+    <string name="ImgDesc">Ways to Preserve Food</string>
+    <string name="TodayWord">Today</string>
+    <string name="TmwWord">Tomorrow</string>
+    <string name="UpcomingWord">Upcoming</string>
+    <string name="ProfileHeader">Profile</string>
+    <string name="EmailHeader">Email: </string>
+    <string name="PhoneHeader">Phone Number: </string>
+    <string name="BirthdateHeader">Birthdate: </string>
+    <string name="logoutbtn">Log Out </string>
+    <string name="Product">Add Product</string>
+    <string name="Category">Category</string>
+    <string name="addName">Name: </string>
+    <string name="addDate">Expiry Date: </string>
+    <string name="addDescription">Description: </string>
+    <string name="addCategory">Category: </string>
+    <string name="addLocation">Location: </string>
+    <string name="cancelBtn">Cancel</string>
+    <string name="saveBtn">Save</string>
+    <string name="LoginHeader">Log In</string>
 </resources>

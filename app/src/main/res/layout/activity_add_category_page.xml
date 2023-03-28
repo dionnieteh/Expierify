@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    tools:context=".AddCategoryPage">
+
+
+    <!--Back Button-->
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:background="@android:color/transparent"
+        android:id="@+id/backBtn"
+        android:layout_marginTop="5dp"
+        />
+
+    <!--Add Category Header-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:layout_alignParentTop="true"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:id="@+id/category"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        />
+
+    <!--Name Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addName"
+        android:layout_below="@+id/category"
+        android:layout_marginTop="30dp"
+        android:text="Add Name"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        />
+
+    <!--Name-->
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/newName"
+        android:layout_below="@+id/addName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        />
+
+    <!--Cancel Button-->
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:id="@+id/cancelBtn"
+        android:layout_alignParentBottom="true"
+        android:text="@string/cancelBtn"
+        android:textSize="20dp"
+        android:onClick="cancel"
+        />
+
+    <!--Save Button-->
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:id="@+id/saveBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="50dp"
+        android:text="@string/saveBtn"
+        android:layout_alignParentEnd="true"
+        android:textSize="20dp"
+        android:onClick="save"
+        />
+
+</RelativeLayout>

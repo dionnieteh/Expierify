@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:id="@+id/home"/>
+    <item android:title="Category"
+        android:icon="@drawable/ic_baseline_category_24"
+        android:id="@+id/category"/>
+    <item android:title="Camera"
+        android:icon="@drawable/ic_baseline_camera_alt_24"
+        android:id="@+id/camera"/>
+    <item android:title="Tags"
+        android:icon="@drawable/ic_baseline_label_24"
+        android:id="@+id/tags"/>
+    <item android:title="Profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:id="@+id/profile"/>
+</menu>
