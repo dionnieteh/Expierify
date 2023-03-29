@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment {
         notificationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(HomeFragment.this.getActivity(),  LoginPage.class));
+                startActivity(new Intent(HomeFragment.this.getActivity(),  AddProductPage.class));
             }
 
 

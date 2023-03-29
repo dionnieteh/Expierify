@@ -184,40 +184,10 @@
                         android:textSize="30sp"
                         android:textStyle="bold" />
 
-                    <!--today category-->
-                    <TextView
-                        android:id="@+id/todayCategory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/TodayWord"
-                        android:textSize="20dp" />
 
-                    <!--Today Blocks-->
-                    <Button
-                        android:id="@+id/todayBlock"
-                        android:layout_width="200dp"
-                        android:layout_height="80dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Food Name"
-                        android:textColor="@color/black" />
-                    <!--tomorrow category-->
-                    <TextView
-                        android:id="@+id/tomorrowCategory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/TmwWord"
-                        android:textSize="20dp" />
 
-                    <!--Tomorrow Blocks-->
-                    <Button
-                        android:id="@+id/tomorrowBlock"
-                        android:layout_width="260dp"
-                        android:layout_height="80dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Food Name"
-                        android:textColor="@color/black" />
+
+
                     <!--Upcoming category-->
                     <TextView
                         android:id="@+id/upcomingCategory"

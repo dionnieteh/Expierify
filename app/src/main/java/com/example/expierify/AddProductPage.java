@@ -1,103 +1,101 @@
 package com.example.expierify;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.app.AlertDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import com.example.expierify.databinding.ActivityMainBinding;
 
 import java.util.Calendar;
 
 public class AddProductPage extends AppCompatActivity {
 
-    private DatePickerDialog datePickerDialog;
-    private Button dateButton;
+    private DatePickerDialog picker;
+    private ActivityMainBinding binding;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product_page);
-        initDatePicker();
-        dateButton = findViewById(R.id.datePickerBtn);
-        dateButton.setText(getTodayDate());
 
+        //Back arrow image button redirects user to homeFragment
         ImageButton backBtn= (ImageButton)findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddProductPage.this,  ProfileFragment.class));
+                startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
             }
-
-
         });
 
-    }
-
-    private String getTodayDate() {
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        month = month + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        return makeDateString(day, month, year);
-
-    }
-
-    private void initDatePicker() {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        //cancel button image button redirects user to homeFragment
+        Button cancelBtn= (Button)findViewById(R.id.cancelBtn);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1; //january is 0 so +1 to make it 1
-                String date = makeDateString(day, month, year);
-                dateButton.setText(date);
+            public void onClick(View v) {
+                startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
             }
-        };
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
+        });
 
+        //select image to store food images
+
+        Button selectImgBtn= (Button)findViewById(R.id.selectImgBtn);
+        selectImgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
+
+        //set DatePicker for expiry Date
+        EditText expiry_date=(EditText)findViewById(R.id.expiry_date);
+        expiry_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day= calendar.get(Calendar.DAY_OF_MONTH);
+                int month= calendar.get(Calendar.MONTH);
+                int year= calendar.get(Calendar.YEAR);
+
+                //define datepicker
+                picker = new DatePickerDialog(AddProductPage.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        expiry_date.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                    }
+                },year, month, day);
+
+                picker.getDatePicker().setMinDate(calendar.getTimeInMillis());
+                picker.show();
+            }
+        });
     }
 
-    private String makeDateString(int day, int month, int year) {
-        return getMonthFormat(month) + "/" + day + "/" + year;
+    private void selectImage(){
+        Intent intent= new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 100);
     }
 
-    private String getMonthFormat(int month) {
-        if (month == 1)
-            return "JAN";
-        if (month == 2)
-            return "FEB";
-        if (month == 3)
-            return "MAR";
-        if (month == 4)
-            return "APR";
-        if (month == 5)
-            return "MAY";
-        if (month == 6)
-            return "JUN";
-        if (month == 7)
-            return "JUL";
-        if (month == 8)
-            return "AUG";
-        if (month == 9)
-            return "SEPT";
-        if (month == 10)
-            return "OCT";
-        if (month == 11)
-            return "NOV";
-        if (month == 12)
-            return "DEC";
-        //defualt
-        return "JAN";
-    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==100 && data !=null && data.getData() != null){
+            imageUri=data.getData();
+            ImageView foodImage = (ImageView) findViewById(R.id.foodImage);
+            foodImage.setImageURI(imageUri);
 
-    public void openDatePicker(View view){
-        datePickerDialog.show();
+        }
     }
 }
