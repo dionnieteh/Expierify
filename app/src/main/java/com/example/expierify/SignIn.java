@@ -126,6 +126,7 @@ public class SignIn extends AppCompatActivity {
                             signInButton.setVisibility(View.GONE);
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(SignIn.this, "You are signed in.", Toast.LENGTH_LONG).show();
                             updateUI(user);
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
