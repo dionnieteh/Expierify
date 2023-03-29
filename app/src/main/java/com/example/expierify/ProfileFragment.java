@@ -9,9 +9,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -21,7 +27,8 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private Button logOutButton;
-    private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -52,21 +59,38 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // Get the GoogleSignInClient instance
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        mAuth = FirebaseAuth.getInstance();
         logOutButton = view.findViewById(R.id.logOutBtn);
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.signOut();
-                Toast.makeText(getContext(), "You are signed out", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(),SignIn.class);
-                startActivity(intent);
+                // Sign the user out of their Google account
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign-out was successful
+                                    // Navigate the user back to the login screen
+                                    Intent intent = new Intent(getActivity(), SignIn.class);
+                                    startActivity(intent);
+                                    getActivity().finish();
+                                } else {
+                                    // Sign-out failed, handle the error
+                                    Toast.makeText(getActivity(), "Sign-out failed.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
         // Inflate the layout for this fragment
