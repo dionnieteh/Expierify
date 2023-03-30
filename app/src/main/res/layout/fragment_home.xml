@@ -36,7 +36,7 @@
                     android:layout_alignParentTop="true"
                     android:text="@string/Greeting"
                     android:textColor="@color/black"
-                    android:textSize="35sp"
+                    android:textSize="30sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +47,6 @@
                     android:id="@+id/notificationBtn"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="5dp"
                     android:background="@null"
                     android:onClick="notification"
                     android:src="@drawable/bell"
@@ -182,10 +181,8 @@
                         android:layout_marginTop="30dp"
                         android:textColor="@color/black"
                         android:textSize="30sp"
-                        android:textStyle="bold" />
-
-
-
+                        android:textStyle="bold"
+                        />
 
 
                     <!--Upcoming category-->
