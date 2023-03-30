@@ -205,13 +205,12 @@
 
                 <!--New Category through spinner-->
                 <Spinner
+                    android:id="@+id/newCategory"
                     android:layout_width="150dp"
                     android:layout_height="30dp"
-                    android:id="@+id/newCategory"
                     android:layout_below="@id/newDesc"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="20dp"
-                    />
+                    android:layout_marginTop="20dp" />
 
                 <!--Location Header-->
                 <TextView
