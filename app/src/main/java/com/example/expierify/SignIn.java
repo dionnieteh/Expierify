@@ -35,7 +35,7 @@ public class SignIn extends AppCompatActivity {
 
     private static final String TAG = "Main: ";
     SignInButton signInButton;
-    Button signOutButton;
+
     FirebaseAuth mAuth;
     private int RC_SIGN_IN = 9001;
     GoogleSignInClient mGoogleSignInClient;
@@ -56,7 +56,6 @@ public class SignIn extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         signInButton = findViewById(R.id.sign_in_button);
-        signOutButton = findViewById(R.id.sign_out_button);
 
         progressBar = findViewById(R.id.progressBar);
         textViewusername = findViewById(R.id.username);
@@ -68,8 +67,6 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() != null){
-                    signInButton.setVisibility(View.GONE);
-                    signOutButton.setVisibility(View.VISIBLE);
                     updateUI(mAuth.getCurrentUser());
                 }
             }
@@ -86,17 +83,6 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signIn();
-            }
-        });
-
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                signOutButton.setVisibility(View.GONE);
-                signInButton.setVisibility(View.VISIBLE);
-                textViewusername.setVisibility(View.GONE);
-                imageViewuserprofile.setVisibility(View.GONE);
             }
         });
 
@@ -140,6 +126,7 @@ public class SignIn extends AppCompatActivity {
                             signInButton.setVisibility(View.GONE);
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(SignIn.this, "You are signed in.", Toast.LENGTH_LONG).show();
                             updateUI(user);
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
