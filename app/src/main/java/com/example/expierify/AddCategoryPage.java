@@ -60,4 +60,6 @@ public class AddCategoryPage extends AppCompatActivity {
         Toast.makeText(this, "New Category is Added", Toast.LENGTH_SHORT).show();
     }
 
+
+
 }
