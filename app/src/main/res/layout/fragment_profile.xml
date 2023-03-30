@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileFragment">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="20dp"
@@ -29,15 +28,14 @@
 
                 <!--Profile Header-->
                 <TextView
+                    android:id="@+id/profileHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/ProfileHeader"
                     android:layout_alignParentTop="true"
-                    android:textSize="35sp"
+                    android:text="@string/ProfileHeader"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:id="@+id/profileHeader"/>
-
+                    android:textSize="35sp"
+                    android:textStyle="bold" />
 
 
                 <!--Edit Button-->
@@ -48,32 +46,32 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="5dp"
                     android:background="@null"
-                    tools:ignore="SpeakableTextPresentCheck"
-                    android:src="@drawable/ic_baseline_edit_24"/>
+                    android:src="@drawable/ic_baseline_edit_24"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <!--User Profile Picture-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/UserPicture"
                     android:layout_width="155dp"
                     android:layout_height="155dp"
-                    android:layout_marginTop="40dp"
-                    app:cardCornerRadius="250dp"
-                    app:cardBackgroundColor="@color/white"
+                    android:layout_below="@+id/profileHeader"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/profileHeader">
+                    android:layout_marginTop="40dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="250dp">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        app:cardCornerRadius="250dp"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        app:cardCornerRadius="250dp">
 
                         <ImageView
                             android:id="@id/UserPicture"
                             android:layout_width="140dp"
                             android:layout_height="140dp"
                             android:layout_gravity="center"
-                            android:scaleType="fitCenter"/>
+                            android:scaleType="fitCenter" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -81,120 +79,97 @@
 
                 <!--User Name-->
                 <TextView
+                    android:id="@+id/UserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/UserName"
                     android:layout_below="@+id/UserPicture"
-                    android:layout_marginTop="10dp"
                     android:layout_centerHorizontal="true"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/black"
-                    />
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
                 <!--Email Header -->
                 <TextView
+                    android:id="@+id/emailHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/emailHeader"
                     android:layout_below="@+id/UserName"
                     android:layout_marginTop="40dp"
                     android:text="@string/EmailHeader"
                     android:textSize="25dp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
                 <!--Email  -->
                 <TextView
+                    android:id="@+id/emailProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/emailProfile"
                     android:layout_below="@+id/UserName"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="40dp"
                     android:textSize="25dp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
                 <!--Phone Number Header -->
                 <TextView
+                    android:id="@+id/phHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/phHeader"
                     android:layout_below="@+id/emailHeader"
                     android:layout_marginTop="30dp"
                     android:text="@string/PhoneHeader"
                     android:textSize="25dp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
                 <!--PhoneNumber  -->
                 <TextView
+                    android:id="@+id/phProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/phProfile"
                     android:layout_below="@+id/emailHeader"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="40dp"
                     android:textSize="25dp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
                 <!--Date of Birth Header -->
                 <TextView
+                    android:id="@+id/dobHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/dobHeader"
                     android:layout_below="@+id/phHeader"
                     android:layout_marginTop="30dp"
                     android:text="@string/BirthdateHeader"
                     android:textSize="25dp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
                 <!--Date of Birth-->
                 <TextView
+                    android:id="@+id/dobProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/dobProfile"
                     android:layout_below="@+id/phHeader"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="40dp"
                     android:textSize="25dp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
-                <!--Horizontal line-->
-                <View
-                    android:id="@+id/divider1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="2dp"
-                    android:background="@color/black"
-                    android:layout_marginTop="40dp"
-                    android:layout_below="@+id/dobProfile"/>
 
-                <!--LoG Out Button-->
+                <!--Log Out Button-->
                 <Button
+                    android:id="@+id/logOutBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/divider1"
-                    android:textColor="@color/black"
-                    android:text="@string/logoutbtn"
-                    android:id="@+id/logOutBtn"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:textSize="20sp"
-                    android:padding="15dp"
-                    android:background="@android:color/transparent"
-                    />
+                    android:layout_below="@+id/dobProfile"
+                    android:layout_centerInParent="true"
+                    android:background="#fff"
+                    android:drawableLeft="@drawable/ic_google_logo"
+                    android:drawablePadding="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="sign out" />
 
-                <!--Horizontal line-->
-                <View
-                    android:id="@+id/divider2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="2dp"
-                    android:background="@color/black"
-                    android:layout_below="@+id/logOutBtn"/>
             </RelativeLayout>
 
 

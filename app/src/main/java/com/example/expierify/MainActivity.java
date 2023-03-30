@@ -3,7 +3,9 @@ package com.example.expierify;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.expierify.databinding.ActivityMainBinding;
 import com.google.firebase.FirebaseApp;
@@ -31,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.category:
-                    replaceFragment(new CategoryFragment());
+                    //supposed to go to Sort java but doesnt
+                    Intent intent = new Intent(MainActivity.this,Sort.class);
+                    startActivity(intent);
                     break;
                 case R.id.camera:
                     //replaceFragment(new CameraFragment());
