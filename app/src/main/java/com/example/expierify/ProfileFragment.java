@@ -66,19 +66,5 @@ public class ProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
 
-        //enter new activity with notification (bell) button
-        ImageButton editBtn = (ImageButton) view.findViewById(R.id.editBtn);
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ProfileFragment.this.getActivity(),  AddLabelPage.class));
-            }
-
-
-        });
-    }
 }
