@@ -11,6 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -50,14 +54,28 @@ public class AddCategoryPage extends AppCompatActivity {
 
     private void insertCategory(){
         String cName = categoryName.getText().toString();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userID = currentUser.getUid();
+
+        CategoryClass categoryClass = new CategoryClass(cName, userID);
 
 
-        CategoryClass categoryClass = new CategoryClass(cName);
 
+        category.push().setValue(categoryClass).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "New Category is Added", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(AddCategoryPage.this,  HomeFragment.class));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Error When Adding New Category", Toast.LENGTH_SHORT).show();
+            }
+        });
         
-        //push() to generate unique key for the new category
-        category.push().setValue(categoryClass);
-        Toast.makeText(this, "New Category is Added", Toast.LENGTH_SHORT).show();
+
     }
 
 
