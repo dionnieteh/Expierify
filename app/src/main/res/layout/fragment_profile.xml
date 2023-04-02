@@ -50,39 +50,31 @@
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <!--User Profile Picture-->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/UserPicture"
-                    android:layout_width="155dp"
-                    android:layout_height="155dp"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/section"
                     android:layout_below="@+id/profileHeader"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="40dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="250dp">
+                    android:layout_marginTop="50dp"
+                    android:gravity="center">
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                    <ImageView
+                        android:id="@+id/UserPicture"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
                         android:layout_gravity="center"
-                        app:cardCornerRadius="250dp">
+                        android:scaleType="fitCenter" />
 
-                        <ImageView
-                            android:id="@id/UserPicture"
-                            android:layout_width="140dp"
-                            android:layout_height="140dp"
-                            android:layout_gravity="center"
-                            android:scaleType="fitCenter" />
+                </RelativeLayout>
 
-                    </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
 
                 <!--User Name-->
                 <TextView
                     android:id="@+id/UserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/UserPicture"
+                    android:layout_below="@+id/section"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/black"
@@ -166,13 +158,9 @@
                     android:background="#fff"
                     android:drawableLeft="@drawable/ic_google_logo"
                     android:drawablePadding="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
                     android:text="sign out" />
 
             </RelativeLayout>
-
-
         </LinearLayout>
     </ScrollView>
 
