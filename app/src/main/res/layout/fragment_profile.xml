@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FEF3EF"
     tools:context=".ProfileFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
         android:paddingTop="20dp"
+        android:paddingRight="20dp"
         android:paddingBottom="20dp"
         tools:context=".MainActivity"> <!--Scroll view-->
 
@@ -51,9 +52,9 @@
 
                 <!--User Profile Picture-->
                 <RelativeLayout
+                    android:id="@+id/section"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/section"
                     android:layout_below="@+id/profileHeader"
                     android:layout_marginTop="50dp"
                     android:gravity="center">
@@ -68,7 +69,6 @@
                 </RelativeLayout>
 
 
-
                 <!--User Name-->
                 <TextView
                     android:id="@+id/UserName"
@@ -81,12 +81,33 @@
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
+                <!--User ID Header -->
+                <TextView
+                    android:id="@+id/uidHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/UserName"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/uidHeader"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <!--User ID  -->
+                <TextView
+                    android:id="@+id/uid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/UserName"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="40dp"
+                    android:textSize="25dp" />
+
                 <!--Email Header -->
                 <TextView
                     android:id="@+id/emailHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/UserName"
+                    android:layout_below="@+id/uidHeader"
                     android:layout_marginTop="40dp"
                     android:text="@string/EmailHeader"
                     android:textSize="25dp"
@@ -97,70 +118,43 @@
                     android:id="@+id/emailProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/UserName"
+                    android:layout_below="@+id/uidHeader"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="40dp"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
+                    android:textSize="25dp" />
 
-                <!--Phone Number Header -->
+                <!--Allergens Header -->
                 <TextView
-                    android:id="@+id/phHeader"
+                    android:id="@+id/allergenHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/emailHeader"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/PhoneHeader"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/Allergens"
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
                 <!--PhoneNumber  -->
                 <TextView
-                    android:id="@+id/phProfile"
+                    android:id="@+id/allergen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/emailHeader"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="40dp"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
-
-                <!--Date of Birth Header -->
-                <TextView
-                    android:id="@+id/dobHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/phHeader"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/BirthdateHeader"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
-
-                <!--Date of Birth-->
-                <TextView
-                    android:id="@+id/dobProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/phHeader"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="40dp"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
-
-
+                    android:layout_below="@+id/allergenHeader"
+                    android:layout_marginTop="20dp"
+                    android:textSize="25dp" />
                 <!--Log Out Button-->
                 <Button
                     android:id="@+id/logOutBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/dobProfile"
+                    android:layout_below="@+id/allergen"
                     android:layout_centerInParent="true"
                     android:background="#fff"
                     android:drawableLeft="@drawable/ic_google_logo"
                     android:drawablePadding="10dp"
                     android:text="sign out" />
-
             </RelativeLayout>
+
         </LinearLayout>
     </ScrollView>
 
