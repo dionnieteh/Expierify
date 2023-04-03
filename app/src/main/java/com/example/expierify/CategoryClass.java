@@ -9,6 +9,9 @@ public class CategoryClass {
         this.cName = cName;
         this.userID = userID;
     }
+    public CategoryClass() {
+        // Required empty constructor for Firebase
+    }
 
     public String getcName() {
         return cName;

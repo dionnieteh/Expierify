@@ -9,6 +9,10 @@ public class LabelClass {
         this.userID = userID;
     }
 
+    public LabelClass() {
+        // Required empty constructor for Firebase
+    }
+
     public String getlName() {
         return lName;
     }

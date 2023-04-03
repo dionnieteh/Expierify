@@ -131,7 +131,9 @@ public class AddProductPage extends AppCompatActivity {
                     String currentUserID = currentUser.getUid();
                     if (userID != null && userID.equals(currentUserID)){
                         String category = categorySnapshot.child("cName").getValue(String.class);
-                        categories.add(category);
+                        if (!category.equals("Uncategorized")) {
+                            categories.add(category);
+                        }
                     }
 
                 }
@@ -187,52 +189,8 @@ public class AddProductPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //insertFoodData();
-                String name = foodName.getText().toString().trim();
-                String desc = foodDesc.getText().toString().trim();
-                String expiry = expiry_date.getText().toString().trim();
-                String category = newCategory.getSelectedItem().toString();
-                String label = newLocation.getSelectedItem().toString();
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                String userID = currentUser.getUid();
+                insertFoodData();
 
-                // Validation
-                if (name.isEmpty()) {
-                    foodName.setError("Name is required");
-                    foodName.requestFocus();
-                    return;
-                }
-
-                if (expiry.isEmpty()) {
-                    expiry_date.setError("Expiry date is required");
-                    expiry_date.requestFocus();
-                    return;
-                }
-
-                if (category.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Please select a category", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (label.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Please select a location", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // Create new Food object and save to Firebase databasw
-                if (userID !=null){
-                    DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
-                    String foodId = foodRef.push().getKey();
-                    Food newFood = new Food(userID, foodId, name, desc, expiry, category, label);
-                    foodRef.child(foodId).setValue(newFood).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            uploadFoodImage(foodId);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Failed to Upload Food Product", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
             }
         });
 
@@ -256,104 +214,154 @@ public class AddProductPage extends AppCompatActivity {
         }
     }
 
-    /*private void insertFoodData(){
+    private void insertFoodData(){
         EditText foodName = findViewById(R.id.newName);
         EditText foodDesc = findViewById(R.id.newDesc);
-        EditText expiryDate = findViewById(R.id.expiry_date);
-        Spinner categorySpinner = findViewById(R.id.newCategory);
-        Spinner labelSpinner = findViewById(R.id.newLocation);
-        ImageView foodImage = findViewById(R.id.foodImage);
+        EditText expiry_date = findViewById(R.id.expiry_date);
+        Spinner newCategory = findViewById(R.id.newCategory);
+        Spinner newLocation = findViewById(R.id.newLocation);
 
         String name = foodName.getText().toString().trim();
         String desc = foodDesc.getText().toString().trim();
-        String expiry = expiryDate.getText().toString().trim();
-        String category = categorySpinner.getSelectedItem().toString();
-        String label = labelSpinner.getSelectedItem().toString();
+        String expiry = expiry_date.getText().toString().trim();
+        String category = newCategory.getSelectedItem() != null ? newCategory.getSelectedItem().toString() : "Uncategorized";
+        String label = newLocation.getSelectedItem() != null ? newLocation.getSelectedItem().toString() : "Unlabeled";
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String userID = currentUser.getUid();
 
-        Bitmap bitmap = ((BitmapDrawable) foodImage.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] data = baos.toByteArray();
-        String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Image Description", null);
-
-
-
         // Validation
+        boolean hasError = false;
         if (name.isEmpty()) {
             foodName.setError("Name is required");
             foodName.requestFocus();
-            return;
+            hasError = true;
         }
 
         if (expiry.isEmpty()) {
-            expiryDate.setError("Expiry date is required");
-            expiryDate.requestFocus();
-            return;
+            expiry_date.setError("Expiry date is required");
+            expiry_date.requestFocus();
+            hasError = true;
         }
 
-        if (category.isEmpty()) {
-            Toast.makeText(this, "Please select a category", Toast.LENGTH_SHORT).show();
-            return;
+        if (hasError) {
+            return; // Exit early if there are validation errors
         }
 
-        if (label.isEmpty()) {
-            Toast.makeText(this, "Please select a location", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         // Create new Food object and save to Firebase database
-        DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
-        String foodId = foodRef.push().getKey();
-        Food newFood = new Food(userID, name, desc, expiry, category, label);
-        foodRef.child(foodId).setValue(newFood).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                uploadFoodImage(path);
-            } else {
-                Toast.makeText(getApplicationContext(), "Failed to Upload Food Product", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (userID !=null){
+            DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
+            String foodId = foodRef.push().getKey();
+            Food newFood = new Food(userID, foodId, name, desc, expiry, category, label);
+            foodRef.child(foodId).setValue(newFood).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    uploadFoodImage(foodId);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to Upload Food Product", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
-        // Clear input fields
-        foodName.setText("");
-        foodDesc.setText("");
-        expiryDate.setText("");
 
-        // Display success message
-        //Toast.makeText(this, "Food added successfully1", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
-    }*/
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+        //category uncategorized
+        if (category != null && category.equals("Uncategorized")) {
+
+            // Check if there is already an existing "Uncategorized" category for the current user
+            databaseRef.child("Category").orderByChild("userID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    boolean categoryExists = false;
+                    for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                        CategoryClass category = categorySnapshot.getValue(CategoryClass.class);
+                        if (category.getcName().equals("Uncategorized")) {
+                            categoryExists = true;
+                            break;
+                        }
+                    }
+
+                    if (!categoryExists) {
+                        // If an "Uncategorized" category for the current user does not exist, add it to the database
+                        CategoryClass newCategory = new CategoryClass( "Uncategorized",userID );
+                        databaseRef.child("Category").push().setValue(newCategory);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle any errors here
+                }
+            });
+
+        }
+
+        //label unlabeled
+        if (label != null && label.equals("Unlabeled")) {
+
+            // Check if there is already an existing "Uncategorized" category for the current user
+            databaseRef.child("Label").orderByChild("userID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    boolean labelExists = false;
+                    for (DataSnapshot labelSnapshot : dataSnapshot.getChildren()) {
+                        LabelClass category = labelSnapshot.getValue(LabelClass.class);
+                        if (category.getlName().equals("Unlabeled")) {
+                            labelExists = true;
+                            break;
+                        }
+                    }
+
+                    if (!labelExists) {
+                        // If an "Uncategorized" category for the current user does not exist, add it to the database
+                        LabelClass newLabel = new LabelClass( "Unlabeled",userID );
+                        databaseRef.child("Label").push().setValue(newLabel);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle any errors here
+                }
+            });
+
+        }
+    }
 
     private void uploadFoodImage(String foodId) {
         String foodID=foodId;
         StorageReference storageRef = FirebaseStorage.getInstance().getReference("Food/" + foodId);
 
-        try {
-            InputStream stream = getContentResolver().openInputStream(imageUri);
-            Bitmap bitmap = BitmapFactory.decodeStream(stream);
+        if (imageUri !=null){
+            try {
+                InputStream stream = getContentResolver().openInputStream(imageUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(stream);
 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            byte[] data = baos.toByteArray();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] data = baos.toByteArray();
 
-            UploadTask uploadTask = storageRef.putBytes(data);
-            // Listen for upload success or failure
-            uploadTask.addOnFailureListener(exception -> {
-                Toast.makeText(getApplicationContext(), "Failed to Upload Food Image", Toast.LENGTH_SHORT).show();
-            }).addOnSuccessListener(taskSnapshot -> {
-                // Get the download URL of the uploaded image and save to Firebase Realtime Database
-                storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
-                    foodRef.child(foodId).child("image").setValue(uri.toString());
-                    Toast.makeText(getApplicationContext(), "Food Successfully Added", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
+                UploadTask uploadTask = storageRef.putBytes(data);
+                // Listen for upload success or failure
+                uploadTask.addOnFailureListener(exception -> {
+                    Toast.makeText(getApplicationContext(), "Failed to Upload Food Image", Toast.LENGTH_SHORT).show();
+                }).addOnSuccessListener(taskSnapshot -> {
+                    // Get the download URL of the uploaded image and save to Firebase Realtime Database
+                    storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
+                        foodRef.child(foodId).child("image").setValue(uri.toString());
+                        Toast.makeText(getApplicationContext(), "Food Successfully Added", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
+                    });
                 });
-            });
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else{
+            startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
+            return;
         }
+
 
 
 

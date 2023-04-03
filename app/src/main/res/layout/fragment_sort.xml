@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FEF3EF"
     android:orientation="vertical"
     android:paddingTop="20dp"
-    tools:context=".Sort">
+    tools:context=".SortFragment">
 
     <!--<androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"
@@ -61,12 +60,7 @@
             android:layout_height="683dp"
             tools:layout="@layout/fragment_category" />
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView7"
-            android:name="com.example.expierify.LabelFragment"
-            android:layout_width="match_parent"
-            android:layout_height="683dp"
-            tools:layout="@layout/fragment_label" />
+        
 
     </LinearLayout>
 

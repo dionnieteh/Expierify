@@ -44,12 +44,16 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.category:
-                    //supposed to go to Sort java but doesnt
-                    Intent intent = new Intent(MainActivity.this,Sort.class);
-                    startActivity(intent);
+                    replaceFragment(new SortFragment());
+                    // Intent intent = new Intent(MainActivity.this,Sort.class);
+                    //startActivity(intent);
                     break;
+                    //supposed to go to Sort java but doesnt
+
                 case R.id.camera:
                     //replaceFragment(new CameraFragment());
+                    Intent intent = new Intent(MainActivity.this, AddProductPage.class);
+                    startActivity(intent);
                     break;
                 case R.id.tags:
                     replaceFragment(new LabelFragment());
