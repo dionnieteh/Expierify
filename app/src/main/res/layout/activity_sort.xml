@@ -55,7 +55,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView6"
-            android:name="com.example.fyp.CategoryFragment"
+            android:name="com.example.expierify.CategoryFragment"
             android:layout_width="match_parent"
             android:layout_height="683dp"
             tools:layout="@layout/fragment_category" />

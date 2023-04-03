@@ -39,19 +39,19 @@ public class Sort extends AppCompatActivity {
                         .commit();
             }
         });
-        SearchView searchView = findViewById(R.id.search_view);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Handle search query submission
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // Handle search query text changes
-                return true;
-            }
-        });
+//        SearchView searchView = findViewById(R.id.search_view);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                // Handle search query submission
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                // Handle search query text changes
+//                return true;
+//            }
+//        });
     }
 }
