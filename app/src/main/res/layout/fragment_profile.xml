@@ -42,8 +42,8 @@
                 <!--Edit Button-->
                 <ImageButton
                     android:id="@+id/editBtn"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="5dp"
                     android:background="@null"
