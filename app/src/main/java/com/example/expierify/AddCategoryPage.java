@@ -34,7 +34,7 @@ public class AddCategoryPage extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddCategoryPage.this,  ProfileFragment.class));
+                finish();
             }
 
 
@@ -66,7 +66,7 @@ public class AddCategoryPage extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(getApplicationContext(), "New Category is Added", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AddCategoryPage.this,  HomeFragment.class));
+                startActivity(new Intent(AddCategoryPage.this,  SortFragment.class));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

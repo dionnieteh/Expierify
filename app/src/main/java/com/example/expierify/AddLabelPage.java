@@ -32,7 +32,7 @@ public class AddLabelPage extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddLabelPage.this,  ProfileFragment.class));
+                finish();
             }
 
 

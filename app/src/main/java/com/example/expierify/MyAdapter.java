@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,10 +48,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public void onClick(View view) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference ref = database.getReference();
+                DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
 
-                // Query the database for the foodIDs
-                Query query = ref.child("Food").orderByChild("userID_category").equalTo(category.getUserID() + "_" + category.getcName());
+
+                Query query = foodRef.orderByChild("userID").equalTo(category.getUserID())
+                        .orderByChild("categoryName").equalTo(category.getcName());
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

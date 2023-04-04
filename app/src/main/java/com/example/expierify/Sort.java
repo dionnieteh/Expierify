@@ -11,6 +11,9 @@ import android.widget.SearchView;
 
 public class Sort extends AppCompatActivity {
 
+    private boolean isCategoryFragmentVisible = true;
+    private boolean isLabelFragmentVisible = false;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sort);
