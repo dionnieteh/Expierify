@@ -77,9 +77,10 @@
                     android:layout_below="@+id/section"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
                     android:textSize="25sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    />
 
 
                 <!--Email Header -->
@@ -91,6 +92,7 @@
                     android:layout_marginTop="40dp"
                     android:text="@string/EmailHeader"
                     android:textSize="25dp"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <!--Email  -->
@@ -112,6 +114,7 @@
                     android:layout_marginTop="40dp"
                     android:text="@string/Allergens"
                     android:textSize="25dp"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <!--Allergen  -->
@@ -141,13 +144,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/allergen"
                     android:layout_centerInParent="true"
-                    android:backgroundTint="#FCA99B"
                     android:padding="10dp"
                     android:radius="30dp"
                     android:layout_marginTop="50dp"
                     android:text="Save"
                     android:textAllCaps="false"
-                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:visibility="invisible" />
@@ -159,15 +160,14 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/allergen"
                     android:layout_centerInParent="true"
-                    android:backgroundTint="#BDBDC1"
+                    android:layout_marginTop="50dp"
+                    android:backgroundTint="@color/grey"
                     android:drawableLeft="@drawable/ic_google_logo"
                     android:drawablePadding="10dp"
                     android:padding="10dp"
                     android:radius="30dp"
                     android:text="Sign Out"
-                    android:layout_marginTop="50dp"
                     android:textAllCaps="false"
-                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:visibility="visible" />

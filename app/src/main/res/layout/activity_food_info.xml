@@ -135,7 +135,7 @@
             android:id="@+id/locateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/purple_200"
+            android:background="@color/purple"
             android:text="cabinet"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/locate"
