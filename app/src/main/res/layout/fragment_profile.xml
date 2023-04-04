@@ -81,33 +81,13 @@
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
-                <!--User ID Header -->
-                <TextView
-                    android:id="@+id/uidHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/UserName"
-                    android:layout_marginTop="40dp"
-                    android:text="@string/uidHeader"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
-
-                <!--User ID  -->
-                <TextView
-                    android:id="@+id/uid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/UserName"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="40dp"
-                    android:textSize="25dp" />
 
                 <!--Email Header -->
                 <TextView
                     android:id="@+id/emailHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/uidHeader"
+                    android:layout_below="@+id/UserName"
                     android:layout_marginTop="40dp"
                     android:text="@string/EmailHeader"
                     android:textSize="25dp"
@@ -118,7 +98,7 @@
                     android:id="@+id/emailProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/uidHeader"
+                    android:layout_below="@+id/UserName"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="40dp"
                     android:textSize="25dp" />
@@ -134,14 +114,46 @@
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
-                <!--PhoneNumber  -->
+                <!--Allergen  -->
+                <EditText
+                    android:id="@+id/editAllergen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/allergenHeader"
+                    android:hint="Enter your allergen here"
+                    android:inputType="text"
+                    android:maxLines="2"
+                    android:layout_marginTop="10dp"
+                    android:visibility="invisible"
+                    android:textSize="25dp" />
+
                 <TextView
                     android:id="@+id/allergen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/allergenHeader"
-                    android:layout_marginTop="20dp"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dp"
                     android:textSize="25dp" />
+
+                <!--Save Edit Button-->
+                <Button
+                    android:id="@+id/saveBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/allergen"
+                    android:layout_centerInParent="true"
+                    android:backgroundTint="#FCA99B"
+                    android:padding="10dp"
+                    android:radius="30dp"
+                    android:layout_marginTop="50dp"
+                    android:text="Save"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
                 <!--Log Out Button-->
                 <Button
                     android:id="@+id/logOutBtn"
@@ -149,10 +161,19 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/allergen"
                     android:layout_centerInParent="true"
-                    android:background="#fff"
+                    android:backgroundTint="#BDBDC1"
                     android:drawableLeft="@drawable/ic_google_logo"
                     android:drawablePadding="10dp"
-                    android:text="sign out" />
+                    android:padding="10dp"
+                    android:radius="30dp"
+                    android:text="Sign Out"
+                    android:layout_marginTop="50dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
             </RelativeLayout>
 
         </LinearLayout>

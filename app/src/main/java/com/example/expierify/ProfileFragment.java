@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,8 +26,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
@@ -36,9 +40,13 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button logOutButton;
     private GoogleSignInClient mGoogleSignInClient;
-
+    private Button logOutButton;
+    private Button saveBtn;
+    private ImageButton editBtn;
+    private EditText editAllergen;
+    private TextView allergen;
+    FirebaseAuth mAuth;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -93,8 +101,8 @@ public class ProfileFragment extends Fragment {
             ImageView profPic = view.findViewById(R.id.UserPicture);
             // Load the image from a URL using Picasso
             Picasso.get().load(photoUrl).into(profPic);
-        }
 
+        }
 
         logOutButton = view.findViewById(R.id.logOutBtn);
         logOutButton.setOnClickListener(new View.OnClickListener() {
@@ -111,12 +119,54 @@ public class ProfileFragment extends Fragment {
                                     Intent intent = new Intent(getActivity(), SignIn.class);
                                     startActivity(intent);
                                     getActivity().finish();
+                                    Toast.makeText(getActivity(), "You have signed out.", Toast.LENGTH_SHORT).show();
                                 } else {
                                     // Sign-out failed, handle the error
                                     Toast.makeText(getActivity(), "Sign-out failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
+            }
+        });
+
+        editBtn = view.findViewById(R.id.editBtn);
+        allergen = view.findViewById(R.id.allergen);
+        editAllergen = view.findViewById(R.id.editAllergen);
+        saveBtn = view.findViewById(R.id.saveBtn);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users");
+        String userId = user.getUid();
+        myRef.child(userId).child("allergen").addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String allergenValue = dataSnapshot.getValue(String.class);
+                if (allergenValue != null) {
+                    allergen.setText(allergenValue);
+                }
+            }
+
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle database error
+                Toast.makeText(getActivity(), "Failed to add into database.", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                logOutButton.setVisibility(View.INVISIBLE);
+                editAllergen.setVisibility(View.VISIBLE);
+                saveBtn.setVisibility(View.VISIBLE);
+                allergen.setVisibility(View.INVISIBLE);
+                saveBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String newAllergen = editAllergen.getText().toString().trim();
+                        myRef.child(userId).child("allergen").setValue(newAllergen);
+                        editAllergen.setVisibility(View.INVISIBLE);
+                        allergen.setVisibility(View.VISIBLE);
+                        saveBtn.setVisibility(View.INVISIBLE);
+                        logOutButton.setVisibility(View.VISIBLE);
+                    }
+                });
             }
         });
         // Inflate the layout for this fragment
