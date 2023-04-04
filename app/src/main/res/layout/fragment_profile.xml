@@ -120,10 +120,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/allergenHeader"
-                    android:hint="Enter your allergen here"
+                    android:hint="What are you allergic to?"
                     android:inputType="text"
                     android:maxLines="2"
-                    android:layout_marginTop="10dp"
                     android:visibility="invisible"
                     android:textSize="25dp" />
 
@@ -133,7 +132,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/allergenHeader"
                     android:visibility="visible"
-                    android:layout_marginTop="10dp"
                     android:textSize="25dp" />
 
                 <!--Save Edit Button-->
