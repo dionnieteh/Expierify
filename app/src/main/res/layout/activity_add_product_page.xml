@@ -47,15 +47,27 @@
                     android:textStyle="bold"
                     />
 
-                <!--Add Image Button-->
-                <ImageButton
-                    android:layout_width="155dp"
-                    android:layout_height="155dp"
-                    android:id="@+id/addImage"
-                    android:layout_centerHorizontal="true"
+                <!--food Imageview-->
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/foodImage"
                     android:layout_below="@+id/addHeader"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/ic_baseline_add_24"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="40dp"
+                    android:background="@drawable/image_border"
+                />
+
+                <!--food select image button-->
+                <Button
+                    android:layout_width="160dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/selectImgBtn"
+                    android:layout_below="@+id/addHeader"
+                    android:layout_toEndOf="@id/foodImage"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="30dp"
+                    android:text="Select Image"
                     />
 
                 <!--Name Header -->
@@ -63,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/addName"
-                    android:layout_below="@+id/addImage"
+                    android:layout_below="@+id/foodImage"
                     android:layout_marginTop="20dp"
                     android:text="@string/addName"
                     android:textSize="20sp"
@@ -82,7 +94,7 @@
                     android:textSize="20sp"
                     />
 
-                <!--Expiry Date Header -->
+                <!--Expiry Date Header
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -93,9 +105,9 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    />
+                    />-->
 
-                <!--Add expiry date-->
+                <!--Add expiry date
                 <Button
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
@@ -109,15 +121,58 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     android:onClick="openDatePicker"
-                    />
+                    />-->
+
+                <RelativeLayout
+                    android:id="@+id/datePickerBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/newName"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/addDate"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/addDate"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+
+                    <ImageView
+                        android:id="@+id/imageView_date_picker"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_below="@id/addDate"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_baseline_calendar_today_24" />
+
+                    <EditText
+                        android:id="@+id/expiry_date"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/addDate"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:focusable="false"
+                        android:background="@android:color/transparent"
+                        android:layout_toEndOf="@id/imageView_date_picker"
+                        android:hint="Select Expiry Date"
+                        android:inputType="date"
+                        android:padding="6dp"
+                        android:textSize="16sp" />
+                </RelativeLayout>
 
                 <!--Description Header -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/addDescription"
-                    android:layout_below="@+id/addDate"
-                    android:layout_marginTop="30dp"
+                    android:layout_below="@+id/datePickerBtn"
+                    android:layout_marginTop="20dp"
                     android:text="@string/addDescription"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -141,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/addCategory"
                     android:layout_below="@+id/newDesc"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:text="@string/addCategory"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -150,13 +205,12 @@
 
                 <!--New Category through spinner-->
                 <Spinner
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/newCategory"
+                    android:layout_width="150dp"
+                    android:layout_height="30dp"
                     android:layout_below="@id/newDesc"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="30dp"
-                    />
+                    android:layout_marginTop="20dp" />
 
                 <!--Location Header-->
                 <TextView
@@ -174,7 +228,7 @@
                 <!--New Category through spinner-->
                 <Spinner
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:id="@+id/newLocation"
                     android:layout_below="@id/newCategory"
                     android:layout_alignParentEnd="true"
@@ -187,7 +241,7 @@
                     android:layout_height="60dp"
                     android:id="@+id/cancelBtn"
                     android:layout_below="@id/newLocation"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="30dp"
                     android:text="@string/cancelBtn"
                     android:textSize="20dp"
                     android:onClick="cancel"
@@ -199,7 +253,7 @@
                     android:layout_height="60dp"
                     android:id="@+id/saveBtn"
                     android:layout_below="@id/newLocation"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="30dp"
                     android:text="@string/saveBtn"
                     android:layout_alignParentEnd="true"
                     android:textSize="20dp"

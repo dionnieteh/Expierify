@@ -16,7 +16,6 @@
         android:paddingBottom="20dp"
         tools:context=".MainActivity"> <!--Scroll view-->
 
-
         <LinearLayout
 
             android:layout_width="match_parent"
@@ -69,7 +68,7 @@
                 </RelativeLayout>
 
 
-                <!--User Name-->
+                <!--Name Header -->
                 <TextView
                     android:id="@+id/UserName"
                     android:layout_width="wrap_content"
@@ -102,6 +101,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="40dp"
                     android:textSize="25dp" />
+
 
                 <!--Allergens Header -->
                 <TextView
