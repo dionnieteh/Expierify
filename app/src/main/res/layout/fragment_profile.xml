@@ -69,7 +69,9 @@
                 </RelativeLayout>
 
 
-                <!--User Name-->
+
+
+                <!--Name Header -->
                 <TextView
                     android:id="@+id/UserName"
                     android:layout_width="wrap_content"
@@ -81,7 +83,6 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     />
-
 
                 <!--Email Header -->
                 <TextView
