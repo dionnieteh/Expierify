@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FEF3EF"
     android:paddingLeft="16dp"
     android:paddingTop="16dp"
     android:paddingRight="16dp"
     android:paddingBottom="16dp"
+    android:background="@color/Ivory"
     tools:context=".FoodInfo">
 
     <ImageView
@@ -33,23 +33,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <!-- max 20 characs for title--><TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="Food Name"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/expDate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        <!-- max 20 characs for title-->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="Food Name"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/expDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
 
         <ImageButton
             android:id="@+id/editBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#FEF3EF"
+            android:background="@color/Ivory"
             android:padding="15dp"
             android:scaleType="center"
             android:src="@drawable/ic_baseline_edit_24"
@@ -63,6 +65,7 @@
             android:layout_height="wrap_content"
             android:text="Expiry Date: "
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/desc"
             app:layout_constraintStart_toStartOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -73,9 +76,12 @@
             android:layout_height="wrap_content"
             android:text="Description: "
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/descLabel"
             app:layout_constraintStart_toStartOf="@+id/expDate"
-            app:layout_constraintTop_toBottomOf="@+id/expDate" /><!--54 characs-->
+            app:layout_constraintTop_toBottomOf="@+id/expDate" />
+
+        <!--54 characs-->
         <TextView
             android:id="@+id/descLabel"
             android:layout_width="wrap_content"
@@ -92,6 +98,7 @@
             android:layout_height="wrap_content"
             android:text="Category: "
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/locate"
             app:layout_constraintStart_toStartOf="@+id/descLabel"
             app:layout_constraintTop_toBottomOf="@+id/descLabel" />
@@ -102,6 +109,7 @@
             android:layout_height="wrap_content"
             android:text="Location: "
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/categ"
             app:layout_constraintTop_toBottomOf="@+id/categ" />
@@ -122,25 +130,26 @@
             android:id="@+id/categLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="188dp"
-            android:background="@color/white"
+            android:background="@color/orange"
             android:text="cereal"
             android:textSize="20sp"
+            android:padding="10px"
             app:layout_constraintBottom_toBottomOf="@+id/categ"
-            app:layout_constraintEnd_toEndOf="@+id/locateLabel"
-            app:layout_constraintTop_toBottomOf="@+id/editBtn"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintEnd_toEndOf="@+id/editBtn"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toTopOf="@+id/categ" />
 
         <TextView
             android:id="@+id/locateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/purple"
+            android:background="@color/Teagreen"
+            android:padding="10px"
             android:text="cabinet"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/locate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categLabel"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintEnd_toEndOf="@+id/editBtn"
+            app:layout_constraintTop_toTopOf="@+id/locate"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

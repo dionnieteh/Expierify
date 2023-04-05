@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FEF3EF"
+    android:background="#FEFBEA"
     tools:context=".ProfileFragment">
 
     <ScrollView
@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:text="@string/ProfileHeader"
-                    android:textColor="@color/black"
+                    android:textColor="@color/Mantis"
                     android:textSize="35sp"
                     android:textStyle="bold" />
 
@@ -68,9 +68,6 @@
 
                 </RelativeLayout>
 
-
-
-
                 <!--Name Header -->
                 <TextView
                     android:id="@+id/UserName"
@@ -80,7 +77,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:textSize="25sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/Mantis"
                     android:textStyle="bold"
                     />
 
@@ -93,7 +90,7 @@
                     android:layout_marginTop="40dp"
                     android:text="@string/EmailHeader"
                     android:textSize="25dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/Mantis"
                     android:textStyle="bold" />
 
                 <!--Email  -->
@@ -115,7 +112,7 @@
                     android:layout_marginTop="40dp"
                     android:text="@string/Allergens"
                     android:textSize="25dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/Mantis"
                     android:textStyle="bold" />
 
                 <!--Allergen  -->
@@ -126,6 +123,8 @@
                     android:layout_below="@+id/allergenHeader"
                     android:hint="What are you allergic to?"
                     android:inputType="text"
+                    android:textColor="@color/Mantis"
+                    android:textColorHint="@color/Mantis"
                     android:maxLines="2"
                     android:visibility="invisible"
                     android:textSize="25dp" />
@@ -141,7 +140,7 @@
                 <!--Save Edit Button-->
                 <Button
                     android:id="@+id/saveBtn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/allergen"
                     android:layout_centerInParent="true"
@@ -162,7 +161,8 @@
                     android:layout_below="@+id/allergen"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="50dp"
-                    android:backgroundTint="@color/grey"
+                    android:backgroundTint="@color/Teagreen"
+                    android:textColor="@color/Mantis"
                     android:drawableLeft="@drawable/ic_google_logo"
                     android:drawablePadding="10dp"
                     android:padding="10dp"
