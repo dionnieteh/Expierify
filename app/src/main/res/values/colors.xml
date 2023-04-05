@@ -12,4 +12,13 @@
     <color name="Teagreen">#C8E4BB</color>
     <color name="Mantis">#757A64</color>
     <color name="Resedagreen">#73BA65</color>
+
+    <color name="darkgreen">#216a56</color>
+    <color name="darkerwhite">#f8f8f8</color>
+    <color name="lighterwhite">#fefffb</color>
+    <color name="orangeyellow">#e4912c</color>
+    <color name="yellow">#FFF5E0</color>
+
+
+
 </resources>

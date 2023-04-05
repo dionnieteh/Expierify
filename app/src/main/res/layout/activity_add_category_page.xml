@@ -72,6 +72,7 @@
         android:layout_alignParentEnd="true"
         android:textSize="20dp"
         android:onClick="save"
+        android:textColor="@color/lighterwhite"
         />
 
 </RelativeLayout>

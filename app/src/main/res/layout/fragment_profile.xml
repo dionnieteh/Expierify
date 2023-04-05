@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FEFBEA"
+    android:background="@color/darkerwhite"
     tools:context=".ProfileFragment">
 
     <ScrollView
@@ -161,14 +161,14 @@
                     android:layout_below="@+id/allergen"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="50dp"
-                    android:backgroundTint="@color/Teagreen"
-                    android:textColor="@color/Mantis"
+                    android:backgroundTint="@color/lighterwhite"
                     android:drawableLeft="@drawable/ic_google_logo"
                     android:drawablePadding="10dp"
                     android:padding="10dp"
                     android:radius="30dp"
                     android:text="Sign Out"
                     android:textAllCaps="false"
+                    android:textColor="@color/Mantis"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:visibility="visible" />
