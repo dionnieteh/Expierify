@@ -85,6 +85,7 @@ public class ProfileFragment extends Fragment {
                                     Intent intent = new Intent(getActivity(), SignIn.class);
                                     startActivity(intent);
                                     getActivity().finish();
+                                    Toast.makeText(getActivity(), "You have signed out.", Toast.LENGTH_SHORT).show();
                                 } else {
                                     // Sign-out failed, handle the error
                                     Toast.makeText(getActivity(), "Sign-out failed.", Toast.LENGTH_SHORT).show();

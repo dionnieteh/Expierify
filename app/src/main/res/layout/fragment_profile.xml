@@ -77,16 +77,28 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <!--User Name-->
+
+
+                <!--Name Header -->
                 <TextView
                     android:id="@+id/UserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/UserPicture"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
+                    android:layout_marginTop="30dp"
+                    android:text="Name: "
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <!--Name-->
+                <TextView
+                    android:id="@+id/nameProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/emailHeader"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="40dp"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
                 <!--Email Header -->
@@ -111,49 +123,9 @@
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
-                <!--Phone Number Header -->
-                <TextView
-                    android:id="@+id/phHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/emailHeader"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/PhoneHeader"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
 
-                <!--PhoneNumber  -->
-                <TextView
-                    android:id="@+id/phProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/emailHeader"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="40dp"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
 
-                <!--Date of Birth Header -->
-                <TextView
-                    android:id="@+id/dobHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/phHeader"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/BirthdateHeader"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
 
-                <!--Date of Birth-->
-                <TextView
-                    android:id="@+id/dobProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/phHeader"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="40dp"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
 
 
                 <!--Log Out Button-->
@@ -161,8 +133,9 @@
                     android:id="@+id/logOutBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/dobProfile"
+                    android:layout_below="@+id/emailProfile"
                     android:layout_centerInParent="true"
+                    android:layout_marginTop="20dp"
                     android:background="#fff"
                     android:drawableLeft="@drawable/ic_google_logo"
                     android:drawablePadding="10dp"

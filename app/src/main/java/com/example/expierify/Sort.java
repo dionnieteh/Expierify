@@ -11,6 +11,9 @@ import android.widget.SearchView;
 
 public class Sort extends AppCompatActivity {
 
+    private boolean isCategoryFragmentVisible = true;
+    private boolean isLabelFragmentVisible = false;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sort);
@@ -39,7 +42,7 @@ public class Sort extends AppCompatActivity {
                         .commit();
             }
         });
-        SearchView searchView = findViewById(R.id.search_view);
+        /*SearchView searchView = findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -52,6 +55,6 @@ public class Sort extends AppCompatActivity {
                 // Handle search query text changes
                 return true;
             }
-        });
+        });*/
     }
 }
