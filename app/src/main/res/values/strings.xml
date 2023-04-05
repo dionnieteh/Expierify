@@ -21,4 +21,6 @@
     <string name="cancelBtn">Cancel</string>
     <string name="saveBtn">Save</string>
     <string name="LoginHeader">Log In</string>
+    <string name="Allergens">Allergens:</string>
+    <string name="uidHeader">User ID:</string>
 </resources>

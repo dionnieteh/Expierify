@@ -30,9 +30,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignIn extends AppCompatActivity {
-
     private static final String TAG = "Main: ";
     SignInButton signInButton;
 
@@ -112,7 +113,6 @@ public class SignIn extends AppCompatActivity {
         }
     }
 
-
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
@@ -126,6 +126,13 @@ public class SignIn extends AppCompatActivity {
                             signInButton.setVisibility(View.GONE);
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String userId = user.getUid();
+                            String email = user.getEmail();
+                            String name = user.getDisplayName();
+                            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+                            usersRef.child(userId).child("email").setValue(email);
+                            usersRef.child(userId).child("name").setValue(name);
+                            user = mAuth.getCurrentUser();
                             Toast.makeText(SignIn.this, "You are signed in.", Toast.LENGTH_LONG).show();
                             updateUI(user);
                         } else {
