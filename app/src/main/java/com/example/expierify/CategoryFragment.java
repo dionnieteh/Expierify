@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +35,8 @@ public class CategoryFragment extends Fragment {
     private DatabaseReference database;
     private MyAdapter myAdapter;
     private ArrayList<CategoryClass> categoryList;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -65,7 +68,7 @@ public class CategoryFragment extends Fragment {
         recyclerView.setAdapter(myAdapter);
 
         String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Query categoryQuery = database.orderByChild(USER_ID).equalTo(currentUserID);
+        Query categoryQuery = database.child(CATEGORY_NODE).child(currentUserID);
         categoryQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -76,6 +79,24 @@ public class CategoryFragment extends Fragment {
                 myAdapter.notifyDataSetChanged();
             }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "Failed to get categories", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference categoryRef = database.getReference("Category").child(userID);
+
+        categoryRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    CategoryClass category = categorySnapshot.getValue(CategoryClass.class);
+                    categoryList.add(category);
+                }
+                myAdapter.notifyDataSetChanged();
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getActivity(), "Failed to get categories", Toast.LENGTH_SHORT).show();

@@ -55,6 +55,9 @@ public class AddProductPage extends AppCompatActivity {
 
     private DatePickerDialog picker;
     Uri imageUri;
+    private DatabaseReference category;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,25 +121,20 @@ public class AddProductPage extends AppCompatActivity {
 
         //Category Spinner dropdown
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference categoryRef = database.getReference("Category");
+        DatabaseReference categoryRef = database.getReference("Category").child(userID);
         Spinner newCategory= findViewById(R.id.newCategory);
+
         categoryRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> categories = new ArrayList<>();
                 for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    String userID = categorySnapshot.child("userID").getValue(String.class);
-                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                    FirebaseUser currentUser = mAuth.getCurrentUser();
-                    String currentUserID = currentUser.getUid();
-                    if (userID != null && userID.equals(currentUserID)){
-                        String category = categorySnapshot.child("cName").getValue(String.class);
+                    String category = categorySnapshot.getKey();
                         if (!category.equals("Uncategorized")) {
                             categories.add(category);
                         }
                     }
 
-                }
                 // Update the Spinner with the retrieved categories
                 ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(AddProductPage.this, android.R.layout.simple_spinner_item, categories);
                 categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -190,6 +188,7 @@ public class AddProductPage extends AppCompatActivity {
             public void onClick(View v) {
 
                 insertFoodData();
+//                insertFoodToCategory();
 
             }
         });
@@ -261,6 +260,10 @@ public class AddProductPage extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Failed to Upload Food Product", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("Category").child(userID).child(category);
+            categoryRef.child("foodName").setValue(name);
+
         }
 
 
@@ -283,7 +286,7 @@ public class AddProductPage extends AppCompatActivity {
 
                     if (!categoryExists) {
                         // If an "Uncategorized" category for the current user does not exist, add it to the database
-                        CategoryClass newCategory = new CategoryClass( "Uncategorized",userID );
+                        CategoryClass newCategory = new CategoryClass( "Uncategorized" );
                         databaseRef.child("Category").push().setValue(newCategory);
                     }
                 }
@@ -326,6 +329,7 @@ public class AddProductPage extends AppCompatActivity {
             });
 
         }
+
     }
 
     private void uploadFoodImage(String foodId) {
@@ -361,12 +365,15 @@ public class AddProductPage extends AppCompatActivity {
             startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
             return;
         }
-
-
-
-
-
     }
+//    private void insertFoodToCategory(){
+//        if (userID !=null){
+//            DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("Category").child(userID).child("");
+//            EditText foodName = findViewById(R.id.newName);
+//            String name = foodName.getText().toString().trim();
+//            categoryRef.child("foodName").setValue(name);
+//        }
+//    }
 
 
 
