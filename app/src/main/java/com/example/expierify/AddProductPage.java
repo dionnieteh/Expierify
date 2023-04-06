@@ -254,7 +254,8 @@ public class AddProductPage extends AppCompatActivity {
             DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
             String foodId = foodRef.push().getKey();
             Food newFood = new Food(userID, foodId, name, desc, expiry, category, label);
-            foodRef.child(foodId).setValue(newFood).addOnCompleteListener(task -> {
+            String formatExpDate = expiry.replace("/","-");
+            foodRef.child(formatExpDate).child(foodId).setValue(newFood).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     uploadFoodImage(foodId);
                 } else {
