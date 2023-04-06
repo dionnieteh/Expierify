@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="darkviolet">#190933</color>
-    <color name="peach">#FFDBC3</color>
-    <color name="rosepink">#EE9E8E</color>
-    <color name="grey">#BDBDC1</color>
-    <color name="cream">#FEF3EF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="Ivory">#FDFFF1</color>
-    <color name="orange">#F58C33</color>
     <color name="Teagreen">#C8E4BB</color>
-    <color name="Mantis">#757A64</color>
     <color name="Resedagreen">#73BA65</color>
 
     <color name="darkgreen">#216a56</color>
+    <color name="Mantis">#757A64</color>
+    <color name="orange">#F58C33</color>
     <color name="darkerwhite">#f8f8f8</color>
     <color name="lighterwhite">#fefffb</color>
-    <color name="orangeyellow">#e4912c</color>
-    <color name="yellow">#FFF5E0</color>
+<!--    <color name="orangeyellow">#e4912c</color>-->
+<!--    <color name="yellow">#FFF5E0</color>-->
 
 
 
