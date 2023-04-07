@@ -55,6 +55,9 @@ public class AddProductPage extends AppCompatActivity {
 
     private DatePickerDialog picker;
     Uri imageUri;
+    private DatabaseReference category;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,25 +121,21 @@ public class AddProductPage extends AppCompatActivity {
 
         //Category Spinner dropdown
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference categoryRef = database.getReference("Category");
+        DatabaseReference categoryRef = database.getReference("Category").child(userID);
         Spinner newCategory= findViewById(R.id.newCategory);
+
         categoryRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> categories = new ArrayList<>();
+                categories.add("Uncategorized");
                 for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    String userID = categorySnapshot.child("userID").getValue(String.class);
-                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                    FirebaseUser currentUser = mAuth.getCurrentUser();
-                    String currentUserID = currentUser.getUid();
-                    if (userID != null && userID.equals(currentUserID)){
-                        String category = categorySnapshot.child("cName").getValue(String.class);
+                    String category = categorySnapshot.getKey();
                         if (!category.equals("Uncategorized")) {
                             categories.add(category);
                         }
                     }
 
-                }
                 // Update the Spinner with the retrieved categories
                 ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(AddProductPage.this, android.R.layout.simple_spinner_item, categories);
                 categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -151,19 +150,16 @@ public class AddProductPage extends AppCompatActivity {
 
         //Label Spinner dropdown
         FirebaseDatabase database2 = FirebaseDatabase.getInstance();
-        DatabaseReference labelRef = database.getReference("Label");
+        DatabaseReference labelRef = database.getReference("Label").child(userID);
         Spinner newLocation= findViewById(R.id.newLocation);
         labelRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> labels = new ArrayList<>();
-                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    String userID = categorySnapshot.child("userID").getValue(String.class);
-                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                    FirebaseUser currentUser = mAuth.getCurrentUser();
-                    String currentUserID = currentUser.getUid();
-                    if (userID != null && userID.equals(currentUserID)){
-                        String label = categorySnapshot.child("lName").getValue(String.class);
+                labels.add("Unlabeled");
+                for (DataSnapshot labelSnapshot : snapshot.getChildren()) {
+                    String label = labelSnapshot.getKey();
+                    if (!label.equals("Unlabeled")) {
                         labels.add(label);
                     }
 
@@ -188,9 +184,7 @@ public class AddProductPage extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 insertFoodData();
-
             }
         });
 
@@ -226,9 +220,6 @@ public class AddProductPage extends AppCompatActivity {
         String expiry = expiry_date.getText().toString().trim();
         String category = newCategory.getSelectedItem() != null ? newCategory.getSelectedItem().toString() : "Uncategorized";
         String label = newLocation.getSelectedItem() != null ? newLocation.getSelectedItem().toString() : "Unlabeled";
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userID = currentUser.getUid();
 
         // Validation
         boolean hasError = false;
@@ -262,14 +253,12 @@ public class AddProductPage extends AppCompatActivity {
                 }
             });
         }
-
-
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
         //category uncategorized
         if (category != null && category.equals("Uncategorized")) {
 
             // Check if there is already an existing "Uncategorized" category for the current user
-            databaseRef.child("Category").orderByChild("userID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseRef.child("Category").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     boolean categoryExists = false;
@@ -283,8 +272,8 @@ public class AddProductPage extends AppCompatActivity {
 
                     if (!categoryExists) {
                         // If an "Uncategorized" category for the current user does not exist, add it to the database
-                        CategoryClass newCategory = new CategoryClass( "Uncategorized",userID );
-                        databaseRef.child("Category").push().setValue(newCategory);
+                        CategoryClass newCategory = new CategoryClass( "Uncategorized" );
+                        databaseRef.child("Category").child(userID).child("Uncategorized").setValue(newCategory);
                     }
                 }
 
@@ -293,14 +282,13 @@ public class AddProductPage extends AppCompatActivity {
                     // Handle any errors here
                 }
             });
-
         }
 
         //label unlabeled
         if (label != null && label.equals("Unlabeled")) {
 
             // Check if there is already an existing "Uncategorized" category for the current user
-            databaseRef.child("Label").orderByChild("userID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseRef.child("Label").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     boolean labelExists = false;
@@ -314,8 +302,8 @@ public class AddProductPage extends AppCompatActivity {
 
                     if (!labelExists) {
                         // If an "Uncategorized" category for the current user does not exist, add it to the database
-                        LabelClass newLabel = new LabelClass( "Unlabeled",userID );
-                        databaseRef.child("Label").push().setValue(newLabel);
+                        LabelClass newLabel = new LabelClass( "Unlabeled");
+                        databaseRef.child("Label").child(userID).child("Unlabeled").setValue(newLabel);
                     }
                 }
 
@@ -326,6 +314,7 @@ public class AddProductPage extends AppCompatActivity {
             });
 
         }
+
     }
 
     private void uploadFoodImage(String foodId) {
@@ -363,14 +352,5 @@ public class AddProductPage extends AppCompatActivity {
             startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
             return;
         }
-
-
-
-
-
     }
-
-
-
-
 }
