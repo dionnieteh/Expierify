@@ -5,9 +5,8 @@ public class CategoryClass {
     String cName;
     String userID;
 
-    public CategoryClass(String cName, String userID) {
+    public CategoryClass(String cName) {
         this.cName = cName;
-        this.userID = userID;
     }
     public CategoryClass() {
         // Required empty constructor for Firebase

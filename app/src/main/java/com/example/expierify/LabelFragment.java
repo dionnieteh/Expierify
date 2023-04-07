@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +36,8 @@ public class LabelFragment extends Fragment {
     private DatabaseReference database;
     private MyAdapter2 myAdapter2;
     private ArrayList<LabelClass> labelList;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
 
     public LabelFragment() {
         // Required empty public constructor
@@ -65,13 +68,13 @@ public class LabelFragment extends Fragment {
         myAdapter2 = new MyAdapter2(requireContext(), labelList);
         recyclerView.setAdapter(myAdapter2);
 
-        String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Query categoryQuery = database.orderByChild(USER_ID).equalTo(currentUserID);
-        categoryQuery.addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference labelRef = database.getReference(LABEL_NODE).child(userID);
+        labelRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    LabelClass label = categorySnapshot.getValue(LabelClass.class);
+                for (DataSnapshot labelSnapshot : snapshot.getChildren()) {
+                    LabelClass label = labelSnapshot.getValue(LabelClass.class);
                     labelList.add(label);
                 }
                 myAdapter2.notifyDataSetChanged();
@@ -82,7 +85,6 @@ public class LabelFragment extends Fragment {
                 Toast.makeText(getActivity(), "Failed to get labels", Toast.LENGTH_SHORT).show();
             }
         });
-
         return view;
     }
 }
