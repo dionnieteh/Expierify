@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -55,78 +56,41 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if (foodList != null && foodIDList != null && !foodList.isEmpty() && !foodIDList.isEmpty()) {
-            if (foodIDList.size() > 0) {
-                String foodID = foodIDList.get(position);
-                Food food1 = foodList.get(position);
-                holder.foodNameTextView.setText(food1.getName());
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference foodsRef = database.getReference("Food");
-                DatabaseReference foodRef = foodsRef.child(foodID);
-
-
-
-                foodRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Get the food object corresponding to the foodID
-                        Food food = dataSnapshot.getValue(Food.class);
-
-                        // Check if the food object is not null and its ID matches the requested ID
-                        if (food != null && food.getFoodId().equals(foodID)) {
-                            // Get the food name from the food object
-                            String foodName = food.getName();
-                            // Set the food name in the holder
-                            holder.foodNameTextView.setText(foodName);
-
-                            String imageUrl = food.getImage(); // Get the image URL from the food object
-                            Glide.with(context)
-                                    .load(imageUrl) // Load the image using Glide
-                                    .placeholder(R.drawable.placeholderimg) // Set a placeholder image while the actual image is loading
-                                    .into(holder.foodImageView); // Set the image in the ImageView
-
-                            String expiryDate = food.getExpiry();
-                            holder.expiryDateTextView.setText(expiryDate);
-
-
-
-                        }else{
-                            Toast.makeText(context.getApplicationContext(), "There are no items in this category", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(context.getApplicationContext(), "Failed to get food products", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-                Food food = null;
-
-                for (int i = 0; i < foodList.size(); i++) {
-                    if (foodList.get(i).getFoodId().equals(foodID)) {
-                        food = foodList.get(i);
-                        break;
-                    }
-                }
-
-                if (food != null) {
-                    holder.foodNameTextView.setText(food.getName());
-                    holder.expiryDateTextView.setText(food.getExpiry());
-
-
-
-                    String imageUrl = food.getImage(); // Get the image URL from the food object
-                    Glide.with(context)
-                            .load(imageUrl) // Load the image using Glide
-                            .placeholder(R.drawable.placeholderimg) // Set a placeholder image while the actual image is loading
-                            .into(holder.foodImageView); // Set the image in the ImageView
-                }
-
-            }
+        if (foodList != null && foodIDList != null && !foodList.isEmpty() && !foodIDList.isEmpty() && foodIDList.size() > position) {
+            String foodID = foodIDList.get(position);
+            Food food = foodList.get(position);
+            holder.foodNameTextView.setText(food.getName());
+            holder.expiryDateTextView.setText(food.getExpiry());
+            String imageUrl = food.getImage(); // Get the image URL from the food object
+            Glide.with(context)
+                    .load(imageUrl) // Load the image using Glide
+                    .placeholder(R.drawable.placeholderimg) // Set a placeholder image while the actual image is loading
+                    .into(holder.foodImageView); // Set the image in the ImageView
         }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Food food = foodList.get(position);
+                String foodName = food.getName();
+                String foodId = food.getFoodId();
+                String desc = food.getDesc();
+                String expiry = food.getExpiry();
+                String category = food.getCategory();
+                String label = food.getLabel();
+                String imageUrl = food.getImage();
+
+                Intent intent = new Intent(context, FoodInfo.class);
+                intent.putExtra("foodName", foodName);
+                intent.putExtra("foodId", foodId);
+                intent.putExtra("desc", desc);
+                intent.putExtra("expiry", expiry);
+                intent.putExtra("category", category);
+                intent.putExtra("label", label);
+                intent.putExtra("imageUrl", imageUrl);
+                context.startActivity(intent);
+            }
+        });
     }
 
     public void sortExpiryDateAscending() {

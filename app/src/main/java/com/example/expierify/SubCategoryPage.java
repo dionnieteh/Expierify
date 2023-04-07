@@ -7,12 +7,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -74,6 +78,8 @@ public class SubCategoryPage extends AppCompatActivity {
             deleteBtn.setVisibility(View.GONE);
         }
 
+
+
         // Create a reference to the "Food" node in the database
         foodRef = FirebaseDatabase.getInstance().getReference("Food");
 
@@ -91,7 +97,6 @@ public class SubCategoryPage extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        deleteBtn.setVisibility(View.GONE);
                         foodList.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             // Retrieve the Food object
@@ -130,16 +135,69 @@ public class SubCategoryPage extends AppCompatActivity {
 
     }
 
-    private void openDialog() {
+    public void openDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to delete this category?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("Category").child(userID);
+                Query query = categoryRef.orderByChild("cName").equalTo(getIntent().getStringExtra("categoryTitle"));
+                DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            snapshot.getRef().removeValue()
+
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // Step 2: Update all the foods that belong to this category to "Uncategorized"
+                                            foodRef.orderByChild("category").equalTo(getIntent().getStringExtra("categoryTitle"))
+                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                            for (DataSnapshot foodSnapshot : dataSnapshot.getChildren()) {
+                                                                String foodKey = foodSnapshot.getKey();
+                                                                foodRef.child(foodKey).child("category").setValue("Uncategorized");
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                            Log.e("Firebase", "Error getting foods with category: " + getIntent().getStringExtra("categoryTitle"), databaseError.toException());
+                                                        }
+                                                    });
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.e("Firebase", "Error removing category: " + getIntent().getStringExtra("categoryTitle"), e);
+                                        }
+                                    });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(getApplicationContext(), "Failed to get categories", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
             }
         });
-        builder.setNegativeButton("No", null);
+
         builder.create().show();
     }
+
 }
