@@ -11,7 +11,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,31 +49,37 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String categoryName = category.getcName();
+                String userID = category.getUserID();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
-
-
-                Query query = foodRef.orderByChild("userID").equalTo(category.getUserID())
-                        .orderByChild("categoryName").equalTo(category.getcName());
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = auth.getCurrentUser();
+                String currentUserID= currentUser.getUid();
+                DatabaseReference foodRef = database.getReference("Food");
+                Query query = foodRef.orderByChild("userID").equalTo(currentUserID);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        List<String> foodIDs = new ArrayList<>();
-                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-                            String foodID = child.getKey();
-                            foodIDs.add(foodID);
+                        String mainCategory = category.getcName(); // get the category name
+                        ArrayList<String> foodIDs = new ArrayList<>();
+                        ArrayList<String> categoryTitle = new ArrayList<>(); // declare and initialize categoryTitle
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            String category = snapshot.child("category").getValue(String.class);
+                            if (category != null && category.equals(mainCategory)) {
+                                String foodID = snapshot.getKey();
+                                foodIDs.add(foodID);
+                                categoryTitle.add(mainCategory);
+                            }
                         }
-
-                        // Create the intent and pass the list of foodIDs as an extra
                         Intent intent = new Intent(context, SubCategoryPage.class);
                         intent.putStringArrayListExtra("foodIDs", (ArrayList<String>) foodIDs);
+                        intent.putExtra("categoryTitle", mainCategory);
                         context.startActivity(intent);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         Toast.makeText(context, "Failed get FoodID", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context, SubCategoryPage.class);
                     }
                 });
             }

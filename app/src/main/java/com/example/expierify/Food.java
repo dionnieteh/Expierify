@@ -8,6 +8,7 @@ public class Food {
     String expiry;
     String category ;
     String label ;
+    String image; // add field for image
 
     public Food(String userID, String foodId, String name, String desc, String expiry, String category, String label) {
         this.userID = userID;
@@ -76,5 +77,13 @@ public class Food {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

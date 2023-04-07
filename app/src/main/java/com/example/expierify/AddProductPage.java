@@ -66,7 +66,7 @@ public class AddProductPage extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
+                finish(); // finish the current activity
             }
         });
 
@@ -75,7 +75,7 @@ public class AddProductPage extends AppCompatActivity {
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
+                finish(); // finish the current activity
             }
         });
 
@@ -350,6 +350,8 @@ public class AddProductPage extends AppCompatActivity {
                     storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                         DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
                         foodRef.child(foodId).child("image").setValue(uri.toString());
+                        Food foodImg = new Food();
+                        foodImg.setImage(uri.toString());
                         Toast.makeText(getApplicationContext(), "Food Successfully Added", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
                     });
