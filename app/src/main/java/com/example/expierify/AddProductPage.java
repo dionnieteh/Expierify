@@ -128,6 +128,7 @@ public class AddProductPage extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> categories = new ArrayList<>();
+                categories.add("Uncategorized");
                 for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
                     String category = categorySnapshot.getKey();
                         if (!category.equals("Uncategorized")) {
@@ -149,19 +150,16 @@ public class AddProductPage extends AppCompatActivity {
 
         //Label Spinner dropdown
         FirebaseDatabase database2 = FirebaseDatabase.getInstance();
-        DatabaseReference labelRef = database.getReference("Label");
+        DatabaseReference labelRef = database.getReference("Label").child(userID);
         Spinner newLocation= findViewById(R.id.newLocation);
         labelRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> labels = new ArrayList<>();
-                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    String userID = categorySnapshot.child("userID").getValue(String.class);
-                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                    FirebaseUser currentUser = mAuth.getCurrentUser();
-                    String currentUserID = currentUser.getUid();
-                    if (userID != null && userID.equals(currentUserID)){
-                        String label = categorySnapshot.child("lName").getValue(String.class);
+                labels.add("Unlabeled");
+                for (DataSnapshot labelSnapshot : snapshot.getChildren()) {
+                    String label = labelSnapshot.getKey();
+                    if (!label.equals("Unlabeled")) {
                         labels.add(label);
                     }
 
@@ -186,10 +184,7 @@ public class AddProductPage extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 insertFoodData();
-//                insertFoodToCategory();
-
             }
         });
 
@@ -225,9 +220,6 @@ public class AddProductPage extends AppCompatActivity {
         String expiry = expiry_date.getText().toString().trim();
         String category = newCategory.getSelectedItem() != null ? newCategory.getSelectedItem().toString() : "Uncategorized";
         String label = newLocation.getSelectedItem() != null ? newLocation.getSelectedItem().toString() : "Unlabeled";
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userID = currentUser.getUid();
 
         // Validation
         boolean hasError = false;
@@ -260,19 +252,13 @@ public class AddProductPage extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Failed to Upload Food Product", Toast.LENGTH_SHORT).show();
                 }
             });
-
-            DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("Category").child(userID).child(category);
-            categoryRef.child("foodName").setValue(name);
-
         }
-
-
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
         //category uncategorized
         if (category != null && category.equals("Uncategorized")) {
 
             // Check if there is already an existing "Uncategorized" category for the current user
-            databaseRef.child("Category").orderByChild("userID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseRef.child("Category").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     boolean categoryExists = false;
@@ -287,7 +273,7 @@ public class AddProductPage extends AppCompatActivity {
                     if (!categoryExists) {
                         // If an "Uncategorized" category for the current user does not exist, add it to the database
                         CategoryClass newCategory = new CategoryClass( "Uncategorized" );
-                        databaseRef.child("Category").push().setValue(newCategory);
+                        databaseRef.child("Category").child(userID).child("Uncategorized").setValue(newCategory);
                     }
                 }
 
@@ -296,14 +282,13 @@ public class AddProductPage extends AppCompatActivity {
                     // Handle any errors here
                 }
             });
-
         }
 
         //label unlabeled
         if (label != null && label.equals("Unlabeled")) {
 
             // Check if there is already an existing "Uncategorized" category for the current user
-            databaseRef.child("Label").orderByChild("userID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseRef.child("Label").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     boolean labelExists = false;
@@ -317,8 +302,8 @@ public class AddProductPage extends AppCompatActivity {
 
                     if (!labelExists) {
                         // If an "Uncategorized" category for the current user does not exist, add it to the database
-                        LabelClass newLabel = new LabelClass( "Unlabeled",userID );
-                        databaseRef.child("Label").push().setValue(newLabel);
+                        LabelClass newLabel = new LabelClass( "Unlabeled");
+                        databaseRef.child("Label").child(userID).child("Unlabeled").setValue(newLabel);
                     }
                 }
 
@@ -366,16 +351,4 @@ public class AddProductPage extends AppCompatActivity {
             return;
         }
     }
-//    private void insertFoodToCategory(){
-//        if (userID !=null){
-//            DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("Category").child(userID).child("");
-//            EditText foodName = findViewById(R.id.newName);
-//            String name = foodName.getText().toString().trim();
-//            categoryRef.child("foodName").setValue(name);
-//        }
-//    }
-
-
-
-
 }

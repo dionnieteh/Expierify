@@ -67,26 +67,8 @@ public class CategoryFragment extends Fragment {
         myAdapter = new MyAdapter(requireContext(), categoryList);
         recyclerView.setAdapter(myAdapter);
 
-        String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Query categoryQuery = database.child(CATEGORY_NODE).child(currentUserID);
-        categoryQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    CategoryClass category = categorySnapshot.getValue(CategoryClass.class);
-                    categoryList.add(category);
-                }
-                myAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Failed to get categories", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference categoryRef = database.getReference("Category").child(userID);
+        DatabaseReference categoryRef = database.getReference(CATEGORY_NODE).child(userID);
 
         categoryRef.addValueEventListener(new ValueEventListener() {
             @Override
