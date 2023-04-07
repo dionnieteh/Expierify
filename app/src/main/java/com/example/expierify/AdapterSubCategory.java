@@ -39,6 +39,8 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
     private ArrayList<String> foodIDList;
     private Context context;
     private ArrayList<Date> expiryList;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
 
     public AdapterSubCategory(ArrayList<Food> foodList, Context context, ArrayList<String> foodIDList) {
         this.foodList = foodList;
@@ -61,8 +63,7 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
                 Food food1 = foodList.get(position);
                 holder.foodNameTextView.setText(food1.getName());
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference foodsRef = database.getReference("Food");
-                DatabaseReference foodRef = foodsRef.child(foodID);
+                DatabaseReference foodRef = database.getReference("Food").child(foodID);
 
 
 
@@ -132,10 +133,8 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
     public void sortExpiryDateAscending() {
         ArrayList<Date> expiryList = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = auth.getCurrentUser();
         for (Food food : foodList) {
-            if (food.getUserID().equals(currentUser.getUid())) { // Check if food userID matches current user's ID
+            if (food.getUserID().equals(userID)) { // Check if food userID matches current user's ID
                 try {
                     Date expiryDate = sdf.parse(food.getExpiry());
                     expiryList.add(expiryDate);
@@ -150,7 +149,7 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
         ArrayList<String> sortedFoodIDList = new ArrayList<>();
         for (Date expiryDate : expiryList) {
             for (Food food : foodList) {
-                if (food.getUserID().equals(currentUser.getUid())) { // Check if food userID matches current user's ID
+                if (food.getUserID().equals(userID)) { // Check if food userID matches current user's ID
                     String expiryDateString = food.getExpiry();
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                     try {
