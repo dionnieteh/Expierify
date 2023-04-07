@@ -35,13 +35,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.ViewHolder> {
+public class AdapterSubLabel extends RecyclerView.Adapter<AdapterSubLabel.ViewHolder> {
     private ArrayList<Food> foodList;
     private ArrayList<String> foodIDList;
     private Context context;
     private ArrayList<Date> expiryList;
 
-    public AdapterSubCategory(ArrayList<Food> foodList, Context context, ArrayList<String> foodIDList) {
+    public AdapterSubLabel(ArrayList<Food> foodList, Context context, ArrayList<String> foodIDList) {
         this.foodList = foodList;
         this.context = context;
         this.foodIDList = foodIDList;
@@ -50,7 +50,7 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.subcategoryitem, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sublabelitem, parent, false);
         return new ViewHolder(view);
     }
 
@@ -92,7 +92,6 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
                 context.startActivity(intent);
             }
         });
-
     }
 
     public void sortExpiryDateAscending() {
