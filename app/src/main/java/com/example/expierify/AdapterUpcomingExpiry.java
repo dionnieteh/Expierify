@@ -14,26 +14,25 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class AdapterTodayExpiry extends RecyclerView.Adapter<AdapterTodayExpiry.ViewHolder> {
+public class AdapterUpcomingExpiry extends RecyclerView.Adapter<AdapterUpcomingExpiry.ViewHolder> {
 
     Context context;
     ArrayList<Food> foodList;
 
-    public AdapterTodayExpiry(Context context, ArrayList<Food> foodList) {
+    public AdapterUpcomingExpiry(Context context, ArrayList<Food> foodList) {
         this.context = context;
         this.foodList = foodList;
     }
 
-
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.todayexpiryitem, parent, false);
-        return new AdapterTodayExpiry.ViewHolder(v);
+    public AdapterUpcomingExpiry.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(context).inflate(R.layout.upcomingexpiryitem, parent, false);
+        return new AdapterUpcomingExpiry.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterUpcomingExpiry.ViewHolder holder, int position) {
         if (foodList != null && !foodList.isEmpty()) {
             Food food = foodList.get(position);
             holder.labelName.setText(food.getName());
@@ -48,7 +47,10 @@ public class AdapterTodayExpiry extends RecyclerView.Adapter<AdapterTodayExpiry.
 
     @Override
     public int getItemCount() {
-        return foodList.size();
+        if (foodList == null) {
+            return 0;
+        }
+        return Math.min(foodList.size(), 3);
     }
 
     // Define ViewHolder class

@@ -24,7 +24,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Objects;
 
 public class SubLabelPage extends AppCompatActivity {
 
@@ -100,9 +104,18 @@ public class SubLabelPage extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             // Retrieve the Food object
                             Food food = snapshot.getValue(Food.class);
-
-                            // Add the Food object to the list
-                            foodList.add(food);
+                            String expiryDate = food.getExpiry();
+                            try {
+                                Date todayDate = new Date();
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
+                                String dateString = dateFormat.format(todayDate);
+                                Date expiryDateObj = dateFormat.parse(expiryDate);
+                                if ((!Objects.equals(expiryDate, dateString)) && expiryDateObj.after(todayDate)) {
+                                    foodList.add(food);
+                                }
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
 
                         }
 
@@ -154,7 +167,6 @@ public class SubLabelPage extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            // Step 2: Update all the foods that belong to this category to "Uncategorized"
                                             foodRef.orderByChild("label").equalTo(getIntent().getStringExtra("labelTitle"))
                                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                                         @Override

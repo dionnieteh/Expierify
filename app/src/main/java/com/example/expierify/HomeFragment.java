@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,14 +29,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class HomeFragment extends Fragment {
 
-
+    private RecyclerView recyclerView;
+    private DatabaseReference database;
+    private AdapterTodayExpiry myAdapter;
+    private ArrayList<Food> foodList;
+    private ArrayList<Food> foodList2;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
 
 
     public HomeFragment() {
@@ -42,12 +53,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,8 +64,97 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        // Recycler view for Today's expiry
+        recyclerView = view.findViewById(R.id.todayExpiryList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        foodList = new ArrayList<>();
+        myAdapter = new AdapterTodayExpiry(requireContext(), foodList);
+        recyclerView.setAdapter(myAdapter);
+
+
+        Date todayDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
+        String dateString = dateFormat.format(todayDate);
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Food");
+        Query foodRef = database.orderByChild("userID").equalTo(userID);
+
+        foodRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foodList.clear(); // clear previous list
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    Food food = categorySnapshot.getValue(Food.class);
+                    String expiryDate = food.getExpiry();
+                    if (Objects.equals(expiryDate, dateString)) {
+                        foodList.add(food);
+                    }
+                }
+                myAdapter.notifyDataSetChanged();
+
+                // Hide the TextView if the foodList is empty
+                TextView todayCategory = view.findViewById(R.id.todayCategory);
+                if (foodList.isEmpty()) {
+                    todayCategory.setVisibility(View.GONE);
+                } else {
+                    todayCategory.setVisibility(View.VISIBLE);
+                }
+            }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "Failed to get Food Items", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        // Recycler view for Upcoming's expiry
+        RecyclerView recyclerView2 = view.findViewById(R.id.upcomingExpiryList);
+        recyclerView2.setHasFixedSize(true);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        foodList2 = new ArrayList<>();
+        AdapterUpcomingExpiry myAdapter2 = new AdapterUpcomingExpiry(requireContext(), foodList2);
+        recyclerView2.setAdapter(myAdapter2);
+
+        DatabaseReference database2 = FirebaseDatabase.getInstance().getReference("Food");
+        Query foodRef2 = database.orderByChild("userID").equalTo(userID);
+
+        foodRef2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foodList2.clear(); // clear previous list
+                for (DataSnapshot categorySnapshot2 : snapshot.getChildren()) {
+                    Food food2 = categorySnapshot2.getValue(Food.class);
+                    String expiryDate2 = food2.getExpiry();
+                    try {
+                        Date expiryDateObj = dateFormat.parse(expiryDate2);
+                        if ((!Objects.equals(expiryDate2, dateString)) && expiryDateObj.after(todayDate)) {
+                            foodList2.add(food2);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                myAdapter2.notifyDataSetChanged();
+
+            }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "Failed to get Food Items", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        return view;
 
 
     }
@@ -140,5 +234,8 @@ public class HomeFragment extends Fragment {
 
 
         });
+
+
+
     }
 }
