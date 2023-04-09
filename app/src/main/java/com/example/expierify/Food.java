@@ -1,5 +1,9 @@
 package com.example.expierify;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Food {
     String userID;
     String foodId;
@@ -85,5 +89,17 @@ public class Food {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public boolean isExpired() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date expiryDate = null;
+        try {
+            expiryDate = sdf.parse(this.expiry);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date currentDate = new Date();
+        return currentDate.after(expiryDate);
     }
 }
