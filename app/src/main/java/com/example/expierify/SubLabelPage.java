@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,10 +26,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class SubCategoryPage extends AppCompatActivity {
+public class SubLabelPage extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private AdapterSubCategory adapter;
+    private AdapterSubLabel adapter;
     private ArrayList<Food> foodList;
     private DatabaseReference foodRef;
     private ArrayList<String> foodIDs;
@@ -38,7 +37,7 @@ public class SubCategoryPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_category_page);
+        setContentView(R.layout.activity_sub_label_page);
 
         ImageButton backBtn= (ImageButton)findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -57,23 +56,23 @@ public class SubCategoryPage extends AppCompatActivity {
             }
         });
 
-        String category = getIntent().getStringExtra("categoryTitle");
-        TextView categoryTitle= (TextView) findViewById(R.id.categoryName);
-        categoryTitle.setText(category);
+        String label = getIntent().getStringExtra("labelTitle");
+        TextView labelTitle= (TextView) findViewById(R.id.labelName);
+        labelTitle.setText(label);
 
         foodIDs = getIntent().getStringArrayListExtra("foodIDs");
 
         TextView emptyfoodlist = (TextView) findViewById(R.id.emptyfoodlist);
-        recyclerView = findViewById(R.id.subCategoryList);
+        recyclerView = findViewById(R.id.subLabelList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         foodList = new ArrayList<>();
-        adapter = new AdapterSubCategory(foodList, this, foodIDs);
+        adapter = new AdapterSubLabel(foodList, this, foodIDs);
         recyclerView.setAdapter(adapter);
 
 
         // Find the position of the item with the name "Uncategorized"
-        if ("Uncategorized".equals(category)) {
+        if ("Unlabeled".equals(label)) {
             // Get a reference to the delete button
             deleteBtn.setVisibility(View.GONE);
         }
@@ -85,7 +84,7 @@ public class SubCategoryPage extends AppCompatActivity {
 
         // Create a query to retrieve all the food items where the "foodId" is in the list of "foodIDs"
         if (foodIDs.isEmpty()) {
-            String message = "There are no food items in this category";
+            String message = "There are no food items in this label";
             emptyfoodlist.setText(message);
 
         } else {
@@ -112,13 +111,13 @@ public class SubCategoryPage extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
 
                         if (foodList.isEmpty()) {
-                            String message = "There are no food items in this category";
+                            String message = "There are no food items in this label";
                             emptyfoodlist.setText(message);
 
                         }
 
                     } else {
-                        String message = "There are no food items in this category";
+                        String message = "There are no food items in this label";
                         emptyfoodlist.setText(message);
                     }
 
@@ -137,13 +136,13 @@ public class SubCategoryPage extends AppCompatActivity {
 
     public void openDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to delete this category?");
+        builder.setMessage("Are you sure you want to delete this label?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("Category").child(userID);
-                Query query = categoryRef.orderByChild("cName").equalTo(getIntent().getStringExtra("categoryTitle"));
+                DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("Label").child(userID);
+                Query query = categoryRef.orderByChild("lName").equalTo(getIntent().getStringExtra("labelTitle"));
                 DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
 
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -156,21 +155,22 @@ public class SubCategoryPage extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             // Step 2: Update all the foods that belong to this category to "Uncategorized"
-                                            foodRef.orderByChild("category").equalTo(getIntent().getStringExtra("categoryTitle"))
+                                            foodRef.orderByChild("label").equalTo(getIntent().getStringExtra("labelTitle"))
                                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                                         @Override
                                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                             for (DataSnapshot foodSnapshot : dataSnapshot.getChildren()) {
                                                                 String foodKey = foodSnapshot.getKey();
-                                                                foodRef.child(foodKey).child("category").setValue("Uncategorized");
-                                                                Toast.makeText(getApplicationContext(), "Category Deleted", Toast.LENGTH_SHORT).show();
+                                                                foodRef.child(foodKey).child("label").setValue("Unlabeled");
+                                                                Toast.makeText(getApplicationContext(), "Label Deleted", Toast.LENGTH_SHORT).show();
                                                                 finish();
                                                             }
                                                         }
 
+
                                                         @Override
                                                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                            Log.e("Firebase", "Error getting foods with category: " + getIntent().getStringExtra("categoryTitle"), databaseError.toException());
+                                                            Log.e("Firebase", "Error getting foods with label: " + getIntent().getStringExtra("categoryTitle"), databaseError.toException());
                                                         }
                                                     });
                                         }
@@ -178,7 +178,7 @@ public class SubCategoryPage extends AppCompatActivity {
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Log.e("Firebase", "Error removing category: " + getIntent().getStringExtra("categoryTitle"), e);
+                                            Log.e("Firebase", "Error removing label: " + getIntent().getStringExtra("categoryTitle"), e);
                                         }
                                     });
                         }
@@ -186,7 +186,7 @@ public class SubCategoryPage extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(), "Failed to get categories", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Failed to get label", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
