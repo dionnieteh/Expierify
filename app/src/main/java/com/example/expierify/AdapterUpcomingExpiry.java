@@ -50,7 +50,7 @@ public class AdapterUpcomingExpiry extends RecyclerView.Adapter<AdapterUpcomingE
         if (foodList == null) {
             return 0;
         }
-        return Math.min(foodList.size(), 3);
+        return Math.min(foodList.size(), 4);
     }
 
     // Define ViewHolder class
