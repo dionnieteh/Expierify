@@ -57,20 +57,25 @@ public class AddCategoryPage extends AppCompatActivity {
 
     private void insertCategory(){
         String cName = categoryName.getText().toString();
-        CategoryClass categoryClass = new CategoryClass(cName);
-        category.child(cName).setValue(categoryClass)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "New Category is Added", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AddCategoryPage.this,  SortFragment.class));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error When Adding New Category", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (cName.isEmpty()){
+            categoryName.setError("This field cannot be empty");
+        }else{
+            CategoryClass categoryClass = new CategoryClass(cName);
+            category.child(cName).setValue(categoryClass)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getApplicationContext(), "New Category is Added", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddCategoryPage.this,  SortFragment.class));
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Error When Adding New Category", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
         
 
     }
