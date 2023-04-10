@@ -220,7 +220,7 @@ public class HomeFragment extends Fragment {
         //PRESENT DATE
         TextView presentDate = (view.findViewById(R.id.todayDate));
         // create a date format
-        @SuppressLint("SimpleDateFormat") String currentDate = new SimpleDateFormat("dd-MM-yyy").format(new Date());
+        @SuppressLint("SimpleDateFormat") String currentDate = new SimpleDateFormat("d/M/yyy").format(new Date());
         presentDate.setText(currentDate);
         //PRESENT DATE END
 

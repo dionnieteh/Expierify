@@ -105,7 +105,7 @@ public class AddProductPage extends AppCompatActivity {
                 picker = new DatePickerDialog(AddProductPage.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        expiry_date.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                        expiry_date.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
                     }
                 },year, month, day);
 
