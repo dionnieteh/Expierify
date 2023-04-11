@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.tags:
-                    replaceFragment(new ExpiredFragment());
+                    Intent newIntent = new Intent(MainActivity.this, ESubCategoryPage.class);
+                    startActivity(newIntent);;
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileFragment());

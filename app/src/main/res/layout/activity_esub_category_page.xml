@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
-    tools:context=".SubCategoryPage">
+    tools:context=".ESubCategoryPage">
 
     <!--Back Button-->
     <ImageButton
@@ -24,7 +24,7 @@
         android:textSize="28dp"
         android:textColor="@color/black"
         android:layout_centerHorizontal="true"
-    />
+        />
 
     <ImageButton
         android:id="@+id/deleteCategoryBtn"

@@ -35,23 +35,22 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.ViewHolder> {
+public class EAdapterSubCategory extends RecyclerView.Adapter<EAdapterSubCategory.ViewHolder> {
     private ArrayList<Food> foodList;
     private ArrayList<String> foodIDList;
     private Context context;
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private String userID = currentUser.getUid();
 
-    public AdapterSubCategory(ArrayList<Food> foodList, Context context, ArrayList<String> foodIDList) {
+    public EAdapterSubCategory(ArrayList<Food> foodList, Context context) {
         this.foodList = foodList;
         this.context = context;
-        this.foodIDList = foodIDList;
 
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.subcategoryitem, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.esubcategoryitem, parent, false);
         return new ViewHolder(view);
     }
 
@@ -68,7 +67,7 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
                     .placeholder(R.drawable.placeholderimg) // Set a placeholder image while the actual image is loading
                     .into(holder.foodImageView); // Set the image in the ImageView
         }
-       
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
