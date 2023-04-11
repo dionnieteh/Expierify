@@ -235,6 +235,17 @@ public class HomeFragment extends Fragment {
 
         });
 
+        //Tips button
+        ImageButton tipsBtn = (ImageButton) view.findViewById(R.id.tipsBtn);
+        tipsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeFragment.this.getActivity(),  TipsPage.class));
+            }
+
+
+        });
+
 
 
     }
