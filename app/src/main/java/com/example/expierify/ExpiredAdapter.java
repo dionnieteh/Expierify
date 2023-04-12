@@ -26,6 +26,8 @@ public class ExpiredAdapter extends RecyclerView.Adapter<ExpiredAdapter.ExpiredV
 
     private Context context;
     ArrayList<Food> foodList;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
 
     public ExpiredAdapter(Context context,ArrayList<Food> foodList) {
         this.context = context;
@@ -51,6 +53,41 @@ public class ExpiredAdapter extends RecyclerView.Adapter<ExpiredAdapter.ExpiredV
                     .placeholder(R.drawable.placeholderimg) // Set a placeholder image while the actual image is loading
                     .into(holder.foodImageView); // Set the image in the ImageView
         }
+    }
+    public void sortExpiryDateAscending() {
+        ArrayList<Date> expiryList = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        for (Food food : foodList) {
+            if (food.getUserID().equals(userID)) { // Check if food userID matches current user's ID
+                try {
+                    Date expiryDate = sdf.parse(food.getExpiry());
+                    expiryList.add(expiryDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        Collections.sort(expiryList);
+
+        ArrayList<Food> sortedFoodList = new ArrayList<>();
+        for (Date expiryDate : expiryList) {
+            for (Food food : foodList) {
+                if (food.getUserID().equals(userID)) { // Check if food userID matches current user's ID
+                    String expiryDateString = food.getExpiry();
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    try {
+                        Date foodExpiryDate = dateFormat.parse(expiryDateString);
+                        if (foodExpiryDate.equals(expiryDate)) {
+                            sortedFoodList.add(food);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        foodList = sortedFoodList;
+        notifyDataSetChanged();
     }
 
     @Override
