@@ -7,11 +7,13 @@
     android:background="#f5c585"
     tools:context=".HomeFragment">
 
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        tools:context=".MainActivity"> <!--Scroll view-->
+        tools:context=".HomeFragment"> <!--Scroll view-->
 
 
         <LinearLayout
@@ -27,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp">
+
 
                 <!--Welcome Header-->
                 <TextView
@@ -57,7 +60,7 @@
                 <LinearLayout
                     android:id="@+id/layoutFoodNo"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -73,11 +76,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="Food Product" />
+                        android:text="Food Item" />
 
                     <TextView
+                        android:id="@+id/foodNo"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="21dp"
                         android:text="0"
                         android:textSize="20dp"
                         android:textStyle="bold" />
@@ -87,7 +91,7 @@
                 <LinearLayout
                     android:id="@+id/layoutCategoryNo"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -107,6 +111,7 @@
                         android:text="Category" />
 
                     <TextView
+                        android:id="@+id/categoryNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -120,7 +125,7 @@
                 <LinearLayout
                     android:id="@+id/layoutLocationNo"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -139,6 +144,7 @@
                         android:text="Location" />
 
                     <TextView
+                        android:id="@+id/locationNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -165,51 +171,100 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp">
 
-                    <!--Present Date Header-->
-                    <TextView
-                        android:id="@+id/todayDate"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="30dp"
-                        android:textColor="@color/black"
-                        android:textSize="30sp"
-                        android:textStyle="bold"
-                        />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/todayDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="30sp"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"/>
+
+                        <ImageButton
+                            android:id="@+id/tipsBtn"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:background="@null"
+                            android:src="@drawable/ic_baseline_lightbulb_24"
+                            />
+
+                    </LinearLayout>
 
 
-                    <!--Upcoming category-->
+
+
+                    <!--today category-->
                     <TextView
-                        android:id="@+id/upcomingCategory"
+                        android:id="@+id/todayCategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="@string/UpcomingWord"
-                        android:textSize="20dp" />
-                    <!--Upcoming Expires-->
-                    <TextView
-                        android:id="@+id/upcomingExpires"
-                        android:layout_width="200dp"
+                        android:text="Expiring Today"
+                        android:textSize="20dp"
+                        android:textStyle="bold"/>
+                    <!--Today Expires-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/black"
-                        android:textSize="35sp" />
+                        android:layout_marginTop="20dp">
 
-                    <!--Tomorrow Blocks-->
-                    <Button
-                        android:id="@+id/upcomingBlock"
-                        android:layout_width="260dp"
-                        android:layout_height="80dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Food Name"
-                        android:textColor="@color/black" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/todayExpiryList"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+                        <!--Upcoming category-->
+                        <TextView
+                            android:id="@+id/upcomingCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/UpcomingWord"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="20dp"/>
+
+                        <!--Upcoming Expires-->
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/upcomingExpiryList"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:scrollbars="none"/>
+
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

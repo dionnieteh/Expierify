@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment()); //Home will be open when application is on
 
+
+
         binding.bottomNavigationView.setOnItemSelectedListener(item->{
             switch(item.getItemId()){
                 case R.id.home:
@@ -45,10 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.category:
                     replaceFragment(new SortFragment());
-                    // Intent intent = new Intent(MainActivity.this,Sort.class);
-                    //startActivity(intent);
                     break;
-                    //supposed to go to Sort java but doesnt
 
                 case R.id.camera:
                     //replaceFragment(new CameraFragment());
