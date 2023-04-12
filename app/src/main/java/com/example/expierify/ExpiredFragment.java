@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,18 +27,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ExpiredFragment extends Fragment {
     private RecyclerView recyclerView;
     private ExpiredAdapter adapter;
-    private ArrayList<ExpiredFood> expiredFoodArrayList;
+    private ArrayList<Food> foodList;
     private DatabaseReference foodRef;
-    private ArrayList<String> foodIDs;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
     public ExpiredFragment() {
         // Required empty public constructor
     }
@@ -51,68 +56,63 @@ public class ExpiredFragment extends Fragment {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().onBackPressed(); // finish the current fragment
+                getActivity().onBackPressed();; // finish the current fragment
             }
         });
-
-
-        foodIDs = getArguments().getStringArrayList("foodIDs");
 
         TextView emptyfoodlist = view.findViewById(R.id.emptyfoodlist);
         recyclerView = view.findViewById(R.id.expireditemlist);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        expiredFoodArrayList = new ArrayList<>();
-        adapter = new ExpiredAdapter(getContext(), expiredFoodArrayList);
+        foodList = new ArrayList<>();
+        adapter = new ExpiredAdapter(getContext(), foodList);
         recyclerView.setAdapter(adapter);
 
         // Create a reference to the "Food" node in the database
         foodRef = FirebaseDatabase.getInstance().getReference("Food");
 
-        // Create a query to retrieve all the food items where the "foodId" is in the list of "foodIDs"
-        if (foodIDs.isEmpty()) {
-            String message = "There are no expired food items";
-            emptyfoodlist.setText(message);
 
-        } else {
-            Query query = foodRef.orderByChild("foodId").startAt(foodIDs.get(0)).endAt(foodIDs.get(foodIDs.size() - 1));
+        Date todayDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
+        String dateString = dateFormat.format(todayDate);
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Food");
+        Query foodRef = database.orderByChild("userID").equalTo(userID);
 
-            // Add a listener to the query to retrieve the data
-            query.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        expiredFoodArrayList.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            // Retrieve the Food object
-                            ExpiredFood food = snapshot.getValue(ExpiredFood.class);
+        foodRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foodList.clear(); // clear previous list
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    Food food = categorySnapshot.getValue(Food.class);
+                    String expiryDate = food.getExpiry();
+                    try {
+                        Date todayDate = new Date();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
+                        Date expiryDateObj = dateFormat.parse(expiryDate);
+                        // Calculate the date one day before today
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(todayDate);
+                        cal.add(Calendar.DATE, -1);
+                        Date oneDayBefore = cal.getTime();
 
-                            // Add the Food object to the list
-                            if(food.isExpired()) {
-                                expiredFoodArrayList.add(food);
-                            }
+                        if (expiryDateObj.before(oneDayBefore)) {
+                            foodList.add(food);
                         }
-
-                        adapter.sortExpiryDateAscending();
-                        // Notify the adapter that the data has changed
-                        adapter.notifyDataSetChanged();
-
-                        if (expiredFoodArrayList.isEmpty()) {
-                            String message = "There are no food items in this category";
-                            emptyfoodlist.setText(message);
-
-                        }
-
-                    } else {
-                        String message = "There are no food items in this category";
-                        emptyfoodlist.setText(message);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
                 }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+                adapter.notifyDataSetChanged();
+
             }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "Failed to get Food Items", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
 
     }

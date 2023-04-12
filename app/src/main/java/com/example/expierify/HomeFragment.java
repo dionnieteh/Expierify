@@ -39,7 +39,6 @@ import java.util.Objects;
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private DatabaseReference database;
     private AdapterTodayExpiry myAdapter;
     private ArrayList<Food> foodList;
     private ArrayList<Food> foodList2;
