@@ -75,6 +75,7 @@ public class CategoryFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
                     CategoryClass category = categorySnapshot.getValue(CategoryClass.class);
+
                     categoryList.add(category);
                 }
                 myAdapter.notifyDataSetChanged();

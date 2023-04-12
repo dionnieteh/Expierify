@@ -342,15 +342,15 @@ public class AddProductPage extends AppCompatActivity {
                         Food foodImg = new Food();
                         foodImg.setImage(uri.toString());
                         Toast.makeText(getApplicationContext(), "Food Successfully Added", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
+                        finish();
                     });
                 });
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }else{
-            startActivity(new Intent(AddProductPage.this,  HomeFragment.class));
-            return;
+            Toast.makeText(getApplicationContext(), "Food Successfully Added", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 }

@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment()); //Home will be open when application is on
 
+
+
         binding.bottomNavigationView.setOnItemSelectedListener(item->{
             switch(item.getItemId()){
                 case R.id.home:

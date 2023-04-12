@@ -54,20 +54,25 @@ public class AddLabelPage extends AppCompatActivity {
 
     private void insertLabel(){
         String lName = labelName.getText().toString();
-        LabelClass labelClass = new LabelClass(lName);
-        label.child(lName).setValue(labelClass)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "New Label is Added", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AddLabelPage.this,  HomeFragment.class));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error When Adding New Label", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (lName.isEmpty()){
+            labelName.setError("This field cannot be empty");
+        }else{
+            LabelClass labelClass = new LabelClass(lName);
+            label.child(lName).setValue(labelClass)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getApplicationContext(), "New Label is Added", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddLabelPage.this,  HomeFragment.class));
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Error When Adding New Label", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
     }
 
 }
