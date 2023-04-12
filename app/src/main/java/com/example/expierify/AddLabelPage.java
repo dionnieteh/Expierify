@@ -20,8 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AddLabelPage extends AppCompatActivity {
 
-    EditText labelName;
-    DatabaseReference labelDBH;
+    private EditText labelName;
+    private DatabaseReference label;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class AddLabelPage extends AppCompatActivity {
         });
 
         labelName =(EditText)findViewById(R.id.newLabel);
-        labelDBH = FirebaseDatabase.getInstance().getReference().child("Label");
+        label = FirebaseDatabase.getInstance().getReference().child("Label").child(userID);
 
         Button saveBtn=(Button)findViewById(R.id.saveBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -52,27 +54,25 @@ public class AddLabelPage extends AppCompatActivity {
 
     private void insertLabel(){
         String lName = labelName.getText().toString();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userID = currentUser.getUid();
+        if (lName.isEmpty()){
+            labelName.setError("This field cannot be empty");
+        }else{
+            LabelClass labelClass = new LabelClass(lName);
+            label.child(lName).setValue(labelClass)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getApplicationContext(), "New Label is Added", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddLabelPage.this,  HomeFragment.class));
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Error When Adding New Label", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
 
-
-
-        LabelClass labelClass = new LabelClass(lName, userID);
-
-
-        labelDBH.push().setValue(labelClass).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "New Label is Added", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AddLabelPage.this,  HomeFragment.class));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error When Adding New Label", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 }

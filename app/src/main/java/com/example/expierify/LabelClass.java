@@ -4,9 +4,8 @@ public class LabelClass {
     String lName;
     String userID;
 
-    public LabelClass(String lName, String userID) {
+    public LabelClass(String lName) {
         this.lName = lName;
-        this.userID = userID;
     }
 
     public LabelClass() {

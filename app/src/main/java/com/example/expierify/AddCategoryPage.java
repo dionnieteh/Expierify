@@ -22,8 +22,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AddCategoryPage extends AppCompatActivity {
 
-    EditText categoryName;
-    DatabaseReference category;
+    private EditText categoryName;
+    private DatabaseReference category;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class AddCategoryPage extends AppCompatActivity {
         });
 
         categoryName =(EditText)findViewById(R.id.newName);
-        category = FirebaseDatabase.getInstance().getReference().child("Category");
+        category = FirebaseDatabase.getInstance().getReference().child("Category").child(userID);
 
         Button saveBtn=(Button)findViewById(R.id.saveBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -54,26 +57,25 @@ public class AddCategoryPage extends AppCompatActivity {
 
     private void insertCategory(){
         String cName = categoryName.getText().toString();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userID = currentUser.getUid();
+        if (cName.isEmpty()){
+            categoryName.setError("This field cannot be empty");
+        }else{
+            CategoryClass categoryClass = new CategoryClass(cName);
+            category.child(cName).setValue(categoryClass)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getApplicationContext(), "New Category is Added", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddCategoryPage.this,  SortFragment.class));
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Error When Adding New Category", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
 
-        CategoryClass categoryClass = new CategoryClass(cName, userID);
-
-
-
-        category.push().setValue(categoryClass).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "New Category is Added", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AddCategoryPage.this,  SortFragment.class));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error When Adding New Category", Toast.LENGTH_SHORT).show();
-            }
-        });
         
 
     }
