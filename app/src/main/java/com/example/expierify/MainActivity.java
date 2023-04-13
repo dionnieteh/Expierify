@@ -50,9 +50,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.camera:
-                    //replaceFragment(new CameraFragment());
-                    Intent intent = new Intent(MainActivity.this, AddProductPage.class);
-                    startActivity(intent);
+                    replaceFragment(new AddFoodFragment());
+
                     break;
                 case R.id.tags:
                     replaceFragment(new LabelFragment());
