@@ -29,6 +29,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -40,8 +41,6 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
     private ArrayList<String> foodIDList;
     private Context context;
     private ArrayList<Date> expiryList;
-    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-    private String userID = currentUser.getUid();
 
     public AdapterSubCategory(ArrayList<Food> foodList, Context context, ArrayList<String> foodIDList) {
         this.foodList = foodList;
@@ -69,7 +68,6 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
                     .placeholder(R.drawable.placeholderimg) // Set a placeholder image while the actual image is loading
                     .into(holder.foodImageView); // Set the image in the ImageView
         }
-       
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,12 +98,28 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
 
     public void sortExpiryDateAscending() {
         ArrayList<Date> expiryList = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy");
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
+        Set<String> addedFoods = new HashSet<>(); // Keep track of food IDs that have already been added
+        ArrayList<Food> sortedFoodList = new ArrayList<>();
+        ArrayList<String> sortedFoodIDList = new ArrayList<>();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        Date today= calendar.getTime();
+
+
         for (Food food : foodList) {
-            if (food.getUserID().equals(userID)) { // Check if food userID matches current user's ID
+            if (food.getUserID().equals(currentUser.getUid())) { // Check if food userID matches current user's ID
                 try {
                     Date expiryDate = sdf.parse(food.getExpiry());
-                    expiryList.add(expiryDate);
+                    if (expiryDate.after(today)) { // Check if expiry date is after today's date
+                        if (!expiryList.contains(expiryDate)) {
+                            expiryList.add(expiryDate);
+                        }
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -113,18 +127,17 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
         }
         Collections.sort(expiryList);
 
-        ArrayList<Food> sortedFoodList = new ArrayList<>();
-        ArrayList<String> sortedFoodIDList = new ArrayList<>();
         for (Date expiryDate : expiryList) {
             for (Food food : foodList) {
-                if (food.getUserID().equals(userID)) { // Check if food userID matches current user's ID
+                if (food.getUserID().equals(currentUser.getUid())) { // Check if food userID matches current user's ID
                     String expiryDateString = food.getExpiry();
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                     try {
                         Date foodExpiryDate = dateFormat.parse(expiryDateString);
-                        if (foodExpiryDate.equals(expiryDate)) {
+                        if (foodExpiryDate.equals(expiryDate) && !addedFoods.contains(food.getFoodId()) && foodExpiryDate.after(today)) { // Check if expiry date is after today's date
                             sortedFoodList.add(food);
                             sortedFoodIDList.add(food.getFoodId());
+                            addedFoods.add(food.getFoodId()); // Add food ID to the set of added foods
                         }
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -164,4 +177,3 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
         }
     }
 }
-
