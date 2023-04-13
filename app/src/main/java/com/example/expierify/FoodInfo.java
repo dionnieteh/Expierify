@@ -1,13 +1,254 @@
 package com.example.expierify;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class FoodInfo extends AppCompatActivity {
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food_info);
+        TextView foodTitle;
+        ImageView foodImage;
+        TextView descLabel;
+        TextView categLabel;
+        TextView expDateLabel;
+        TextView locateLabel;
+        ImageButton edit;
+        Button save;
+        ImageButton calendarBtn;
+        Spinner newLocation, newCategory;
+        private DatePickerDialog picker;
+
+        EditText titleEdit, descLabelEdit, expDateLabelEdit;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_food_info);
+
+            // Get the Intent that started this activity
+            Intent intent = getIntent();
+
+            // Retrieve the data passed through the Intent using the getStringExtra() method
+            String foodName = intent.getStringExtra("foodName");
+            String foodId = intent.getStringExtra("foodId");
+            String description = intent.getStringExtra("desc");
+            String expiry = intent.getStringExtra("expiry");
+            String category = intent.getStringExtra("category");
+            String label = intent.getStringExtra("label");
+            String imageUrl = intent.getStringExtra("imageUrl");
+
+            // Initialize the TextView and ImageView variables
+            foodTitle = findViewById(R.id.title);
+            foodImage = findViewById(R.id.foodImg);
+            descLabel = findViewById(R.id.descLabel);
+            expDateLabel = findViewById(R.id.expDateLabel);
+            categLabel = findViewById(R.id.categLabel);
+            locateLabel = findViewById(R.id.locateLabel);
+            edit = findViewById(R.id.editBtn);
+            save = findViewById(R.id.saveBtn);
+            titleEdit = findViewById(R.id.titleEdit);
+            descLabelEdit = findViewById(R.id.descLabelEdit);
+            newLocation= findViewById(R.id.newLocation);
+            newCategory= findViewById(R.id.newCategory);
+            expDateLabelEdit = findViewById(R.id.expDateLabelEdit);
+            calendarBtn=(ImageButton)findViewById(R.id.calendar);
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference ref = database.getReference("Food").child(foodId);
+
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Extract the values from the DataSnapshot object
+                    String name = dataSnapshot.child("name").getValue(String.class);
+                    String expDate = dataSnapshot.child("expiry").getValue(String.class);
+                    String description = dataSnapshot.child("desc").getValue(String.class);
+                    String category = dataSnapshot.child("category").getValue(String.class);
+                    String label = dataSnapshot.child("label").getValue(String.class);
+                    // Create a new instance of the Food class
+                    Food food = new Food(userID, foodId, name, description, expDate, category, label);
+                    foodTitle.setText(food.getName());
+                    descLabel.setText(food.getDesc());
+                    expDateLabel.setText(food.getExpiry());
+                    categLabel.setText(food.getCategory());
+                    locateLabel.setText(food.getLabel());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+
+            // Load the image using Glide
+            Glide.with(this)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.placeholderimg)
+                    .into(foodImage);
+
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setVisibilityTextView(4);
+                    setVisibilityEditText(0);
+                    save.setVisibility(View.VISIBLE);
+                    calendarBtn.setVisibility(View.VISIBLE);
+                    //set DatePicker for expiry Date
+                    calendarBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final Calendar calendar = Calendar.getInstance();
+                            int day= calendar.get(Calendar.DAY_OF_MONTH);
+                            int month= calendar.get(Calendar.MONTH);
+                            int year= calendar.get(Calendar.YEAR);
+
+                            //define datepicker
+                            picker = new DatePickerDialog(FoodInfo.this, new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                    calendarBtn.setVisibility(View.INVISIBLE);
+                                    expDateLabelEdit.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                                }
+                            },year, month, day);
+
+                            picker.getDatePicker().setMinDate(calendar.getTimeInMillis());
+                            picker.show();
+                        }
+                    });
+
+                    labelSpinner();
+                    categorySpinner();
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                    save.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Create a reference to the specific node in the database that you want to update
+                            DatabaseReference ref = database.getReference("Food").child(foodId);
+                            // Create a Map object to hold the updated values
+                            Map<String, Object> updates = new HashMap<>();
+                            updates.put("name", titleEdit.getText().toString().trim());
+                            updates.put("expiry", expDateLabelEdit.getText().toString().trim());
+                            updates.put("desc", descLabelEdit.getText().toString().trim());
+                            String category = newCategory.getSelectedItem() != null ? newCategory.getSelectedItem().toString() : "Uncategorized";
+                            updates.put("category", category);
+                            String newLabel = newLocation.getSelectedItem() != null ? newLocation.getSelectedItem().toString() : "Unlabeled";
+                            updates.put("label", newLabel);
+                            // Update the node in the database with the new values
+                            ref.updateChildren(updates);
+                            save.setVisibility(View.INVISIBLE);
+                            setVisibilityTextView(0);
+                            setVisibilityEditText(4);
+                        }
+                    });
+                }
+            });
+        }
+    public void setVisibilityTextView(int visibility){
+        foodTitle.setVisibility(visibility);
+        descLabel.setVisibility(visibility);
+        expDateLabel.setVisibility(visibility);
+        categLabel.setVisibility(visibility);
+        locateLabel.setVisibility(visibility);
     }
-}
+    public void setVisibilityEditText(int visibility){
+            newLocation.setVisibility(visibility);
+            newCategory.setVisibility(visibility);
+        titleEdit.setVisibility(visibility);
+        descLabelEdit.setVisibility(visibility);
+        expDateLabelEdit.setVisibility(visibility);
+    }
+
+    public void labelSpinner(){
+        //Label Spinner dropdown
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference labelRef = database.getReference("Label").child(userID);
+        labelRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<String> labels = new ArrayList<>();
+                labels.add("Unlabeled");
+                for (DataSnapshot labelSnapshot : snapshot.getChildren()) {
+                    String label = labelSnapshot.getKey();
+                    if (!label.equals("Unlabeled")) {
+                        labels.add(label);
+                    }
+
+                }
+                // Update the Spinner with the retrieved categories
+                ArrayAdapter<String> labelAdapter = new ArrayAdapter<String>(FoodInfo.this, android.R.layout.simple_spinner_item, labels);
+                labelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                newLocation.setAdapter(labelAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Failed to retrieve labels", error.toException());
+            }
+        });
+    }
+
+    public void categorySpinner(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference categoryRef = database.getReference("Category").child(userID);
+        Spinner newCategory= findViewById(R.id.newCategory);
+
+        categoryRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<String> categories = new ArrayList<>();
+                categories.add("Uncategorized");
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    String category = categorySnapshot.getKey();
+                    if (!category.equals("Uncategorized")) {
+                        categories.add(category);
+                    }
+                }
+
+                // Update the Spinner with the retrieved categories
+                ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(FoodInfo.this, android.R.layout.simple_spinner_item, categories);
+                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                newCategory.setAdapter(categoryAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Failed to retrieve categories", error.toException());
+            }
+        });
+    }
+    }
