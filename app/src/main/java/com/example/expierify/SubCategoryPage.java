@@ -25,11 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Objects;
 
 public class SubCategoryPage extends AppCompatActivity {
 
@@ -102,22 +98,19 @@ public class SubCategoryPage extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         foodList.clear();
+                        ArrayList<String> foodNames = new ArrayList<String>(); // Create a new ArrayList to store unique food names
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             // Retrieve the Food object
                             Food food = snapshot.getValue(Food.class);
-                            String expiryDate = food.getExpiry();
-                            try {
-                                Date todayDate = new Date();
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
-                                String dateString = dateFormat.format(todayDate);
-                                Date expiryDateObj = dateFormat.parse(expiryDate);
-                                if (expiryDateObj.after(todayDate)) {
-                                    foodList.add(food);
-                                }
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
 
+                            // Check if the food name is already in the foodNames ArrayList
+                            if (!foodNames.contains(food.getName())) {
+                                // Add the Food object to the list
+                                foodList.add(food);
+
+                                // Add the food name to the foodNames ArrayList
+                                foodNames.add(food.getName());
+                            }
                         }
 
                         adapter.sortExpiryDateAscending();

@@ -29,6 +29,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -96,14 +97,28 @@ public class AdapterSubLabel extends RecyclerView.Adapter<AdapterSubLabel.ViewHo
 
     public void sortExpiryDateAscending() {
         ArrayList<Date> expiryList = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy");
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
+        Set<String> addedFoods = new HashSet<>(); // Keep track of food IDs that have already been added
+        ArrayList<Food> sortedFoodList = new ArrayList<>();
+        ArrayList<String> sortedFoodIDList = new ArrayList<>();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        Date today = calendar.getTime();
+
+
         for (Food food : foodList) {
             if (food.getUserID().equals(currentUser.getUid())) { // Check if food userID matches current user's ID
                 try {
                     Date expiryDate = sdf.parse(food.getExpiry());
-                    expiryList.add(expiryDate);
+                    if (expiryDate.after(today)) { // Check if expiry date is after today's date
+                        if (!expiryList.contains(expiryDate)) {
+                            expiryList.add(expiryDate);
+                        }
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -111,8 +126,6 @@ public class AdapterSubLabel extends RecyclerView.Adapter<AdapterSubLabel.ViewHo
         }
         Collections.sort(expiryList);
 
-        ArrayList<Food> sortedFoodList = new ArrayList<>();
-        ArrayList<String> sortedFoodIDList = new ArrayList<>();
         for (Date expiryDate : expiryList) {
             for (Food food : foodList) {
                 if (food.getUserID().equals(currentUser.getUid())) { // Check if food userID matches current user's ID
@@ -120,9 +133,10 @@ public class AdapterSubLabel extends RecyclerView.Adapter<AdapterSubLabel.ViewHo
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                     try {
                         Date foodExpiryDate = dateFormat.parse(expiryDateString);
-                        if (foodExpiryDate.equals(expiryDate)) {
+                        if (foodExpiryDate.equals(expiryDate) && !addedFoods.contains(food.getFoodId()) && foodExpiryDate.after(today)) { // Check if expiry date is after today's date
                             sortedFoodList.add(food);
                             sortedFoodIDList.add(food.getFoodId());
+                            addedFoods.add(food.getFoodId()); // Add food ID to the set of added foods
                         }
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -132,7 +146,6 @@ public class AdapterSubLabel extends RecyclerView.Adapter<AdapterSubLabel.ViewHo
         }
         foodList = sortedFoodList;
         foodIDList = sortedFoodIDList;
-        notifyDataSetChanged();
     }
 
 
@@ -162,4 +175,3 @@ public class AdapterSubLabel extends RecyclerView.Adapter<AdapterSubLabel.ViewHo
         }
     }
 }
-
