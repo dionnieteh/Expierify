@@ -161,7 +161,6 @@ public class SubCategoryPage extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            // Step 2: Update all the foods that belong to this category to "Uncategorized"
                                             foodRef.orderByChild("category").equalTo(getIntent().getStringExtra("categoryTitle"))
                                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                                         @Override
