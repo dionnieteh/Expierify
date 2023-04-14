@@ -145,6 +145,7 @@ public class FoodInfo extends AppCompatActivity{
                         @Override
                         public void onClick(View view) {
                             enlargedFoodImg.setVisibility(View.INVISIBLE);
+                            back2.setVisibility(View.INVISIBLE);
                         }
                     });
                 }
