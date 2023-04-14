@@ -73,6 +73,7 @@ public class LabelFragment extends Fragment {
         labelRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                labelList.clear(); // clear the list before adding new items
                 for (DataSnapshot labelSnapshot : snapshot.getChildren()) {
                     LabelClass label = labelSnapshot.getValue(LabelClass.class);
                     labelList.add(label);

@@ -1,27 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FEF3EF"
-    android:paddingLeft="16dp"
-    android:paddingTop="16dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="16dp"
-    tools:context=".FoodInfo">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/foodImg"
-        android:layout_width="377dp"
-        android:layout_height="180dp"
-        android:background="#FFFFFF"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FEF3EF"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        tools:context=".FoodInfo">
+
+    <ImageButton
+    android:id="@+id/backBtn"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:background="@android:color/transparent"
+    android:src="@drawable/ic_baseline_arrow_back_24"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:elevation="4dp"
+    tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_delete_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/backBtn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="8dp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/foodImg"
+            android:layout_marginTop="10dp"
+            android:layout_width="370dp"
+            android:layout_height="215dp"
+            android:background="#FFFFFF"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backBtn" />
+
+        <ImageView
+            android:id="@+id/enlargedFoodImg"
+            android:layout_width="385dp"
+            android:layout_height="675dp"
+            android:background="#FFFFFF"
+            android:elevation="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_launcher_background"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -29,28 +81,41 @@
         android:layout_height="400sp"
         android:orientation="horizontal"
         android:padding="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/foodImg"
+        tools:layout_editor_absoluteX="-42dp">
 
-        <!-- max 20 characs for title--><TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="Food Name"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/expDate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        <!-- max 20 characs for title-->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:maxLength="20"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/expDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
+
+        <EditText
+            android:id="@+id/titleEdit"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:maxLength="18"
+            android:textSize="30sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/expDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
 
         <ImageButton
             android:id="@+id/editBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#FEF3EF"
-            android:padding="15dp"
+            android:background="@null"
+            android:padding="10dp"
             android:scaleType="center"
             android:src="@drawable/ic_baseline_edit_24"
             app:layout_constraintEnd_toEndOf="@+id/expDateLabel"
@@ -80,8 +145,19 @@
             android:id="@+id/descLabel"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:text="123456789012345678901234567890123456789012345678901234567890123456789012345678901234"
             android:textSize="20sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/categ"
+            app:layout_constraintStart_toStartOf="@+id/desc"
+            app:layout_constraintTop_toBottomOf="@+id/desc" />
+
+        <EditText
+            android:id="@+id/descLabelEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:maxLength="51"
+            android:textSize="20sp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/categ"
             app:layout_constraintStart_toStartOf="@+id/desc"
             app:layout_constraintTop_toBottomOf="@+id/desc" />
@@ -111,8 +187,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
-            android:text="12/12/2023"
             android:textSize="20sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/expDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editBtn"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/expDateLabelEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:textSize="20sp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/expDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editBtn"
@@ -124,23 +212,93 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="188dp"
             android:background="@color/white"
-            android:text="cereal"
             android:textSize="20sp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/categ"
             app:layout_constraintEnd_toEndOf="@+id/locateLabel"
             app:layout_constraintTop_toBottomOf="@+id/editBtn"
             app:layout_constraintVertical_bias="1.0" />
+
+        <Spinner
+            android:id="@+id/newCategory"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/categ"
+            app:layout_constraintEnd_toEndOf="@+id/locateLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editBtn"
+            app:layout_constraintVertical_bias="1.0" />
+
 
         <TextView
             android:id="@+id/locateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/purple_200"
-            android:text="cabinet"
             android:textSize="20sp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/locate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/categLabel"
             app:layout_constraintVertical_bias="1.0" />
+
+        <!--New Category through spinner-->
+        <Spinner
+            android:id="@+id/newLocation"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/locate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/categLabel"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+        <ImageButton
+            android:id="@+id/calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_calendar_today_24"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/expDate"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/expDate"
+            app:layout_constraintTop_toTopOf="@+id/expDate" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="left"
+            app:constraint_referenced_ids="calendar"
+            tools:layout_editor_absoluteX="187dp"
+            tools:layout_editor_absoluteY="25dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6807388" />
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:text="@string/saveBtn"
+        android:textSize="20dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        tools:layout_editor_absoluteX="32dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

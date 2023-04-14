@@ -51,6 +51,7 @@
     <EditText
         android:id="@+id/newLabel"
         android:layout_width="380dp"
+        android:maxLength="13"
         android:layout_height="wrap_content"
         android:layout_below="@+id/addLabel"
         android:layout_alignParentEnd="true"
