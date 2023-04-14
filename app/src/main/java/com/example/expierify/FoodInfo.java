@@ -3,9 +3,12 @@ package com.example.expierify;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -22,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -45,13 +50,15 @@ public class FoodInfo extends AppCompatActivity{
         TextView categLabel;
         TextView expDateLabel;
         TextView locateLabel;
-        ImageButton edit, back, back2;
+        ImageButton edit, back, back2, delete;
         Button save;
         ImageButton calendarBtn;
         Spinner newLocation, newCategory;
         private DatePickerDialog picker;
 
-        EditText titleEdit, descLabelEdit, expDateLabelEdit;
+
+
+    EditText titleEdit, descLabelEdit, expDateLabelEdit;
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private String userID = currentUser.getUid();
 
@@ -85,6 +92,7 @@ public class FoodInfo extends AppCompatActivity{
             back2 = findViewById(R.id.backBtn2);
             edit = findViewById(R.id.editBtn);
             save = findViewById(R.id.saveBtn);
+            delete = findViewById(R.id.deleteBtn);
             titleEdit = findViewById(R.id.titleEdit);
             InputFilter[] limitTitle = new InputFilter[] {new ExactLengthFilter(18)};
             titleEdit.setFilters(limitTitle);
@@ -158,6 +166,12 @@ public class FoodInfo extends AppCompatActivity{
                 }
             });
 
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDeleteConfirmationDialog(foodId);
+                }
+            });
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -180,7 +194,6 @@ public class FoodInfo extends AppCompatActivity{
                             picker = new DatePickerDialog(FoodInfo.this, new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                    calendarBtn.setVisibility(View.INVISIBLE);
                                     expDateLabelEdit.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
                                 }
                             },year, month, day);
@@ -228,8 +241,8 @@ public class FoodInfo extends AppCompatActivity{
         locateLabel.setVisibility(visibility);
     }
     public void setVisibilityEditText(int visibility){
-            newLocation.setVisibility(visibility);
-            newCategory.setVisibility(visibility);
+        newLocation.setVisibility(visibility);
+        newCategory.setVisibility(visibility);
         titleEdit.setVisibility(visibility);
         descLabelEdit.setVisibility(visibility);
         expDateLabelEdit.setVisibility(visibility);
@@ -324,4 +337,53 @@ public class FoodInfo extends AppCompatActivity{
         });
 
     }
+    public void showDeleteConfirmationDialog(String foodId) {
+        // Define the AlertDialog builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm Delete");
+        builder.setMessage("Are you sure you want to delete this record?");
+
+        // Set the positive button
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Call the deleteFoodRecord() method to delete the record
+                deleteFoodRecord(foodId);
+                dialog.dismiss(); // Dismiss the dialog
+                finish();
+
+            }
+        });
+
+        // Set the negative button
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); // Dismiss the dialog
+            }
+        });
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+
+        // Show the AlertDialog
+        dialog.show();
     }
+
+    public void deleteFoodRecord(String foodId) {
+        DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food").child(foodId);
+        foodRef.removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                if (error == null) {
+                    // Record deleted successfully
+                    Log.d(TAG, "deleteFoodRecord: Record deleted successfully.");
+                } else {
+                    // Failed to delete record
+                    Log.e(TAG, "deleteFoodRecord: Failed to delete record.", error.toException());
+                }
+            }
+        });
+    }
+
+}

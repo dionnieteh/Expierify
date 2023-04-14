@@ -17,14 +17,24 @@
 
     <ImageButton
     android:id="@+id/backBtn"
-    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
     android:background="@android:color/transparent"
     android:src="@drawable/ic_baseline_arrow_back_24"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     android:elevation="4dp"
     tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_delete_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/backBtn2"
@@ -38,17 +48,18 @@
         android:elevation="8dp"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <ImageView
-        android:id="@+id/foodImg"
-        android:layout_width="370dp"
-        android:layout_height="215dp"
-        android:background="#FFFFFF"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/foodImg"
+            android:layout_marginTop="10dp"
+            android:layout_width="370dp"
+            android:layout_height="215dp"
+            android:background="#FFFFFF"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backBtn" />
 
         <ImageView
             android:id="@+id/enlargedFoodImg"
@@ -104,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:padding="15dp"
+            android:padding="10dp"
             android:scaleType="center"
             android:src="@drawable/ic_baseline_edit_24"
             app:layout_constraintEnd_toEndOf="@+id/expDateLabel"
@@ -269,7 +280,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="233dp" />
+            app:layout_constraintGuide_percent="0.6807388" />
 
 
 
