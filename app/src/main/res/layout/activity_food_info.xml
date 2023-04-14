@@ -50,19 +50,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/enlargedFoodImg"
-        android:layout_width="match_parent"
-        android:elevation="8dp"
-        android:layout_height="match_parent"
-        android:visibility="invisible"
-        android:background="#FFFFFF"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/enlargedFoodImg"
+            android:layout_width="385dp"
+            android:layout_height="675dp"
+            android:background="#FFFFFF"
+            android:elevation="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_launcher_background"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -289,4 +289,5 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         tools:layout_editor_absoluteX="32dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>
