@@ -67,14 +67,13 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.category:
                     replaceFragment(new SortFragment());
                     break;
-
                 case R.id.camera:
                     //replaceFragment(new CameraFragment());
                     Intent intent = new Intent(MainActivity.this, AddProductPage.class);
                     startActivity(intent);
                     break;
                 case R.id.tags:
-                    replaceFragment(new LabelFragment());
+                    replaceFragment(new ExpiredFragment());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileFragment());

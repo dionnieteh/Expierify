@@ -73,6 +73,7 @@ public class CategoryFragment extends Fragment {
         categoryRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                categoryList.clear(); // clear the list before adding new items
                 for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
                     CategoryClass category = categorySnapshot.getValue(CategoryClass.class);
 

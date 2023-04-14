@@ -40,7 +40,8 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
     private ArrayList<Food> foodList;
     private ArrayList<String> foodIDList;
     private Context context;
-    private ArrayList<Date> expiryList;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
 
     public AdapterSubCategory(ArrayList<Food> foodList, Context context, ArrayList<String> foodIDList) {
         this.foodList = foodList;

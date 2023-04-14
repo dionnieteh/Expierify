@@ -163,7 +163,6 @@ public class SubLabelPage extends AppCompatActivity {
                                                                 String foodKey = foodSnapshot.getKey();
                                                                 foodRef.child(foodKey).child("label").setValue("Unlabeled");
                                                                 Toast.makeText(getApplicationContext(), "Label Deleted", Toast.LENGTH_SHORT).show();
-                                                                finish();
                                                             }
                                                         }
 
@@ -182,6 +181,7 @@ public class SubLabelPage extends AppCompatActivity {
                                         }
                                     });
                         }
+
                     }
 
                     @Override
@@ -189,6 +189,8 @@ public class SubLabelPage extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Failed to get label", Toast.LENGTH_SHORT).show();
                     }
                 });
+                dialog.dismiss(); // Dismiss the dialog
+                finish();
             }
         });
 

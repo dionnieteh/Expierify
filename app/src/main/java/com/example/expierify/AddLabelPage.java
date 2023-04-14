@@ -2,9 +2,12 @@ package com.example.expierify;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class AddLabelPage extends AppCompatActivity {
 
@@ -41,6 +46,8 @@ public class AddLabelPage extends AppCompatActivity {
         });
 
         labelName =(EditText)findViewById(R.id.newLabel);
+        InputFilter[] limitWord = new InputFilter[] {new ExactLengthFilter(13)};
+        labelName.setFilters(limitWord);
         label = FirebaseDatabase.getInstance().getReference().child("Label").child(userID);
 
         Button saveBtn=(Button)findViewById(R.id.saveBtn);
@@ -63,7 +70,7 @@ public class AddLabelPage extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(getApplicationContext(), "New Label is Added", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(AddLabelPage.this,  HomeFragment.class));
+                            finish();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

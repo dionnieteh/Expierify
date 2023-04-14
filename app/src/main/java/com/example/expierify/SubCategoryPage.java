@@ -137,6 +137,7 @@ public class SubCategoryPage extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Failed to get food products", Toast.LENGTH_SHORT).show();
                 }
             });
+
         }
 
     }
@@ -195,6 +196,8 @@ public class SubCategoryPage extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Failed to get categories", Toast.LENGTH_SHORT).show();
                     }
                 });
+                dialog.dismiss(); // Dismiss the dialog
+                finish();
             }
         });
 
