@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -36,15 +37,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class FoodInfo extends AppCompatActivity {
+public class FoodInfo extends AppCompatActivity{
 
         TextView foodTitle;
-        ImageView foodImage;
+        ImageView foodImage, enlargedFoodImg;
         TextView descLabel;
         TextView categLabel;
         TextView expDateLabel;
         TextView locateLabel;
-        ImageButton edit;
+        ImageButton edit, back, back2;
         Button save;
         ImageButton calendarBtn;
         Spinner newLocation, newCategory;
@@ -74,14 +75,22 @@ public class FoodInfo extends AppCompatActivity {
             // Initialize the TextView and ImageView variables
             foodTitle = findViewById(R.id.title);
             foodImage = findViewById(R.id.foodImg);
+            enlargedFoodImg = findViewById(R.id.enlargedFoodImg);
+            enlargedFoodImg.setElevation(8f); // set elevation to 8dp
             descLabel = findViewById(R.id.descLabel);
             expDateLabel = findViewById(R.id.expDateLabel);
             categLabel = findViewById(R.id.categLabel);
             locateLabel = findViewById(R.id.locateLabel);
+            back = findViewById(R.id.backBtn);
+            back2 = findViewById(R.id.backBtn2);
             edit = findViewById(R.id.editBtn);
             save = findViewById(R.id.saveBtn);
             titleEdit = findViewById(R.id.titleEdit);
+            InputFilter[] limitTitle = new InputFilter[] {new ExactLengthFilter(18)};
+            titleEdit.setFilters(limitTitle);
             descLabelEdit = findViewById(R.id.descLabelEdit);
+            InputFilter[] limitDesc = new InputFilter[] {new ExactLengthFilter(51)};
+            descLabelEdit.setFilters(limitDesc);
             newLocation= findViewById(R.id.newLocation);
             newCategory= findViewById(R.id.newCategory);
             expDateLabelEdit = findViewById(R.id.expDateLabelEdit);
@@ -102,8 +111,11 @@ public class FoodInfo extends AppCompatActivity {
                     // Create a new instance of the Food class
                     Food food = new Food(userID, foodId, name, description, expDate, category, label);
                     foodTitle.setText(food.getName());
+                    titleEdit.setText(food.getName());
                     descLabel.setText(food.getDesc());
+                    descLabelEdit.setText(food.getDesc());
                     expDateLabel.setText(food.getExpiry());
+                    expDateLabelEdit.setText(food.getExpiry());
                     categLabel.setText(food.getCategory());
                     locateLabel.setText(food.getLabel());
                 }
@@ -119,13 +131,41 @@ public class FoodInfo extends AppCompatActivity {
                     .placeholder(R.drawable.placeholderimg)
                     .into(foodImage);
 
+            Glide.with(this)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.placeholderimg)
+                    .into(enlargedFoodImg);
+
+            foodImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    enlargedFoodImg.setVisibility(View.VISIBLE);
+                    back2.setVisibility(View.VISIBLE);
+                    back2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            enlargedFoodImg.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                }
+            });
+
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish(); // finish the current activity
+                }
+            });
+
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     setVisibilityTextView(4);
                     setVisibilityEditText(0);
+
                     save.setVisibility(View.VISIBLE);
                     calendarBtn.setVisibility(View.VISIBLE);
+
                     //set DatePicker for expiry Date
                     calendarBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -171,6 +211,7 @@ public class FoodInfo extends AppCompatActivity {
                             // Update the node in the database with the new values
                             ref.updateChildren(updates);
                             save.setVisibility(View.INVISIBLE);
+                            calendarBtn.setVisibility(View.INVISIBLE);
                             setVisibilityTextView(0);
                             setVisibilityEditText(4);
                         }
@@ -197,58 +238,89 @@ public class FoodInfo extends AppCompatActivity {
         //Label Spinner dropdown
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference labelRef = database.getReference("Label").child(userID);
-        labelRef.addValueEventListener(new ValueEventListener() {
+        Intent intent = getIntent();
+        String foodId = intent.getStringExtra("foodId");
+        DatabaseReference foodRef = database.getReference("Food").child(foodId).child("label");
+        foodRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<String> labels = new ArrayList<>();
-                labels.add("Unlabeled");
-                for (DataSnapshot labelSnapshot : snapshot.getChildren()) {
-                    String label = labelSnapshot.getKey();
-                    if (!label.equals("Unlabeled")) {
-                        labels.add(label);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String selectedLabel = dataSnapshot.getValue(String.class);
+                labelRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<String> labels = new ArrayList<>();
+                        labels.add(selectedLabel);
+                        for (DataSnapshot labelSnapshot : snapshot.getChildren()) {
+                            String label = labelSnapshot.getKey();
+                            if (!label.equals(selectedLabel)) {
+                                labels.add(label);
+                            }
+
+                        }
+                        // Update the Spinner with the retrieved categories
+                        ArrayAdapter<String> labelAdapter = new ArrayAdapter<String>(FoodInfo.this, android.R.layout.simple_spinner_item, labels);
+                        labelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        newLocation.setAdapter(labelAdapter);
                     }
 
-                }
-                // Update the Spinner with the retrieved categories
-                ArrayAdapter<String> labelAdapter = new ArrayAdapter<String>(FoodInfo.this, android.R.layout.simple_spinner_item, labels);
-                labelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                newLocation.setAdapter(labelAdapter);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e(TAG, "Failed to retrieve labels", error.toException());
+                    }
+                });
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, "Failed to retrieve labels", error.toException());
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
     }
 
     public void categorySpinner(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference categoryRef = database.getReference("Category").child(userID);
         Spinner newCategory= findViewById(R.id.newCategory);
-
-        categoryRef.addValueEventListener(new ValueEventListener() {
+        Intent intent = getIntent();
+        String foodId = intent.getStringExtra("foodId");
+        DatabaseReference foodRef = database.getReference("Food").child(foodId).child("category");
+        foodRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<String> categories = new ArrayList<>();
-                categories.add("Uncategorized");
-                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    String category = categorySnapshot.getKey();
-                    if (!category.equals("Uncategorized")) {
-                        categories.add(category);
-                    }
-                }
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String selectedCategory = dataSnapshot.getValue(String.class);
+                categoryRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<String> category = new ArrayList<>();
+                        category.add(selectedCategory);
+                        for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                            String categories = categorySnapshot.getKey();
+                            if (!categories.equals(selectedCategory)) {
+                                category.add(categories);
+                            }
 
-                // Update the Spinner with the retrieved categories
-                ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(FoodInfo.this, android.R.layout.simple_spinner_item, categories);
-                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                newCategory.setAdapter(categoryAdapter);
+                        }
+                        // Update the Spinner with the retrieved categories
+                        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(FoodInfo.this, android.R.layout.simple_spinner_item, category);
+                        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        newCategory.setAdapter(categoryAdapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e(TAG, "Failed to retrieve categories", error.toException());
+                    }
+                });
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, "Failed to retrieve categories", error.toException());
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
     }
     }
