@@ -328,7 +328,6 @@ public class FoodInfo extends AppCompatActivity{
                     }
                 });
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value

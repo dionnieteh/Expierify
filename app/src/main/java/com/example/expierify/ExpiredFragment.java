@@ -97,6 +97,9 @@ public class ExpiredFragment extends Fragment {
                 if(foodList.isEmpty()){
                     emptyfoodlist.setText("There is no expired food items.");
                 }
+                else{
+//                    Toast.makeText(getActivity(),""+String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

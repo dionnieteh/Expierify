@@ -127,8 +127,6 @@ public class SubCategoryPage extends AppCompatActivity {
                         String message = "There are no food items in this category";
                         emptyfoodlist.setText(message);
                     }
-
-
                 }
 
 

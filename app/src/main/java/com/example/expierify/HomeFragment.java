@@ -141,7 +141,6 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 myAdapter2.notifyDataSetChanged();
-
             }
 
 

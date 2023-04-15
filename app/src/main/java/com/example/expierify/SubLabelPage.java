@@ -120,8 +120,6 @@ public class SubLabelPage extends AppCompatActivity {
                         String message = "There are no food items in this label";
                         emptyfoodlist.setText(message);
                     }
-
-
                 }
 
 
@@ -181,7 +179,6 @@ public class SubLabelPage extends AppCompatActivity {
                                         }
                                     });
                         }
-
                     }
 
                     @Override
