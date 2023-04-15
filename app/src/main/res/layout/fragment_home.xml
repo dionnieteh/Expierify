@@ -45,18 +45,18 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                <!--Notification Button-->
-                <ImageButton
-                    android:id="@+id/notificationBtn"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@null"
-                    android:onClick="notification"
-                    android:src="@drawable/bell"
-                    app:layout_constraintEnd_toEndOf="@id/dashboard"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <!--Display Number of food product-->
+
+                <ImageButton
+                    android:id="@+id/tipsBtn"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="10dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_baseline_lightbulb_24"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
                 <LinearLayout
                     android:id="@+id/layoutFoodNo"
                     android:layout_width="0dp"
@@ -201,15 +201,6 @@
                             android:layout_marginTop="10dp"
                             android:textStyle="bold"
                             android:textColor="@color/black"/>
-
-                        <ImageButton
-                            android:id="@+id/tipsBtn"
-                            android:layout_marginTop="10dp"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:background="@null"
-                            android:src="@drawable/ic_baseline_lightbulb_24"
-                            />
 
                     </LinearLayout>
 
