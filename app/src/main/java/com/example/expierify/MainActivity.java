@@ -2,10 +2,13 @@ package com.example.expierify;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -50,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.action_bar_custom);
 
         FirebaseApp.initializeApp(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -64,15 +69,15 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.home:
                     replaceFragment(new HomeFragment());
                     break;
-                case R.id.category:
+                case R.id.labels:
                     replaceFragment(new SortFragment());
                     break;
-                case R.id.camera:
+                case R.id.add:
                     //replaceFragment(new CameraFragment());
                     Intent intent = new Intent(MainActivity.this, AddProductPage.class);
                     startActivity(intent);
                     break;
-                case R.id.tags:
+                case R.id.expired:
                     replaceFragment(new ExpiredFragment());
                     break;
                 case R.id.profile:
@@ -220,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 // An icon only badge will be displayed unless a number is set:
                 if(adapter.getItemCount()>0){
-                    BadgeDrawable badge = MainActivity.this.binding.bottomNavigationView.getOrCreateBadge(R.id.tags);
+                    BadgeDrawable badge = MainActivity.this.binding.bottomNavigationView.getOrCreateBadge(R.id.expired);
                     badge.setVisible(true);
                     badge.setNumber(adapter.getItemCount());
                 }
@@ -231,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 
