@@ -89,7 +89,7 @@ public class SubCategoryPage extends AppCompatActivity {
             emptyfoodlist.setText(message);
 
         } else {
-            Query query = foodRef.orderByChild("foodId").startAt(foodIDs.get(0)).endAt(foodIDs.get(foodIDs.size() - 1));
+            Query query = foodRef.orderByChild("category").equalTo(category);
 
 
             // Add a listener to the query to retrieve the data

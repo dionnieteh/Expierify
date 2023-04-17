@@ -88,7 +88,7 @@ public class SubLabelPage extends AppCompatActivity {
             emptyfoodlist.setText(message);
 
         } else {
-            Query query = foodRef.orderByChild("foodId").startAt(foodIDs.get(0)).endAt(foodIDs.get(foodIDs.size() - 1));
+            Query query = foodRef.orderByChild("label").equalTo(label);
 
 
             // Add a listener to the query to retrieve the data
@@ -100,9 +100,8 @@ public class SubLabelPage extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             // Retrieve the Food object
                             Food food = snapshot.getValue(Food.class);
-
-                            // Add the Food object to the list
-                            foodList.add(food);
+                                // Add the Food object to the list
+                                foodList.add(food);
 
                         }
 
