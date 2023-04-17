@@ -30,136 +30,158 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp">
 
-
-                <!--Welcome Header-->
-                <TextView
-                    android:id="@+id/welcome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:text="@string/Greeting"
-                    android:textColor="@color/black"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-
-                <!--Display Number of food product-->
-
-                <ImageButton
-                    android:id="@+id/tipsBtn"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_margin="10dp"
-                    android:background="@null"
-                    android:src="@drawable/ic_baseline_lightbulb_24"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
                 <LinearLayout
-                    android:id="@+id/layoutFoodNo"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@+id/welcome"
+                    android:id="@+id/headerbox"
+                    android:layout_width="378dp"
+                    android:layout_height="64dp"
+                    app:layout_constraintBottom_toTopOf="@+id/cardView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!--Welcome Header-->
+
+
+                    <!--Display Number of food product-->
+
+                    <TextView
+                        android:id="@+id/welcome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/Greeting"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/tipsBtn"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_baseline_lightbulb_24"
+                        app:layout_constraintBottom_toBottomOf="@id/headerbox"
+                        app:layout_constraintEnd_toEndOf="@id/headerbox"
+                        app:layout_constraintTop_toTopOf="@id/headerbox" />
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/headerbox"
+                    app:cardBackgroundColor="@color/darkerwhite"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp"
+                    app:cardMaxElevation="17dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_baseline_fastfood_24" />
+                    <LinearLayout
+                        android:id="@+id/layoutFoodNo"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/headerbox">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Food Item" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_baseline_fastfood_24" />
 
-                    <TextView
-                        android:id="@+id/foodNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="21dp"
-                        android:text="0"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Food Item" />
 
-                <!--Display Number of category-->
+                        <TextView
+                            android:id="@+id/foodNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="21dp"
+                            android:text="0"
+                            android:textColor="@color/black"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
-                <!--Display Number of locations-->
-                <LinearLayout
-                    android:id="@+id/layoutCategoryNo"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintLeft_toLeftOf="@id/layoutFoodNo"
-                    app:layout_constraintRight_toRightOf="@id/layoutLocationNo"
-                    app:layout_constraintTop_toBottomOf="@+id/welcome">
+                    <LinearLayout
+                        android:id="@+id/layoutCategoryNo"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintLeft_toLeftOf="@id/layoutFoodNo"
+                        app:layout_constraintRight_toRightOf="@id/layoutLocationNo"
+                        app:layout_constraintTop_toBottomOf="@+id/welcome">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_baseline_category_24" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_baseline_category_24" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Category"
-                        android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Category"
+                            android:textColor="@color/black" />
 
-                    <TextView
-                        android:id="@+id/categoryNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/categoryNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/black"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/layoutLocationNo"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/welcome">
 
-                </LinearLayout>
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_baseline_location_on_24" />
 
-                <LinearLayout
-                    android:id="@+id/layoutLocationNo"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/welcome">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Location"
+                            android:textColor="@color/black" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_baseline_location_on_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Location"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/locationNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/locationNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/black"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
 
 
-                </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.cardview.widget.CardView
