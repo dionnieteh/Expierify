@@ -28,7 +28,7 @@ public class AdapterUpcomingExpiry extends RecyclerView.Adapter<AdapterUpcomingE
     @NonNull
     @Override
     public AdapterUpcomingExpiry.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.upcomingexpiryitem, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.recyclerviewfooditem, parent, false);
         return new AdapterUpcomingExpiry.ViewHolder(v);
     }
 

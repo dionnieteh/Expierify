@@ -1,7 +1,6 @@
 package com.example.expierify;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,7 @@ public class ExpiredAdapter extends RecyclerView.Adapter<ExpiredAdapter.ExpiredV
     @NonNull
     @Override
     public ExpiredViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.expiredfooditem, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recyclerviewfooditem, parent, false);
         return new ExpiredAdapter.ExpiredViewHolder(view);
     }
 
@@ -61,7 +60,9 @@ public class ExpiredAdapter extends RecyclerView.Adapter<ExpiredAdapter.ExpiredV
             if (food.getUserID().equals(userID)) { // Check if food userID matches current user's ID
                 try {
                     Date expiryDate = sdf.parse(food.getExpiry());
-                    expiryList.add(expiryDate);
+                    if (!expiryList.contains(expiryDate)) { // Check if expiryList already contains the expiry date
+                        expiryList.add(expiryDate);
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -86,7 +87,8 @@ public class ExpiredAdapter extends RecyclerView.Adapter<ExpiredAdapter.ExpiredV
                 }
             }
         }
-        foodList = sortedFoodList;
+        foodList.clear(); // clear the previous food items
+        foodList.addAll(sortedFoodList); // add the sorted food items to the foodList
         notifyDataSetChanged();
     }
 
