@@ -29,7 +29,6 @@
                 android:id="@+id/foodImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/bell"
                 android:layout_gravity="center_vertical|start"
                 android:layout_marginLeft="20dp"/>
 
