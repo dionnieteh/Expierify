@@ -42,12 +42,13 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
     private Context context;
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private String userID = currentUser.getUid();
+    private String title;
 
-    public AdapterSubCategory(ArrayList<Food> foodList, Context context, ArrayList<String> foodIDList) {
+    public AdapterSubCategory(ArrayList<Food> foodList, Context context, ArrayList<String> foodIDList, String title) {
         this.foodList = foodList;
         this.context = context;
         this.foodIDList = foodIDList;
-
+        this.title = title;
     }
 
     @Override
@@ -61,13 +62,16 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
         if (foodList != null && foodIDList != null && !foodList.isEmpty() && !foodIDList.isEmpty() && foodIDList.size() > position) {
             String foodID = foodIDList.get(position);
             Food food = foodList.get(position);
-            holder.foodNameTextView.setText(food.getName());
-            holder.expiryDateTextView.setText(food.getExpiry());
-            String imageUrl = food.getImage(); // Get the image URL from the food object
-            Glide.with(context)
-                    .load(imageUrl) // Load the image using Glide
-                    .placeholder(R.drawable.placeholderimg) // Set a placeholder image while the actual image is loading
-                    .into(holder.foodImageView); // Set the image in the ImageView
+            if (title.equals(food.getCategory())) {
+                holder.foodNameTextView.setText(food.getName());
+                holder.expiryDateTextView.setText(food.getExpiry());
+                String imageUrl = food.getImage(); // Get the image URL from the food object
+                Glide.with(context)
+                        .load(imageUrl) // Load the image using Glide
+                        .placeholder(R.drawable.placeholderimg) // Set a placeholder image while the actual image is loading
+                        .into(holder.foodImageView); // Set the image in the ImageView
+            }
+
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

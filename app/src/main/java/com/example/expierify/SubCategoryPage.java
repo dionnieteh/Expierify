@@ -68,7 +68,7 @@ public class SubCategoryPage extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         foodList = new ArrayList<>();
-        adapter = new AdapterSubCategory(foodList, this, foodIDs);
+        adapter = new AdapterSubCategory(foodList, this, foodIDs, category);
         recyclerView.setAdapter(adapter);
 
 
@@ -77,6 +77,7 @@ public class SubCategoryPage extends AppCompatActivity {
             // Get a reference to the delete button
             deleteBtn.setVisibility(View.GONE);
         }
+
 
 
 

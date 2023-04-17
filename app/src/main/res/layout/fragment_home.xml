@@ -205,7 +205,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@id/dashboard"
                 android:layout_marginBottom="10dp"
                 app:cardBackgroundColor="@color/darkerwhite"
@@ -214,10 +214,9 @@
                 app:cardMaxElevation="17dp"
                 app:cardPreventCornerOverlap="true">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
@@ -244,10 +243,6 @@
 
                     </LinearLayout>
 
-
-
-
-
                     <!--today category-->
                     <TextView
                         android:id="@+id/todayCategory"
@@ -257,52 +252,53 @@
                         android:text="Expiring Today"
                         android:textSize="20dp"
                         android:textStyle="bold"/>
+
                     <!--Today Expires-->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:layout_marginTop="20dp">
 
-                        <LinearLayout
+                        <androidx.core.widget.NestedScrollView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/todayExpiryList"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"/>
-
-
-
-                        <!--Upcoming category-->
-                        <TextView
-                            android:id="@+id/upcomingCategory"
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/UpcomingWord"
-                            android:textSize="20dp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="20dp"/>
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent">
 
-                        <!--Upcoming Expires-->
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/upcomingExpiryList"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                android:scrollbars="none"/>
+                                android:orientation="vertical">
 
-                        </LinearLayout>
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/todayExpiryList"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                                <!--Upcoming category-->
+                                <TextView
+                                    android:id="@+id/upcomingCategory"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="@string/UpcomingWord"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold"
+                                    android:layout_marginBottom="20dp"/>
+
+                                <!--Upcoming Expires-->
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/upcomingExpiryList"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                            </LinearLayout>
+
+                        </androidx.core.widget.NestedScrollView>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
