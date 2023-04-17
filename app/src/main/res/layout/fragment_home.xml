@@ -54,12 +54,13 @@
                     android:id="@+id/tipsBtn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
                     android:background="@null"
                     android:src="@drawable/ic_baseline_lightbulb_24"
                     app:layout_constraintBottom_toBottomOf="@+id/welcome"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toTopOf="@+id/welcome"
-                    app:layout_constraintVertical_bias="0.666"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:ignore="MissingConstraints" />
 
                 <androidx.constraintlayout.widget.Guideline
@@ -121,7 +122,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:text="Food Item"
-                                android:textColor="@color/darkgreen"/>
+                                android:textColor="@color/lightgreen"/>
 
                             <TextView
                                 android:id="@+id/foodNo"
@@ -130,7 +131,7 @@
                                 android:text="0"
                                 android:textSize="20dp"
                                 android:textStyle="bold"
-                                android:textColor="@color/darkgreen"/>
+                                android:textColor="@color/lightgreen"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -155,14 +156,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:text="Category"
-                                android:textColor="@color/darkgreen"/>
+                                android:textColor="@color/lightgreen"/>
 
                             <TextView
                                 android:id="@+id/categoryNo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/darkgreen"
+                                android:textColor="@color/lightgreen"
                                 android:textSize="20dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -187,14 +188,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:text="Location"
-                                android:textColor="@color/darkgreen" />
+                                android:textColor="@color/lightgreen" />
 
                             <TextView
                                 android:id="@+id/locationNo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/darkgreen"
+                                android:textColor="@color/lightgreen"
                                 android:textSize="20dp"
                                 android:textStyle="bold" />
 
@@ -251,6 +252,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:text="Expiring Today"
+                        android:textColor="@color/lightgreen"
                         android:textSize="20dp"
                         android:textStyle="bold"/>
 
@@ -287,6 +289,7 @@
                                     android:layout_marginTop="20dp"
                                     android:text="@string/UpcomingWord"
                                     android:textSize="20dp"
+                                    android:textColor="@color/lightgreen"
                                     android:textStyle="bold"
                                     android:layout_marginBottom="20dp"/>
 
