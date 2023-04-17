@@ -1,6 +1,7 @@
 package com.example.expierify;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,7 +39,9 @@ public class SubLabelPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_label_page);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.action_bar_custom);
         ImageButton backBtn= (ImageButton)findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +91,7 @@ public class SubLabelPage extends AppCompatActivity {
             emptyfoodlist.setText(message);
 
         } else {
-            Query query = foodRef.orderByChild("foodId").startAt(foodIDs.get(0)).endAt(foodIDs.get(foodIDs.size() - 1));
+            Query query = foodRef.orderByChild("label").equalTo(label);
 
 
             // Add a listener to the query to retrieve the data
@@ -100,9 +103,8 @@ public class SubLabelPage extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             // Retrieve the Food object
                             Food food = snapshot.getValue(Food.class);
-
-                            // Add the Food object to the list
-                            foodList.add(food);
+                                // Add the Food object to the list
+                                foodList.add(food);
 
                         }
 
@@ -120,8 +122,6 @@ public class SubLabelPage extends AppCompatActivity {
                         String message = "There are no food items in this label";
                         emptyfoodlist.setText(message);
                     }
-
-
                 }
 
 
@@ -181,7 +181,6 @@ public class SubLabelPage extends AppCompatActivity {
                                         }
                                     });
                         }
-
                     }
 
                     @Override

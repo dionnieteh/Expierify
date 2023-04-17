@@ -41,13 +41,6 @@ public class ExpiredFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_expired, container, false);
-        ImageButton backBtn = view.findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();; // finish the current fragment
-            }
-        });
 
         TextView emptyfoodlist = view.findViewById(R.id.emptyfoodlist);
         recyclerView = view.findViewById(R.id.expireditemlist);
@@ -96,6 +89,9 @@ public class ExpiredFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 if(foodList.isEmpty()){
                     emptyfoodlist.setText("There is no expired food items.");
+                }
+                else{
+//                    Toast.makeText(getActivity(),""+String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -1,59 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profileFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FEF3EF"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="20dp"
     tools:context=".ProfileFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="20dp"
-        tools:context=".MainActivity"> <!--Scroll view-->
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/logOutBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:context=".MainActivity">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <!--Profile Header-->
                 <TextView
                     android:id="@+id/profileHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
                     android:text="@string/ProfileHeader"
-                    android:textColor="@color/black"
                     android:textSize="35sp"
                     android:textStyle="bold" />
-
-
-                <!--Edit Button-->
-                <ImageButton
-                    android:id="@+id/editBtn"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="5dp"
-                    android:background="@null"
-                    android:src="@drawable/ic_baseline_edit_24"
-                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <!--User Profile Picture-->
                 <RelativeLayout
                     android:id="@+id/section"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/profileHeader"
                     android:layout_marginTop="50dp"
                     android:gravity="center">
@@ -67,7 +54,6 @@
 
                 </RelativeLayout>
 
-
                 <!--Name Header -->
                 <TextView
                     android:id="@+id/UserName"
@@ -76,10 +62,8 @@
                     android:layout_below="@+id/section"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
                     android:textSize="25sp"
                     android:textStyle="bold" />
-
 
                 <!--Email Header -->
                 <TextView
@@ -97,84 +81,34 @@
                     android:id="@+id/emailProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/UserName"
-                    android:layout_alignParentRight="true"
                     android:layout_marginTop="40dp"
                     android:textSize="25dp" />
-
-
-                <!--Allergens Header -->
-                <TextView
-                    android:id="@+id/allergenHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/emailHeader"
-                    android:layout_marginTop="40dp"
-                    android:text="@string/Allergens"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
-
-                <!--Allergen  -->
-                <EditText
-                    android:id="@+id/editAllergen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/allergenHeader"
-                    android:hint="What are you allergic to?"
-                    android:inputType="text"
-                    android:maxLines="2"
-                    android:visibility="invisible"
-                    android:textSize="25dp" />
-
-                <TextView
-                    android:id="@+id/allergen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/allergenHeader"
-                    android:visibility="visible"
-                    android:textSize="25dp" />
-
-                <!--Save Edit Button-->
-                <Button
-                    android:id="@+id/saveBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/allergen"
-                    android:layout_centerInParent="true"
-                    android:backgroundTint="#FCA99B"
-                    android:padding="10dp"
-                    android:radius="30dp"
-                    android:layout_marginTop="50dp"
-                    android:text="Save"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:visibility="invisible" />
-
-                <!--Log Out Button-->
-                <Button
-                    android:id="@+id/logOutBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/allergen"
-                    android:layout_centerInParent="true"
-                    android:backgroundTint="#BDBDC1"
-                    android:drawableLeft="@drawable/ic_google_logo"
-                    android:drawablePadding="10dp"
-                    android:padding="10dp"
-                    android:radius="30dp"
-                    android:text="Sign Out"
-                    android:layout_marginTop="50dp"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
-
             </RelativeLayout>
 
-        </LinearLayout>
-    </ScrollView>
 
-</FrameLayout>
+        </LinearLayout>
+
+    </ScrollView>
+    <!--Log Out Button-->
+    <Button
+        android:id="@+id/logOutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_google_logo"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:radius="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="Sign Out"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5c585"
+    android:background="#255A4B"
     tools:context=".HomeFragment">
 
 
@@ -23,149 +23,196 @@
             android:orientation="vertical">
 
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/dashboard"
+                android:id="@+id/headerbox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp">
-
+                android:layout_height="64dp"
+                app:layout_constraintBottom_toTopOf="@+id/cardView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <!--Welcome Header-->
+
+
+                <!--Display Number of food product-->
+
                 <TextView
                     android:id="@+id/welcome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:layout_margin="20dp"
                     android:text="@string/Greeting"
-                    android:textColor="@color/black"
+                    android:textColor="@color/lighterwhite"
                     android:textSize="30sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
-                <!--Notification Button-->
                 <ImageButton
-                    android:id="@+id/notificationBtn"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:id="@+id/tipsBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="@null"
-                    android:onClick="notification"
-                    android:src="@drawable/bell"
-                    app:layout_constraintEnd_toEndOf="@id/dashboard"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:src="@drawable/ic_baseline_lightbulb_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/welcome"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toTopOf="@+id/welcome"
+                    app:layout_constraintVertical_bias="0.666"
+                    tools:ignore="MissingConstraints" />
 
-                <!--Display Number of food product-->
-                <LinearLayout
-                    android:id="@+id/layoutFoodNo"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@+id/welcome"
+                    app:layout_constraintGuide_begin="337dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/darkerwhite"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_baseline_fastfood_24" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:padding="10dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Food Item" />
+                        <LinearLayout
+                            android:id="@+id/layoutFoodNo"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:ignore="MissingConstraints">
 
-                    <TextView
-                        android:id="@+id/foodNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="21dp"
-                        android:text="0"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_baseline_fastfood_24" />
 
-                <!--Display Number of category-->
-                <LinearLayout
-                    android:id="@+id/layoutCategoryNo"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/welcome">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Food Item"
+                                android:textColor="@color/darkgreen"/>
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_baseline_category_24" />
+                            <TextView
+                                android:id="@+id/foodNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="20dp"
+                                android:textStyle="bold"
+                                android:textColor="@color/darkgreen"/>
+                        </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Category" />
+                        <LinearLayout
+                            android:id="@+id/layoutCategoryNo"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintHorizontal_bias="0.498"
+                            app:layout_constraintLeft_toLeftOf="@id/layoutFoodNo"
+                            app:layout_constraintRight_toRightOf="@id/layoutLocationNo"
+                            tools:ignore="MissingConstraints"
+                            tools:layout_editor_absoluteY="0dp">
 
-                    <TextView
-                        android:id="@+id/categoryNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_baseline_category_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Category"
+                                android:textColor="@color/darkgreen"/>
+
+                            <TextView
+                                android:id="@+id/categoryNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@color/darkgreen"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutLocationNo"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:ignore="MissingConstraints">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_baseline_location_on_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Location"
+                                android:textColor="@color/darkgreen" />
+
+                            <TextView
+                                android:id="@+id/locationNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@color/darkgreen"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
 
 
-                </LinearLayout>
-
-                <!--Display Number of locations-->
-                <LinearLayout
-                    android:id="@+id/layoutLocationNo"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="@+id/dashboard"
-                    app:layout_constraintTop_toBottomOf="@+id/welcome">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_baseline_location_on_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Location" />
-
-                    <TextView
-                        android:id="@+id/locationNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dashboard"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="@color/darkerwhite"
+                app:cardCornerRadius="40dp"
                 app:cardElevation="10dp"
-                app:cardMaxElevation="12dp"
+                app:cardMaxElevation="17dp"
                 app:cardPreventCornerOverlap="true">
 
 
@@ -176,7 +223,9 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:paddingTop="20dp"
-                    android:paddingBottom="20dp">
+                    android:paddingBottom="20dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/darkerwhite">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -192,18 +241,10 @@
                             android:textSize="30sp"
                             android:layout_marginTop="10dp"
                             android:textStyle="bold"
-                            android:textColor="@color/black"/>
-
-                        <ImageButton
-                            android:id="@+id/tipsBtn"
-                            android:layout_marginTop="10dp"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:background="@null"
-                            android:src="@drawable/ic_baseline_lightbulb_24"
-                            />
+                            android:textColor="@color/darkgreen"/>
 
                     </LinearLayout>
+
 
 
 
@@ -264,7 +305,6 @@
 
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

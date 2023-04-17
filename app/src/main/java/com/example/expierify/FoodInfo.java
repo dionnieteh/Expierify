@@ -328,7 +328,6 @@ public class FoodInfo extends AppCompatActivity{
                     }
                 });
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
@@ -350,6 +349,7 @@ public class FoodInfo extends AppCompatActivity{
                 // Call the deleteFoodRecord() method to delete the record
                 deleteFoodRecord(foodId);
                 dialog.dismiss(); // Dismiss the dialog
+
                 finish();
 
             }

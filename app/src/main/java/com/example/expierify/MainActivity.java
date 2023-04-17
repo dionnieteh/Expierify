@@ -2,20 +2,18 @@ package com.example.expierify;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.expierify.databinding.ActivityMainBinding;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,53 +24,60 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String CHANNEL_ID = "channel_id";
     private static final int NOTIFICATION_ID = 1;
+    private ExpiredAdapter adapter;
+    private RecyclerView mRecyclerView;
+    private ArrayList<Food> foodList;
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
+    ActivityMainBinding binding;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.action_bar_custom);
 
         FirebaseApp.initializeApp(this);
-        ActivityMainBinding binding;
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment()); //Home will be open when application is on
-
+        getExpiredCount(binding);
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
                     replaceFragment(new HomeFragment());
                     break;
-                case R.id.category:
+                case R.id.labels:
                     replaceFragment(new SortFragment());
                     break;
-                case R.id.camera:
+                case R.id.add:
                     //replaceFragment(new CameraFragment());
                     Intent intent = new Intent(MainActivity.this, AddProductPage.class);
                     startActivity(intent);
                     break;
-                case R.id.tags:
+                case R.id.expired:
                     replaceFragment(new ExpiredFragment());
                     break;
                 case R.id.profile:
@@ -116,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, SignIn.class));
             }
         });
+
+
 
 
         //Notification
@@ -175,6 +182,61 @@ public class MainActivity extends AppCompatActivity {
                 });*/
 
     }
+    public void getExpiredCount(ActivityMainBinding binding) {
+        // initialize the RecyclerView and adapter
+        mRecyclerView = findViewById(R.id.expireditemlist);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        foodList = new ArrayList<>();
+        adapter = new ExpiredAdapter(this, foodList);
+        // set the adapter for the RecyclerView
+        mRecyclerView.setAdapter(adapter);
+
+        Date todayDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
+        String dateString = dateFormat.format(todayDate);
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Food");
+        Query foodRef = database.orderByChild("userID").equalTo(userID);
+
+        foodRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foodList.clear(); // clear previous list
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    Food food = categorySnapshot.getValue(Food.class);
+                    String expiryDate = food.getExpiry();
+                    try {
+                        Date todayDate = new Date();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
+                        Date expiryDateObj = dateFormat.parse(expiryDate);
+                        // Calculate the date one day before today
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(todayDate);
+                        cal.add(Calendar.DATE, -1);
+                        Date oneDayBefore = cal.getTime();
+
+                        if (expiryDateObj.before(oneDayBefore)) {
+                            foodList.add(food);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                // An icon only badge will be displayed unless a number is set:
+                if(adapter.getItemCount()>0){
+                    BadgeDrawable badge = MainActivity.this.binding.bottomNavigationView.getOrCreateBadge(R.id.expired);
+                    badge.setVisible(true);
+                    badge.setNumber(adapter.getItemCount());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
 
 
 

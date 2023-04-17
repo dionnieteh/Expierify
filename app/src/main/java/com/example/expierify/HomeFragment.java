@@ -141,7 +141,6 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 myAdapter2.notifyDataSetChanged();
-
             }
 
 
@@ -224,15 +223,7 @@ public class HomeFragment extends Fragment {
         //PRESENT DATE END
 
         //enter new activity with notification (bell) button
-        ImageButton notificationBtn = (ImageButton) view.findViewById(R.id.notificationBtn);
-        notificationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeFragment.this.getActivity(),  NotificationPage.class));
-            }
 
-
-        });
 
         //Tips button
         ImageButton tipsBtn = (ImageButton) view.findViewById(R.id.tipsBtn);

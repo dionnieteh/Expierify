@@ -44,8 +44,6 @@ public class ProfileFragment extends Fragment {
     private Button logOutButton;
     private Button saveBtn;
     private ImageButton editBtn;
-    private EditText editAllergen;
-    private TextView allergen;
     FirebaseAuth mAuth;
     public ProfileFragment() {
         // Required empty public constructor
@@ -101,7 +99,6 @@ public class ProfileFragment extends Fragment {
             ImageView profPic = view.findViewById(R.id.UserPicture);
             // Load the image from a URL using Picasso
             Picasso.get().load(photoUrl).into(profPic);
-
         }
 
         logOutButton = view.findViewById(R.id.logOutBtn);
@@ -129,47 +126,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        editBtn = view.findViewById(R.id.editBtn);
-        allergen = view.findViewById(R.id.allergen);
-        editAllergen = view.findViewById(R.id.editAllergen);
-        saveBtn = view.findViewById(R.id.saveBtn);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users");
-        String userId = user.getUid();
-        myRef.child(userId).child("allergen").addValueEventListener(new ValueEventListener() {
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String allergenValue = dataSnapshot.getValue(String.class);
-                if (allergenValue != null) {
-                    allergen.setText(allergenValue);
-                }
-            }
-
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle database error
-                Toast.makeText(getActivity(), "Failed to add into database.", Toast.LENGTH_SHORT).show();
-            }
-
-        });
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                logOutButton.setVisibility(View.INVISIBLE);
-                editAllergen.setVisibility(View.VISIBLE);
-                saveBtn.setVisibility(View.VISIBLE);
-                allergen.setVisibility(View.INVISIBLE);
-                saveBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String newAllergen = editAllergen.getText().toString().trim();
-                        myRef.child(userId).child("allergen").setValue(newAllergen);
-                        editAllergen.setVisibility(View.INVISIBLE);
-                        allergen.setVisibility(View.VISIBLE);
-                        saveBtn.setVisibility(View.INVISIBLE);
-                        logOutButton.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-        });
-        // Inflate the layout for this fragment
-        return view;
+            // Inflate the layout for this fragment
+            return view;
     }
 }

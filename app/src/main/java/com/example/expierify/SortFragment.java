@@ -2,6 +2,7 @@ package com.example.expierify;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -49,10 +50,12 @@ public class SortFragment extends Fragment {
         // Hide LabelFragment container
         view.findViewById(R.id.fragmentContainerView7).setVisibility(View.GONE);
 
-
+        Button labelBtn = view.findViewById(R.id.labelBtn);
         Button categBtn = view.findViewById(R.id.categBtn);
         categBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                labelBtn.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.lightgreen)));
+                categBtn.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.darkgreen)));
                 FragmentManager fragmentManager = getChildFragmentManager();
                 if (!isCategoryFragmentVisible) {
                     // Hide LabelFragment container
@@ -69,9 +72,10 @@ public class SortFragment extends Fragment {
             }
         });
 
-        Button labelBtn = view.findViewById(R.id.labelBtn);
         labelBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                categBtn.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.lightgreen)));
+                labelBtn.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.darkgreen)));
                 FragmentManager fragmentManager = getChildFragmentManager();
                 if (!isLabelFragmentVisible) {
                     // Hide CategoryFragment container

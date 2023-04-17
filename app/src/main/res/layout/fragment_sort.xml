@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FEF3EF"
+    android:background="@color/darkerwhite"
     android:orientation="vertical"
     android:paddingTop="20dp"
     tools:context=".SortFragment">
@@ -15,7 +15,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FEF3EF"
         android:orientation="horizontal">
 
         <Button
@@ -23,19 +22,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="#C2A3BC"
             android:text="Category"
-            android:textColor="#000"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:textColor="@color/lighterwhite"/>
 
         <Button
             android:id="@+id/labelBtn"
+            android:backgroundTint="@color/lightgreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="#C2A3BC"
             android:text="Location"
-            android:textColor="#000" />
+            android:textColor="@color/lighterwhite"/>
 
 
 
@@ -45,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:background="#FEF3EF"
+        android:background="@color/darkerwhite"
         android:orientation="vertical">
 
         <androidx.fragment.app.FragmentContainerView

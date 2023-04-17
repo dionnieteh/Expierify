@@ -10,7 +10,6 @@
     android:paddingBottom="20dp"
     tools:context=".AddCategoryPage">
 
-
     <!--Back Button-->
     <ImageButton
         android:layout_width="wrap_content"
@@ -73,6 +72,7 @@
         android:layout_alignParentEnd="true"
         android:textSize="20dp"
         android:onClick="save"
+        android:textColor="@color/lighterwhite"
         />
 
 </RelativeLayout>

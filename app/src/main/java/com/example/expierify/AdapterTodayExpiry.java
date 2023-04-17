@@ -29,7 +29,7 @@ public class AdapterTodayExpiry extends RecyclerView.Adapter<AdapterTodayExpiry.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.todayexpiryitem, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.recyclerviewfooditem, parent, false);
         return new AdapterTodayExpiry.ViewHolder(v);
     }
 

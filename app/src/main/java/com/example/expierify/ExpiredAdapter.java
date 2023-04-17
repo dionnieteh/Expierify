@@ -37,7 +37,7 @@ public class ExpiredAdapter extends RecyclerView.Adapter<ExpiredAdapter.ExpiredV
     @NonNull
     @Override
     public ExpiredViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.expiredfooditem, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recyclerviewfooditem, parent, false);
         return new ExpiredAdapter.ExpiredViewHolder(view);
     }
 
@@ -53,6 +53,32 @@ public class ExpiredAdapter extends RecyclerView.Adapter<ExpiredAdapter.ExpiredV
                     .placeholder(R.drawable.placeholderimg) // Set a placeholder image while the actual image is loading
                     .into(holder.foodImageView); // Set the image in the ImageView
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getAdapterPosition();
+                Food food = foodList.get(pos);
+                String foodName = food.getName();
+                String foodId = food.getFoodId();
+                String desc = food.getDesc();
+                String expiry = food.getExpiry();
+                String category = food.getCategory();
+                String label = food.getLabel();
+                String imageUrl = food.getImage();
+
+                Intent intent = new Intent(context, FoodInfo.class);
+                intent.putExtra("foodName", foodName);
+                intent.putExtra("foodId", foodId);
+                intent.putExtra("desc", desc);
+                intent.putExtra("expiry", expiry);
+                intent.putExtra("category", category);
+                intent.putExtra("label", label);
+                intent.putExtra("imageUrl", imageUrl);
+                context.startActivity(intent);
+            }
+        });
+
     }
     public void sortExpiryDateAscending() {
         ArrayList<Date> expiryList = new ArrayList<>();
@@ -61,7 +87,9 @@ public class ExpiredAdapter extends RecyclerView.Adapter<ExpiredAdapter.ExpiredV
             if (food.getUserID().equals(userID)) { // Check if food userID matches current user's ID
                 try {
                     Date expiryDate = sdf.parse(food.getExpiry());
-                    expiryList.add(expiryDate);
+                    if (!expiryList.contains(expiryDate)) { // Check if expiryList already contains the expiry date
+                        expiryList.add(expiryDate);
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -86,7 +114,8 @@ public class ExpiredAdapter extends RecyclerView.Adapter<ExpiredAdapter.ExpiredV
                 }
             }
         }
-        foodList = sortedFoodList;
+        foodList.clear(); // clear the previous food items
+        foodList.addAll(sortedFoodList); // add the sorted food items to the foodList
         notifyDataSetChanged();
     }
 
