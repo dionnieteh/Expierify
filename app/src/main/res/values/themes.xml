@@ -5,16 +5,14 @@
         <item name="colorPrimary">@color/darkgreen</item>
         <item name="colorOnPrimary">@color/lighterwhite</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/darkgreen</item>
+        <item name="colorSecondary">@color/lightgreen</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/black</item>
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/latoregular</item>
         <item name="android:textColorPrimary">@color/black</item>
-
         <!-- Change the color of the icons and text in the ActionBar to orange -->
-        <item name="android:textColorSecondary">@color/orange</item>
-
+        <item name="android:textColorSecondary">@color/lightgreen</item>
     </style>
 </resources>

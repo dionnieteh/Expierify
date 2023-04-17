@@ -10,7 +10,6 @@
     android:paddingBottom="20dp"
     tools:context=".AddCategoryPage">
 
-
     <!--Back Button-->
     <ImageButton
         android:layout_width="wrap_content"
