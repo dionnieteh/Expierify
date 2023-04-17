@@ -1,6 +1,7 @@
 package com.example.expierify;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,32 @@ public class ExpiredAdapter extends RecyclerView.Adapter<ExpiredAdapter.ExpiredV
                     .placeholder(R.drawable.placeholderimg) // Set a placeholder image while the actual image is loading
                     .into(holder.foodImageView); // Set the image in the ImageView
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getAdapterPosition();
+                Food food = foodList.get(pos);
+                String foodName = food.getName();
+                String foodId = food.getFoodId();
+                String desc = food.getDesc();
+                String expiry = food.getExpiry();
+                String category = food.getCategory();
+                String label = food.getLabel();
+                String imageUrl = food.getImage();
+
+                Intent intent = new Intent(context, FoodInfo.class);
+                intent.putExtra("foodName", foodName);
+                intent.putExtra("foodId", foodId);
+                intent.putExtra("desc", desc);
+                intent.putExtra("expiry", expiry);
+                intent.putExtra("category", category);
+                intent.putExtra("label", label);
+                intent.putExtra("imageUrl", imageUrl);
+                context.startActivity(intent);
+            }
+        });
+
     }
     public void sortExpiryDateAscending() {
         ArrayList<Date> expiryList = new ArrayList<>();
