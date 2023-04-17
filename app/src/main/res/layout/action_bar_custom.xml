@@ -2,12 +2,10 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/darkgreen"
-    android:orientation="horizontal"
-    >
+    android:orientation="horizontal">
 
     <ImageView
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:src="@drawable/logo" />
-
 </LinearLayout>
