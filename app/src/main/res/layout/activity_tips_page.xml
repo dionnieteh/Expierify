@@ -36,30 +36,23 @@
 
     <Button
         android:id="@+id/prevBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="Previous"
-        android:paddingRight="50dp"
-        android:paddingLeft="50dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/lightgreen"
         />
 
     <Button
         android:id="@+id/nextBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="Next"
-        android:paddingRight="50dp"
-        android:paddingLeft="50dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="40dp"
         />
 
     <androidx.viewpager2.widget.ViewPager2
@@ -72,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_below="@id/tipsHeader"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="40dp"/>
 
 
 
