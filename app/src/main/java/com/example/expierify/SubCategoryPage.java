@@ -108,9 +108,9 @@ public class SubCategoryPage extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             // Retrieve the Food object
                             Food food = snapshot.getValue(Food.class);
-                                foodList.add(food);
+                            foodList.add(food);
 
-                                foodNames.add(food.getName());
+                            foodNames.add(food.getName());
                         }
 
                         adapter.sortExpiryDateAscending();

@@ -52,8 +52,8 @@ public class TipsPage extends AppCompatActivity {
 
             viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-            Button prevBtn = (Button) findViewById(R.id.prevBtn);
-            prevBtn.setOnClickListener(new View.OnClickListener() {
+            Button nextBtn = (Button) findViewById(R.id.nextBtn);
+            nextBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (viewPager2.getCurrentItem() < viewPagerItemArrayList.size() - 1) {
@@ -62,8 +62,8 @@ public class TipsPage extends AppCompatActivity {
                 }
             });
 
-            Button nextBtn = findViewById(R.id.nextBtn);
-           nextBtn.setOnClickListener(new View.OnClickListener() {
+            Button prevBtn = findViewById(R.id.prevBtn);
+            prevBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (viewPager2.getCurrentItem() > 0) {
