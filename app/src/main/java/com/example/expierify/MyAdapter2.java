@@ -74,7 +74,7 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
                                 LocalDate expiry = LocalDate.parse(expiryDate, formatter);
                                 LocalDate today = LocalDate.now();
-                                if (expiry.isAfter(today)) {
+                                if (expiry.isAfter(today) || expiry.isEqual(today)) {
                                     foodIDs.add(foodID);
                                     labelTitle.add(mainLabel);
                                 }
