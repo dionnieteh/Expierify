@@ -59,7 +59,16 @@ public class AddCategoryPage extends AppCompatActivity {
     }
 
     private void insertCategory(){
-        String cName = categoryName.getText().toString();
+        String name = categoryName.getText().toString();
+        String[] words = name.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            sb.append(Character.toUpperCase(word.charAt(0)));
+            sb.append(word.substring(1)).append(" ");
+        }
+        String cName = sb.toString().trim();
+
+
         if (cName.isEmpty()){
             categoryName.setError("This field cannot be empty");
         }else{
@@ -82,6 +91,16 @@ public class AddCategoryPage extends AppCompatActivity {
         
 
     }
+    public static String toUpperCamelCase(String str) {
+        String[] words = str.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            sb.append(Character.toUpperCase(word.charAt(0)));
+            sb.append(word.substring(1).toLowerCase());
+        }
+        return sb.toString();
+    }
+
 
 
 

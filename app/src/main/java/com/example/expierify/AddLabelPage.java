@@ -60,7 +60,14 @@ public class AddLabelPage extends AppCompatActivity {
     }
 
     private void insertLabel(){
-        String lName = labelName.getText().toString();
+        String name = labelName.getText().toString();
+        String[] words = name.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            sb.append(Character.toUpperCase(word.charAt(0)));
+            sb.append(word.substring(1)).append(" ");
+        }
+        String lName = sb.toString().trim();
         if (lName.isEmpty()){
             labelName.setError("This field cannot be empty");
         }else{
