@@ -54,10 +54,10 @@
                     android:id="@+id/tipsBtn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
                     android:background="@null"
                     android:src="@drawable/ic_baseline_lightbulb_24"
-                    app:layout_constraintBottom_toBottomOf="@+id/welcome"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toTopOf="@+id/welcome"
                     app:layout_constraintVertical_bias="0.0"
@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_begin="337dp" />
+                    app:layout_constraintGuide_begin="310dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

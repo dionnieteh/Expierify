@@ -97,7 +97,7 @@ public class FoodInfo extends AppCompatActivity{
             InputFilter[] limitTitle = new InputFilter[] {new ExactLengthFilter(18)};
             titleEdit.setFilters(limitTitle);
             descLabelEdit = findViewById(R.id.descLabelEdit);
-            InputFilter[] limitDesc = new InputFilter[] {new ExactLengthFilter(51)};
+            InputFilter[] limitDesc = new InputFilter[] {new ExactLengthFilter(48)};
             descLabelEdit.setFilters(limitDesc);
             newLocation= findViewById(R.id.newLocation);
             newCategory= findViewById(R.id.newCategory);
