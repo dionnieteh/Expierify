@@ -30,18 +30,6 @@
             android:layout_marginLeft="80dp"
             tools:ignore="MissingConstraints" />
 
-        <Button
-            android:id="@+id/sign_out_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:drawableLeft="@drawable/ic_google_logo"
-            android:drawablePadding="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="sign_out"
-            android:visibility="gone" />
-
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

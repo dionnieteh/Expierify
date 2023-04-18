@@ -74,6 +74,7 @@ public class FoodInfo extends AppCompatActivity{
             String category = intent.getStringExtra("category");
             String label = intent.getStringExtra("label");
             String imageUrl = intent.getStringExtra("imageUrl");
+            int position = getIntent().getIntExtra("position", -1);
 
             // Initialize the TextView and ImageView variables
             foodTitle = findViewById(R.id.title);
@@ -372,7 +373,7 @@ public class FoodInfo extends AppCompatActivity{
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if (error == null) {
-                    // Record deleted successfully
+
                     Log.d(TAG, "deleteFoodRecord: Record deleted successfully.");
                 } else {
                     // Failed to delete record
@@ -381,5 +382,7 @@ public class FoodInfo extends AppCompatActivity{
             }
         });
     }
+
+
 
 }

@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,8 +70,14 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
                             String label = snapshot.child("label").getValue(String.class);
                             if (label != null && label.equals(mainLabel)) {
                                 String foodID = snapshot.getKey();
-                                foodIDs.add(foodID);
-                                labelTitle.add(mainLabel);
+                                String expiryDate = snapshot.child("expiry").getValue(String.class);
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+                                LocalDate expiry = LocalDate.parse(expiryDate, formatter);
+                                LocalDate today = LocalDate.now();
+                                if (expiry.isAfter(today)) {
+                                    foodIDs.add(foodID);
+                                    labelTitle.add(mainLabel);
+                                }
                             }
                         }
                         Intent intent = new Intent(context, SubLabelPage.class);

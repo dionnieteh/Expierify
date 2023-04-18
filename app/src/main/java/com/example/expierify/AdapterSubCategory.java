@@ -40,8 +40,7 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
     private ArrayList<Food> foodList;
     private ArrayList<String> foodIDList;
     private Context context;
-    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-    private String userID = currentUser.getUid();
+    private ArrayList<Date> expiryList;
 
     public AdapterSubCategory(ArrayList<Food> foodList, Context context, ArrayList<String> foodIDList) {
         this.foodList = foodList;
@@ -94,7 +93,6 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
                 context.startActivity(intent);
             }
         });
-
     }
 
     public void sortExpiryDateAscending() {
@@ -109,7 +107,7 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.DAY_OF_MONTH, -1);
-        Date today= calendar.getTime();
+        Date today = calendar.getTime();
 
 
         for (Food food : foodList) {
@@ -132,7 +130,7 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
             for (Food food : foodList) {
                 if (food.getUserID().equals(currentUser.getUid())) { // Check if food userID matches current user's ID
                     String expiryDateString = food.getExpiry();
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
                     try {
                         Date foodExpiryDate = dateFormat.parse(expiryDateString);
                         if (foodExpiryDate.equals(expiryDate) && !addedFoods.contains(food.getFoodId()) && foodExpiryDate.after(today)) { // Check if expiry date is after today's date
@@ -148,7 +146,6 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
         }
         foodList = sortedFoodList;
         foodIDList = sortedFoodIDList;
-        notifyDataSetChanged();
     }
 
 
