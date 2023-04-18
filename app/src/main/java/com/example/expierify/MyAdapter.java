@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,6 +42,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return new MyViewHolder(v);
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         CategoryClass category = categoryList.get(position);
@@ -64,11 +65,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String mainCategory = category.getcName(); // get the category name
                         ArrayList<String> foodIDs = new ArrayList<>();
-                        ArrayList<String> categoryTitle = new ArrayList<>(); // declare and initialize categoryTitle
+                        ArrayList<String> categoryTitle = new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             String category = snapshot.child("category").getValue(String.class);
                             if (category != null && category.equals(mainCategory)) {
                                 String foodID = snapshot.getKey();
+                                foodIDs.add(foodID);
                                 String expiryDate = snapshot.child("expiry").getValue(String.class);
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
                                 LocalDate expiry = LocalDate.parse(expiryDate, formatter);

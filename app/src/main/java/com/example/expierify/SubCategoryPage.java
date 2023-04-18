@@ -104,13 +104,13 @@ public class SubCategoryPage extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         foodList.clear();
-                        ArrayList<String> foodNames = new ArrayList<String>(); // Create a new ArrayList to store unique food names
+                        //ArrayList<String> foodNames = new ArrayList<String>(); // Create a new ArrayList to store unique food names
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             // Retrieve the Food object
                             Food food = snapshot.getValue(Food.class);
                                 foodList.add(food);
 
-                                foodNames.add(food.getName());
+                                //foodNames.add(food.getName());
                         }
 
                         adapter.sortExpiryDateAscending();

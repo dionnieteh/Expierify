@@ -106,6 +106,7 @@ public class SubLabelPage extends AppCompatActivity {
                                 // Add the Food object to the list
                                 foodList.add(food);
 
+
                         }
 
                         adapter.sortExpiryDateAscending();

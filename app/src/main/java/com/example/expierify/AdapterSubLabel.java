@@ -130,7 +130,7 @@ public class AdapterSubLabel extends RecyclerView.Adapter<AdapterSubLabel.ViewHo
             for (Food food : foodList) {
                 if (food.getUserID().equals(currentUser.getUid())) { // Check if food userID matches current user's ID
                     String expiryDateString = food.getExpiry();
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
                     try {
                         Date foodExpiryDate = dateFormat.parse(expiryDateString);
                         if (foodExpiryDate.equals(expiryDate) && !addedFoods.contains(food.getFoodId()) && foodExpiryDate.after(today)) { // Check if expiry date is after today's date
