@@ -87,7 +87,7 @@ public class SubLabelPage extends AppCompatActivity {
 
         // Create a query to retrieve all the food items where the "foodId" is in the list of "foodIDs"
         if (foodIDs.isEmpty()) {
-            String message = "There are no food items in this label";
+            String message = "There are no food items in this location.";
             emptyfoodlist.setText(message);
 
         } else {
@@ -113,13 +113,13 @@ public class SubLabelPage extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
 
                         if (foodList.isEmpty()) {
-                            String message = "There are no food items in this label";
+                            String message = "There are no food items in this location.";
                             emptyfoodlist.setText(message);
 
                         }
 
                     } else {
-                        String message = "There are no food items in this label";
+                        String message = "There are no food items in this location.";
                         emptyfoodlist.setText(message);
                     }
                 }
@@ -127,7 +127,7 @@ public class SubLabelPage extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(getApplicationContext(), "Failed to get food products", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to get food products.", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -136,7 +136,7 @@ public class SubLabelPage extends AppCompatActivity {
 
     public void openDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to delete this label?");
+        builder.setMessage("Are you sure you want to delete this location?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -162,22 +162,22 @@ public class SubLabelPage extends AppCompatActivity {
                                                             for (DataSnapshot foodSnapshot : dataSnapshot.getChildren()) {
                                                                 String foodKey = foodSnapshot.getKey();
                                                                 foodRef.child(foodKey).child("label").setValue("Unlabeled");
-                                                                Toast.makeText(getApplicationContext(), "Label Deleted", Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
 
 
                                                         @Override
                                                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                            Log.e("Firebase", "Error getting foods with label: " + getIntent().getStringExtra("categoryTitle"), databaseError.toException());
+                                                            Log.e("Firebase", "Error getting food within this location: " + getIntent().getStringExtra("categoryTitle"), databaseError.toException());
                                                         }
                                                     });
+                                            Toast.makeText(getApplicationContext(), "Location deleted.", Toast.LENGTH_SHORT).show();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Log.e("Firebase", "Error removing label: " + getIntent().getStringExtra("categoryTitle"), e);
+                                            Log.e("Firebase", "Error removing location: " + getIntent().getStringExtra("categoryTitle"), e);
                                         }
                                     });
                         }
@@ -185,7 +185,7 @@ public class SubLabelPage extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(), "Failed to get label", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Failed to get location", Toast.LENGTH_SHORT).show();
                     }
                 });
                 dialog.dismiss(); // Dismiss the dialog

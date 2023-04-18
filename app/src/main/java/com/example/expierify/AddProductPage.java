@@ -262,7 +262,7 @@ public class AddProductPage extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     uploadFoodImage(foodId);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed to Upload Food Product", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to upload food product.", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -346,7 +346,7 @@ public class AddProductPage extends AppCompatActivity {
                 UploadTask uploadTask = storageRef.putBytes(data);
                 // Listen for upload success or failure
                 uploadTask.addOnFailureListener(exception -> {
-                    Toast.makeText(getApplicationContext(), "Failed to Upload Food Image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to upload food image.", Toast.LENGTH_SHORT).show();
                 }).addOnSuccessListener(taskSnapshot -> {
                     // Get the download URL of the uploaded image and save to Firebase Realtime Database
                     storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -354,7 +354,7 @@ public class AddProductPage extends AppCompatActivity {
                         foodRef.child(foodId).child("image").setValue(uri.toString());
                         Food foodImg = new Food();
                         foodImg.setImage(uri.toString());
-                        Toast.makeText(getApplicationContext(), "Food Successfully Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Food successfully added.", Toast.LENGTH_SHORT).show();
                         finish();
                     });
                 });
@@ -362,7 +362,7 @@ public class AddProductPage extends AppCompatActivity {
                 e.printStackTrace();
             }
         }else{
-            Toast.makeText(getApplicationContext(), "Food Successfully Added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Food successfully added.", Toast.LENGTH_SHORT).show();
             finish();
         }
     }

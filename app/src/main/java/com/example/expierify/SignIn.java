@@ -140,7 +140,7 @@ public class SignIn extends AppCompatActivity {
                             updateUI(user);
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(SignIn.this, "You are not Authenticated", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignIn.this, "You are not authenticated", Toast.LENGTH_LONG).show();
                             updateUI(null);
                             progressBar.setVisibility(View.GONE);
                             textViewusername.setVisibility(View.GONE);

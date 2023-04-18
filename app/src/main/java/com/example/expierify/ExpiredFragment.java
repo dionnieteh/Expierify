@@ -97,7 +97,7 @@ public class ExpiredFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Failed to get Food Items", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Failed to get food items.", Toast.LENGTH_SHORT).show();
             }
         });
 
