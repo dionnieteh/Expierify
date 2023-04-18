@@ -176,6 +176,8 @@
                     android:textColor="@color/darkerwhite"
                     android:textSize="20sp"
                     android:visibility="invisible"
+                    android:textColorHint="@color/lighterwhite"
+                    android:hint="Enter food description here."
                     app:layout_constraintBottom_toTopOf="@+id/categ"
                     app:layout_constraintStart_toStartOf="@+id/desc"
                     app:layout_constraintTop_toBottomOf="@+id/desc" />

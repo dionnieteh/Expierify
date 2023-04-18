@@ -354,9 +354,7 @@ public class FoodInfo extends AppCompatActivity{
                 // Call the deleteFoodRecord() method to delete the record
                 deleteFoodRecord(foodId);
                 dialog.dismiss(); // Dismiss the dialog
-
                 finish();
-
             }
         });
 
