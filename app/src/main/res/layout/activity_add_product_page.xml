@@ -61,6 +61,7 @@
                 <!--food select image button-->
                 <Button
                     android:layout_width="160dp"
+
                     android:layout_height="50dp"
                     android:id="@+id/selectImgBtn"
                     android:layout_below="@+id/addHeader"
