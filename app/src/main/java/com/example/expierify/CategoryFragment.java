@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -66,7 +67,6 @@ public class CategoryFragment extends Fragment {
         categoryList = new ArrayList<>();
         myAdapter = new MyAdapter(requireContext(), categoryList);
         recyclerView.setAdapter(myAdapter);
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference categoryRef = database.getReference(CATEGORY_NODE).child(userID);
 
