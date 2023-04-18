@@ -15,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputFilter;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -119,7 +120,11 @@ public class AddProductPage extends AppCompatActivity {
 
         //Name and Description
         EditText foodName= (EditText) findViewById(R.id.newName);
+        InputFilter[] limitWord = new InputFilter[] {new ExactLengthFilter(18)};
+        foodName.setFilters(limitWord);
         EditText foodDesc= (EditText) findViewById(R.id.newDesc);
+        InputFilter[] limitWord2 = new InputFilter[] {new ExactLengthFilter(48)};
+        foodDesc.setFilters(limitWord2);
 
 
         //Category Spinner dropdown

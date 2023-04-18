@@ -85,6 +85,7 @@
 
                 <!--Name-->
                 <EditText
+                    android:maxLength="18"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/newName"
@@ -93,35 +94,6 @@
                     android:layout_marginTop="5dp"
                     android:textSize="20sp"
                     />
-
-                <!--Expiry Date Header
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/addDate"
-                    android:layout_below="@+id/newName"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/addDate"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    />-->
-
-                <!--Add expiry date
-                <Button
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/datePickerBtn"
-                    android:layout_below="@+id/newName"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="20dp"
-                    android:background="@android:color/background_dark"
-                    android:textSize="20sp"
-                    style="?android:spinnerStyle"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:onClick="openDatePicker"
-                    />-->
 
                 <RelativeLayout
                     android:id="@+id/datePickerBtn"
@@ -181,6 +153,7 @@
 
                 <!--Add description textBox-->
                 <EditText
+                    android:maxLength="48"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/newDesc"
