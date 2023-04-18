@@ -140,6 +140,7 @@ public class HomeFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
+                myAdapter2.sortExpiryDateAscending();
                 myAdapter2.notifyDataSetChanged();
             }
 
