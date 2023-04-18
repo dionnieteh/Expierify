@@ -70,12 +70,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                             String category = snapshot.child("category").getValue(String.class);
                             if (category != null && category.equals(mainCategory)) {
                                 String foodID = snapshot.getKey();
-                                foodIDs.add(foodID);
                                 String expiryDate = snapshot.child("expiry").getValue(String.class);
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
                                 LocalDate expiry = LocalDate.parse(expiryDate, formatter);
                                 LocalDate today = LocalDate.now();
-                                if (expiry.isAfter(today)) {
+                                if (expiry.isAfter(today) || expiry.isEqual(today)){
                                     foodIDs.add(foodID);
                                     categoryTitle.add(mainCategory);
                                 }

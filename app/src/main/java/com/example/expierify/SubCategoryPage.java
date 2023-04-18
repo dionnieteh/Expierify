@@ -168,15 +168,31 @@ public class SubCategoryPage extends AppCompatActivity {
                                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                             for (DataSnapshot foodSnapshot : dataSnapshot.getChildren()) {
                                                                 String foodKey = foodSnapshot.getKey();
-                                                                foodRef.child(foodKey).child("category").setValue("Uncategorized");
-                                                                Toast.makeText(getApplicationContext(), "Category Deleted", Toast.LENGTH_SHORT).show();
-                                                                finish();
+                                                                foodRef.child(foodKey).child("category").setValue("Uncategorized")
+                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid) {
+                                                                                Toast.makeText(getApplicationContext(), "Category Deleted", Toast.LENGTH_SHORT).show();
+                                                                                finish();
+
+                                                                                // Remove the food item from the foodList and notify the adapter
+                                                                                Food deletedFood = foodSnapshot.getValue(Food.class);
+                                                                                foodList.remove(deletedFood);
+
+                                                                            }
+                                                                        })
+                                                                        .addOnFailureListener(new OnFailureListener() {
+                                                                            @Override
+                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                Toast.makeText(getApplicationContext(), "Failed to delete category", Toast.LENGTH_SHORT).show();
+                                                                            }
+                                                                        });
                                                             }
                                                         }
 
                                                         @Override
                                                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                            Log.e("Firebase", "Error getting foods with category: " + getIntent().getStringExtra("categoryTitle"), databaseError.toException());
+                                                            Toast.makeText(getApplicationContext(), "Failed to get food products", Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
                                         }
@@ -184,7 +200,7 @@ public class SubCategoryPage extends AppCompatActivity {
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Log.e("Firebase", "Error removing category: " + getIntent().getStringExtra("categoryTitle"), e);
+                                            Toast.makeText(getApplicationContext(), "Failed to delete category", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                         }
@@ -192,22 +208,21 @@ public class SubCategoryPage extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(), "Failed to get categories", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Failed to delete category", Toast.LENGTH_SHORT).show();
                     }
                 });
-                dialog.dismiss(); // Dismiss the dialog
-                finish();
             }
         });
 
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                dialog.dismiss();
             }
         });
 
-        builder.create().show();
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }
