@@ -124,7 +124,7 @@ public class SubCategoryPage extends AppCompatActivity {
                         }
 
                     } else {
-                        String message = "There are no food items in this category";
+                        String message = "There are no food items in this category.";
                         emptyfoodlist.setText(message);
                     }
                 }
@@ -132,7 +132,7 @@ public class SubCategoryPage extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(getApplicationContext(), "Failed to get food products", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to get food products.", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -168,16 +168,16 @@ public class SubCategoryPage extends AppCompatActivity {
                                                             for (DataSnapshot foodSnapshot : dataSnapshot.getChildren()) {
                                                                 String foodKey = foodSnapshot.getKey();
                                                                 foodRef.child(foodKey).child("category").setValue("Uncategorized");
-                                                                Toast.makeText(getApplicationContext(), "Category Deleted", Toast.LENGTH_SHORT).show();
                                                                 finish();
                                                             }
                                                         }
 
                                                         @Override
                                                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                            Log.e("Firebase", "Error getting foods with category: " + getIntent().getStringExtra("categoryTitle"), databaseError.toException());
+                                                            Log.e("Firebase", "Error getting food within this category: " + getIntent().getStringExtra("categoryTitle"), databaseError.toException());
                                                         }
                                                     });
+                                            Toast.makeText(getApplicationContext(), "Category deleted.", Toast.LENGTH_SHORT).show();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -191,7 +191,7 @@ public class SubCategoryPage extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(), "Failed to get categories", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Failed to get categories.", Toast.LENGTH_SHORT).show();
                     }
                 });
                 dialog.dismiss(); // Dismiss the dialog

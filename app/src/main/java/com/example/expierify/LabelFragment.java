@@ -83,7 +83,7 @@ public class LabelFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Failed to get labels", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Failed to get locations.", Toast.LENGTH_SHORT).show();
             }
         });
         return view;

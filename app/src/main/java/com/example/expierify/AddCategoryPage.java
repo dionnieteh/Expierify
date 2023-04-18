@@ -80,13 +80,13 @@ public class AddCategoryPage extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "New Category is Added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "New category is added.", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "Error When Adding New Category", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Error when adding new category.", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
