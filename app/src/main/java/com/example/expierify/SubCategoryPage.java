@@ -108,9 +108,7 @@ public class SubCategoryPage extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             // Retrieve the Food object
                             Food food = snapshot.getValue(Food.class);
-                                foodList.add(food);
-
-                                //foodNames.add(food.getName());
+                            foodList.add(food);
                         }
 
                         adapter.sortExpiryDateAscending();
@@ -126,7 +124,7 @@ public class SubCategoryPage extends AppCompatActivity {
                         }
 
                     } else {
-                        String message = "There are no food items in this category";
+                        String message = "There are no food items in this category.";
                         emptyfoodlist.setText(message);
                     }
                 }
@@ -134,7 +132,7 @@ public class SubCategoryPage extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(getApplicationContext(), "Failed to get food products", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to get food products.", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -192,9 +190,10 @@ public class SubCategoryPage extends AppCompatActivity {
 
                                                         @Override
                                                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                            Toast.makeText(getApplicationContext(), "Failed to get food products", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(getApplicationContext(), "Failed to get food products.", Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
+                                            Toast.makeText(getApplicationContext(), "Category deleted.", Toast.LENGTH_SHORT).show();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -208,7 +207,7 @@ public class SubCategoryPage extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(), "Failed to delete category", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Failed to delete category.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

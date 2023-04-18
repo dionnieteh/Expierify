@@ -1,6 +1,7 @@
 package com.example.expierify;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +35,9 @@ public class AddLabelPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_label_page);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.action_bar_custom);
         ImageButton backBtn= (ImageButton)findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +63,14 @@ public class AddLabelPage extends AppCompatActivity {
     }
 
     private void insertLabel(){
-        String lName = labelName.getText().toString();
+        String name = labelName.getText().toString();
+        String[] words = name.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            sb.append(Character.toUpperCase(word.charAt(0)));
+            sb.append(word.substring(1)).append(" ");
+        }
+        String lName = sb.toString().trim();
         if (lName.isEmpty()){
             labelName.setError("This field cannot be empty");
         }else{
@@ -69,13 +79,13 @@ public class AddLabelPage extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "New Label is Added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "New location is added.", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "Error When Adding New Label", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Error when adding new location.", Toast.LENGTH_SHORT).show();
                         }
                     });
         }

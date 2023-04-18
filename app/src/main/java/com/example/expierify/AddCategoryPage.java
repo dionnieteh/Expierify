@@ -1,6 +1,7 @@
 package com.example.expierify;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -33,7 +34,9 @@ public class AddCategoryPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_category_page);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.action_bar_custom);
         ImageButton backBtn= (ImageButton)findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +62,16 @@ public class AddCategoryPage extends AppCompatActivity {
     }
 
     private void insertCategory(){
-        String cName = categoryName.getText().toString();
+        String name = categoryName.getText().toString();
+        String[] words = name.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            sb.append(Character.toUpperCase(word.charAt(0)));
+            sb.append(word.substring(1)).append(" ");
+        }
+        String cName = sb.toString().trim();
+
+
         if (cName.isEmpty()){
             categoryName.setError("This field cannot be empty");
         }else{
@@ -68,13 +80,13 @@ public class AddCategoryPage extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "New Category is Added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "New category is added.", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "Error When Adding New Category", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Error when adding new category.", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -82,6 +94,16 @@ public class AddCategoryPage extends AppCompatActivity {
         
 
     }
+    public static String toUpperCamelCase(String str) {
+        String[] words = str.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            sb.append(Character.toUpperCase(word.charAt(0)));
+            sb.append(word.substring(1).toLowerCase());
+        }
+        return sb.toString();
+    }
+
 
 
 

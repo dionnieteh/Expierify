@@ -88,7 +88,7 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(context, "Failed get FoodID", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Failed to get food ID.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

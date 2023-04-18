@@ -56,10 +56,11 @@
                     android:layout_height="40dp"
                     android:background="@null"
                     android:src="@drawable/ic_baseline_lightbulb_24"
-                    app:layout_constraintBottom_toBottomOf="@+id/welcome"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toTopOf="@+id/welcome"
-                    app:layout_constraintVertical_bias="0.666"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:ignore="MissingConstraints" />
 
                 <androidx.constraintlayout.widget.Guideline
@@ -67,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_begin="337dp" />
+                    app:layout_constraintGuide_begin="310dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -120,17 +121,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Food Item"
-                                android:textColor="@color/darkgreen"/>
-
+                                android:text="Food Item"/>
                             <TextView
                                 android:id="@+id/foodNo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
                                 android:textSize="20dp"
-                                android:textStyle="bold"
-                                android:textColor="@color/darkgreen"/>
+                                android:textStyle="bold"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -154,15 +152,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Category"
-                                android:textColor="@color/darkgreen"/>
-
+                                android:text="Category" />
                             <TextView
                                 android:id="@+id/categoryNo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/darkgreen"
                                 android:textSize="20dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -186,15 +181,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Location"
-                                android:textColor="@color/darkgreen" />
+                                android:text="Location"/>
 
                             <TextView
                                 android:id="@+id/locationNo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/darkgreen"
                                 android:textSize="20dp"
                                 android:textStyle="bold" />
 
@@ -206,7 +199,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@id/dashboard"
                 android:layout_marginBottom="10dp"
                 app:cardBackgroundColor="@color/darkerwhite"
@@ -215,10 +208,9 @@
                 app:cardMaxElevation="17dp"
                 app:cardPreventCornerOverlap="true">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
@@ -245,10 +237,6 @@
 
                     </LinearLayout>
 
-
-
-
-
                     <!--today category-->
                     <TextView
                         android:id="@+id/todayCategory"
@@ -256,54 +244,57 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:text="Expiring Today"
+                        android:textColor="@color/lightgreen"
                         android:textSize="20dp"
                         android:textStyle="bold"/>
+
                     <!--Today Expires-->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:layout_marginTop="20dp">
 
-                        <LinearLayout
+                        <androidx.core.widget.NestedScrollView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/todayExpiryList"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"/>
-
-
-
-                        <!--Upcoming category-->
-                        <TextView
-                            android:id="@+id/upcomingCategory"
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/UpcomingWord"
-                            android:textSize="20dp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="20dp"/>
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent">
 
-                        <!--Upcoming Expires-->
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/upcomingExpiryList"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                android:scrollbars="none"/>
+                                android:orientation="vertical">
 
-                        </LinearLayout>
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/todayExpiryList"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                                <!--Upcoming category-->
+                                <TextView
+                                    android:id="@+id/upcomingCategory"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="@string/UpcomingWord"
+                                    android:textSize="20dp"
+                                    android:textColor="@color/lightgreen"
+                                    android:textStyle="bold"
+                                    android:layout_marginBottom="20dp"/>
+
+                                <!--Upcoming Expires-->
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/upcomingExpiryList"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                            </LinearLayout>
+
+                        </androidx.core.widget.NestedScrollView>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

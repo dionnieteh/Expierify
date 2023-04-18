@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,25 +23,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class FoodInfo extends AppCompatActivity{
 
@@ -66,7 +60,9 @@ public class FoodInfo extends AppCompatActivity{
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_food_info);
-
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setCustomView(R.layout.action_bar_custom);
             // Get the Intent that started this activity
             Intent intent = getIntent();
 
@@ -98,7 +94,7 @@ public class FoodInfo extends AppCompatActivity{
             InputFilter[] limitTitle = new InputFilter[] {new ExactLengthFilter(18)};
             titleEdit.setFilters(limitTitle);
             descLabelEdit = findViewById(R.id.descLabelEdit);
-            InputFilter[] limitDesc = new InputFilter[] {new ExactLengthFilter(51)};
+            InputFilter[] limitDesc = new InputFilter[] {new ExactLengthFilter(48)};
             descLabelEdit.setFilters(limitDesc);
             newLocation= findViewById(R.id.newLocation);
             newCategory= findViewById(R.id.newCategory);
@@ -150,11 +146,13 @@ public class FoodInfo extends AppCompatActivity{
                 public void onClick(View view) {
                     enlargedFoodImg.setVisibility(View.VISIBLE);
                     back2.setVisibility(View.VISIBLE);
+                    delete.setVisibility(View.INVISIBLE);
                     back2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             enlargedFoodImg.setVisibility(View.INVISIBLE);
                             back2.setVisibility(View.INVISIBLE);
+                            delete.setVisibility(View.VISIBLE);
                         }
                     });
                 }
@@ -178,7 +176,7 @@ public class FoodInfo extends AppCompatActivity{
                 public void onClick(View v) {
                     setVisibilityTextView(4);
                     setVisibilityEditText(0);
-
+                    edit.setVisibility(View.INVISIBLE);
                     save.setVisibility(View.VISIBLE);
                     calendarBtn.setVisibility(View.VISIBLE);
 
@@ -227,6 +225,7 @@ public class FoodInfo extends AppCompatActivity{
                             ref.updateChildren(updates);
                             save.setVisibility(View.INVISIBLE);
                             calendarBtn.setVisibility(View.INVISIBLE);
+                            edit.setVisibility(View.VISIBLE);
                             setVisibilityTextView(0);
                             setVisibilityEditText(4);
                         }
@@ -297,7 +296,6 @@ public class FoodInfo extends AppCompatActivity{
     public void categorySpinner(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference categoryRef = database.getReference("Category").child(userID);
-        Spinner newCategory= findViewById(R.id.newCategory);
         Intent intent = getIntent();
         String foodId = intent.getStringExtra("foodId");
         DatabaseReference foodRef = database.getReference("Food").child(foodId).child("category");
@@ -350,9 +348,7 @@ public class FoodInfo extends AppCompatActivity{
                 // Call the deleteFoodRecord() method to delete the record
                 deleteFoodRecord(foodId);
                 dialog.dismiss(); // Dismiss the dialog
-
                 finish();
-
             }
         });
 

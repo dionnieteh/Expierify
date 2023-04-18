@@ -14,5 +14,8 @@
         <item name="android:textColorPrimary">@color/black</item>
         <!-- Change the color of the icons and text in the ActionBar to orange -->
         <item name="android:textColorSecondary">@color/lightgreen</item>
+
+
     </style>
+
 </resources>

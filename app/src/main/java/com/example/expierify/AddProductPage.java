@@ -12,9 +12,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputFilter;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +29,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.expierify.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -96,7 +97,9 @@ public class AddProductPage extends AppCompatActivity {
 
         //set DatePicker for expiry Date
         EditText expiry_date=(EditText)findViewById(R.id.expiry_date);
-        expiry_date.setOnClickListener(new View.OnClickListener() {
+        ImageView calendar = (ImageView)findViewById(R.id.imageView_date_picker);
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar calendar = Calendar.getInstance();
@@ -115,11 +118,18 @@ public class AddProductPage extends AppCompatActivity {
                 picker.getDatePicker().setMinDate(calendar.getTimeInMillis());
                 picker.show();
             }
-        });
+        };
+        expiry_date.setOnClickListener(onClickListener);
+        calendar.setOnClickListener(onClickListener);
+
 
         //Name and Description
         EditText foodName= (EditText) findViewById(R.id.newName);
+        InputFilter[] limitWord = new InputFilter[] {new ExactLengthFilter(18)};
+        foodName.setFilters(limitWord);
         EditText foodDesc= (EditText) findViewById(R.id.newDesc);
+        InputFilter[] limitWord2 = new InputFilter[] {new ExactLengthFilter(48)};
+        foodDesc.setFilters(limitWord2);
 
 
         //Category Spinner dropdown
@@ -252,7 +262,7 @@ public class AddProductPage extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     uploadFoodImage(foodId);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed to Upload Food Product", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to upload food product.", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -336,7 +346,7 @@ public class AddProductPage extends AppCompatActivity {
                 UploadTask uploadTask = storageRef.putBytes(data);
                 // Listen for upload success or failure
                 uploadTask.addOnFailureListener(exception -> {
-                    Toast.makeText(getApplicationContext(), "Failed to Upload Food Image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to upload food image.", Toast.LENGTH_SHORT).show();
                 }).addOnSuccessListener(taskSnapshot -> {
                     // Get the download URL of the uploaded image and save to Firebase Realtime Database
                     storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -344,7 +354,7 @@ public class AddProductPage extends AppCompatActivity {
                         foodRef.child(foodId).child("image").setValue(uri.toString());
                         Food foodImg = new Food();
                         foodImg.setImage(uri.toString());
-                        Toast.makeText(getApplicationContext(), "Food Successfully Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Food successfully added.", Toast.LENGTH_SHORT).show();
                         finish();
                     });
                 });
@@ -352,7 +362,7 @@ public class AddProductPage extends AppCompatActivity {
                 e.printStackTrace();
             }
         }else{
-            Toast.makeText(getApplicationContext(), "Food Successfully Added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Food successfully added.", Toast.LENGTH_SHORT).show();
             finish();
         }
     }

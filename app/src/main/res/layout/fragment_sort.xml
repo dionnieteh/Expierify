@@ -9,9 +9,6 @@
     android:paddingTop="20dp"
     tools:context=".SortFragment">
 
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Category"
+            android:textStyle="bold"
             android:layout_marginRight="10dp"
             android:textColor="@color/lighterwhite"/>
 
@@ -33,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Location"
+            android:textStyle="bold"
             android:textColor="@color/lighterwhite"/>
 
 
@@ -63,7 +62,4 @@
 
 
     </FrameLayout>
-
-
-
 </LinearLayout>

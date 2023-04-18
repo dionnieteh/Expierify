@@ -1,5 +1,6 @@
 package com.example.expierify;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -19,7 +20,9 @@ public class TipsPage extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_tips_page);
-
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setCustomView(R.layout.action_bar_custom);
             ImageButton backBtn= (ImageButton)findViewById(R.id.backBtn);
             backBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -52,8 +55,8 @@ public class TipsPage extends AppCompatActivity {
 
             viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-            Button prevBtn = (Button) findViewById(R.id.prevBtn);
-            prevBtn.setOnClickListener(new View.OnClickListener() {
+            Button nextBtn = (Button) findViewById(R.id.nextBtn);
+            nextBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (viewPager2.getCurrentItem() < viewPagerItemArrayList.size() - 1) {
@@ -62,8 +65,8 @@ public class TipsPage extends AppCompatActivity {
                 }
             });
 
-            Button nextBtn = findViewById(R.id.nextBtn);
-           nextBtn.setOnClickListener(new View.OnClickListener() {
+            Button prevBtn = findViewById(R.id.prevBtn);
+            prevBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (viewPager2.getCurrentItem() > 0) {
