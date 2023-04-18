@@ -1,6 +1,7 @@
 package com.example.expierify;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +26,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class SubCategoryPage extends AppCompatActivity {
 
@@ -39,7 +44,9 @@ public class SubCategoryPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_category_page);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.action_bar_custom);
         ImageButton backBtn= (ImageButton)findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +75,7 @@ public class SubCategoryPage extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         foodList = new ArrayList<>();
-        adapter = new AdapterSubCategory(foodList, this, foodIDs, category);
+        adapter = new AdapterSubCategory(foodList, this, foodIDs);
         recyclerView.setAdapter(adapter);
 
 
@@ -77,7 +84,6 @@ public class SubCategoryPage extends AppCompatActivity {
             // Get a reference to the delete button
             deleteBtn.setVisibility(View.GONE);
         }
-
 
 
 
@@ -90,8 +96,7 @@ public class SubCategoryPage extends AppCompatActivity {
             emptyfoodlist.setText(message);
 
         } else {
-            Query query = foodRef.orderByChild("foodId").startAt(foodIDs.get(0)).endAt(foodIDs.get(foodIDs.size() - 1));
-
+            Query query = foodRef.orderByChild("category").equalTo(category);
 
             // Add a listener to the query to retrieve the data
             query.addValueEventListener(new ValueEventListener() {
@@ -103,15 +108,9 @@ public class SubCategoryPage extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             // Retrieve the Food object
                             Food food = snapshot.getValue(Food.class);
+                            foodList.add(food);
 
-                            // Check if the food name is already in the foodNames ArrayList
-                            if (!foodNames.contains(food.getName())) {
-                                // Add the Food object to the list
-                                foodList.add(food);
-
-                                // Add the food name to the foodNames ArrayList
-                                foodNames.add(food.getName());
-                            }
+                            foodNames.add(food.getName());
                         }
 
                         adapter.sortExpiryDateAscending();

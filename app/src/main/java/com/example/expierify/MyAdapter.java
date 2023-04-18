@@ -60,19 +60,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        String mainCategory = category.getcName(); // get the category name
                         ArrayList<String> foodIDs = new ArrayList<>();
                         ArrayList<String> categoryTitle = new ArrayList<>(); // declare and initialize categoryTitle
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            String foodCategory = snapshot.child("category").getValue(String.class);
-                            if (foodCategory != null && foodCategory.equals(categoryName)) {
+                            String category = snapshot.child("category").getValue(String.class);
+                            if (category != null && category.equals(mainCategory)) {
                                 String foodID = snapshot.getKey();
                                 foodIDs.add(foodID);
-                                categoryTitle.add(categoryName);
+                                categoryTitle.add(mainCategory);
                             }
                         }
                         Intent intent = new Intent(context, SubCategoryPage.class);
                         intent.putStringArrayListExtra("foodIDs", (ArrayList<String>) foodIDs);
-                        intent.putExtra("categoryTitle", categoryName);
+                        intent.putExtra("categoryTitle", mainCategory);
                         context.startActivity(intent);
                     }
 
@@ -83,7 +84,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 });
             }
         });
-
     }
 
     @Override
