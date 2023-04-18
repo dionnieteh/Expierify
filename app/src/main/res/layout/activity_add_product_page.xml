@@ -4,10 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
+    android:padding = "20dp"
+    android:background="@color/darkerwhite"
     tools:context=".AddProductPage">
 
     <!--Back Button-->
@@ -67,6 +65,8 @@
                     android:layout_toEndOf="@id/foodImage"
                     android:layout_marginTop="40dp"
                     android:layout_marginLeft="30dp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/lighterwhite"
                     android:text="Select Image"
                     />
 
@@ -213,6 +213,7 @@
                     android:layout_width="160dp"
                     android:layout_height="60dp"
                     android:id="@+id/cancelBtn"
+                    android:backgroundTint="@color/lightgreen"
                     android:layout_below="@id/newLocation"
                     android:layout_marginTop="30dp"
                     android:text="@string/cancelBtn"

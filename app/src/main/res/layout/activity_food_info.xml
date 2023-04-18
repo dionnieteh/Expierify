@@ -10,7 +10,23 @@
         android:layout_height="wrap_content"
         tools:context=".FoodInfo">
 
-            <ImageButton
+        <ImageView
+            android:id="@+id/enlargedFoodImg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/darkerwhite"
+            android:elevation="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_launcher_background"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio=":1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageButton
                 android:id="@+id/backBtn"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -57,29 +73,17 @@
                 tools:ignore="MissingConstraints"
                 />
 
-            <ImageView
-                android:id="@+id/enlargedFoodImg"
-                android:layout_width="410dp"
-                android:layout_height="675dp"
-                android:background="@color/darkerwhite"
-                android:elevation="8dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_launcher_background"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.47"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:backgroundTint="@color/darkgreen"
             android:layout_height="550dp"
+            android:layout_marginTop="190dp"
+            android:backgroundTint="@color/darkgreen"
             android:padding="16dp"
             app:cardCornerRadius="30dp"
-            app:layout_constraintTop_toTopOf="@+id/foodImg"
-            android:layout_marginTop="190dp">
+            app:layout_constraintTop_toTopOf="@+id/foodImg">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
