@@ -21,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,8 +69,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                             String category = snapshot.child("category").getValue(String.class);
                             if (category != null && category.equals(mainCategory)) {
                                 String foodID = snapshot.getKey();
-                                foodIDs.add(foodID);
-                                categoryTitle.add(mainCategory);
+                                String expiryDate = snapshot.child("expiry").getValue(String.class);
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+                                LocalDate expiry = LocalDate.parse(expiryDate, formatter);
+                                LocalDate today = LocalDate.now();
+                                if (expiry.isAfter(today)) {
+                                    foodIDs.add(foodID);
+                                    categoryTitle.add(mainCategory);
+                                }
                             }
                         }
                         Intent intent = new Intent(context, SubCategoryPage.class);
