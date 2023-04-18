@@ -84,13 +84,6 @@
             android:name=".AddProductPage"
             android:exported="false" />
         <activity
-            android:name=".Sort"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".FoodInfo"
             android:exported="false">
             <meta-data
