@@ -92,7 +92,7 @@ public class SubCategoryPage extends AppCompatActivity {
 
         // Create a query to retrieve all the food items where the "foodId" is in the list of "foodIDs"
         if (foodIDs.isEmpty()) {
-            String message = "There are no food items in this category";
+            String message = "There are no food items in this category.";
             emptyfoodlist.setText(message);
 
         } else {

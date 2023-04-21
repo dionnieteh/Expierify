@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,6 +39,7 @@ public class LabelFragment extends Fragment {
     private ArrayList<LabelClass> labelList;
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private String userID = currentUser.getUid();
+    private TextView empty;
 
     public LabelFragment() {
         // Required empty public constructor
@@ -63,7 +65,7 @@ public class LabelFragment extends Fragment {
         database = FirebaseDatabase.getInstance().getReference(LABEL_NODE);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
+        empty = view.findViewById(R.id.textView);
         labelList = new ArrayList<>();
         myAdapter2 = new MyAdapter2(requireContext(), labelList);
         recyclerView.setAdapter(myAdapter2);
@@ -79,6 +81,9 @@ public class LabelFragment extends Fragment {
                     labelList.add(label);
                 }
                 myAdapter2.notifyDataSetChanged();
+                if (myAdapter2.getItemCount()==0){
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

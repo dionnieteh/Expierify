@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Add some categories!"
         android:textSize="20dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

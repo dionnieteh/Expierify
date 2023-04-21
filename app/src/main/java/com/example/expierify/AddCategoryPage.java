@@ -67,7 +67,7 @@ public class AddCategoryPage extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
         for (String word : words) {
             sb.append(Character.toUpperCase(word.charAt(0)));
-            sb.append(word.substring(1)).append(" ");
+            sb.append(word.substring(1).toLowerCase()).append(" ");
         }
         String cName = sb.toString().trim();
 
@@ -94,17 +94,4 @@ public class AddCategoryPage extends AppCompatActivity {
         
 
     }
-    public static String toUpperCamelCase(String str) {
-        String[] words = str.split("\\s+");
-        StringBuilder sb = new StringBuilder();
-        for (String word : words) {
-            sb.append(Character.toUpperCase(word.charAt(0)));
-            sb.append(word.substring(1).toLowerCase());
-        }
-        return sb.toString();
-    }
-
-
-
-
 }

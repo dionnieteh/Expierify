@@ -68,7 +68,7 @@ public class AddLabelPage extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
         for (String word : words) {
             sb.append(Character.toUpperCase(word.charAt(0)));
-            sb.append(word.substring(1)).append(" ");
+            sb.append(word.substring(1).toLowerCase()).append(" ");
         }
         String lName = sb.toString().trim();
         if (lName.isEmpty()){
