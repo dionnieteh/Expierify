@@ -38,6 +38,7 @@ public class CategoryFragment extends Fragment {
     private ArrayList<CategoryClass> categoryList;
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private String userID = currentUser.getUid();
+    private TextView empty;
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -63,7 +64,7 @@ public class CategoryFragment extends Fragment {
         database = FirebaseDatabase.getInstance().getReference(CATEGORY_NODE);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
+        empty = view.findViewById(R.id.textView);
         categoryList = new ArrayList<>();
         myAdapter = new MyAdapter(requireContext(), categoryList);
         recyclerView.setAdapter(myAdapter);
@@ -80,6 +81,9 @@ public class CategoryFragment extends Fragment {
                     categoryList.add(category);
                 }
                 myAdapter.notifyDataSetChanged();
+                if (myAdapter.getItemCount()==0){
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
