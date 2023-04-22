@@ -113,66 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, SignIn.class));
             }
         });
-
-
-
-
-        //Notification
-        // Get the current time
-        /*Calendar calendar = Calendar.getInstance();
-        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-        int currentMinute = calendar.get(Calendar.MINUTE);
-
-        // Get today's date
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy", Locale.getDefault());
-        String currentDate = dateFormat.format(date);
-
-        // Query the Food table for expired items with today's date
-        FirebaseDatabase.getInstance().getReference("Food")
-                .orderByChild("expiry")
-                .equalTo(currentDate)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot foodSnapshot : dataSnapshot.getChildren()) {
-                            // Get the user ID for this food item
-                            String userID = foodSnapshot.child("userID").getValue(String.class);
-
-                            // Query the Notification table for a matching notification
-                            FirebaseDatabase.getInstance().getReference("Notification")
-                                    .orderByChild("userID")
-                                    .equalTo(userID)
-                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            for (DataSnapshot notificationSnapshot : dataSnapshot.getChildren()) {
-                                                // Get the hour and minute for this notification
-                                                int notificationHour = notificationSnapshot.child("hour").getValue(Integer.class);
-                                                int notificationMinute = notificationSnapshot.child("min").getValue(Integer.class);
-
-                                                // Check if the notification time matches the current time
-                                                if (notificationHour == currentHour && notificationMinute == currentMinute) {
-                                                    // Create a notification
-                                                    createNotification();
-                                                }
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                                            // Handle any errors
-                                        }
-                                    });
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        // Handle any errors
-                    }
-                });*/
-
     }
     public void getExpiredCount(ActivityMainBinding binding) {
         // initialize the RecyclerView and adapter
@@ -229,38 +169,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
-
     //bottom navi able to switch between fragments
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager= getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment); // replace frame layout when button is clicked
         fragmentTransaction.commit();
-    }
-
-    /*private void createNotification() {
-        // Create a notification channel for Android Oreo and higher
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Channel Name", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        // Create the notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Food Item Expired")
-                .setContentText("One of your food items has expired.")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        // Show the notification
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
-
-    }*/
-
-
-
-}
+    }}
