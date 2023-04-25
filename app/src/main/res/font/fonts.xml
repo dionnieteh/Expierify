@@ -10,9 +10,4 @@
             android:fontStyle="normal"
             android:fontWeight="400"
             android:font="@font/latoregular" />
-        <font-family
-            android:name="lato_italic"
-            android:fontStyle="italic"
-            android:fontWeight="400"
-            android:font="@font/latoitalic" />
     </font-family>
