@@ -122,7 +122,6 @@ public class AddProductPage extends AppCompatActivity {
         expiry_date.setOnClickListener(onClickListener);
         calendar.setOnClickListener(onClickListener);
 
-
         //Name and Description
         EditText foodName= (EditText) findViewById(R.id.newName);
         InputFilter[] limitWord = new InputFilter[] {new ExactLengthFilter(18)};
@@ -130,7 +129,6 @@ public class AddProductPage extends AppCompatActivity {
         EditText foodDesc= (EditText) findViewById(R.id.newDesc);
         InputFilter[] limitWord2 = new InputFilter[] {new ExactLengthFilter(48)};
         foodDesc.setFilters(limitWord2);
-
 
         //Category Spinner dropdown
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -189,7 +187,6 @@ public class AddProductPage extends AppCompatActivity {
             }
         });
 
-
         //SAVE ALL INFO OF FOOD
         Button saveBtn = findViewById(R.id.saveBtn);
         DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
@@ -200,9 +197,6 @@ public class AddProductPage extends AppCompatActivity {
                 insertFoodData();
             }
         });
-
-
-
     }
 
     private void selectImage(){
@@ -252,7 +246,6 @@ public class AddProductPage extends AppCompatActivity {
             return; // Exit early if there are validation errors
         }
 
-
         // Create new Food object and save to Firebase database
         if (userID !=null){
             DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
@@ -291,15 +284,14 @@ public class AddProductPage extends AppCompatActivity {
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    // Handle any errors here
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e(TAG, "Error", error.toException());
                 }
             });
         }
 
         //label unlabeled
         if (label != null && label.equals("Unlabeled")) {
-
             // Check if there is already an existing "Uncategorized" category for the current user
             databaseRef.child("Label").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -312,7 +304,6 @@ public class AddProductPage extends AppCompatActivity {
                             break;
                         }
                     }
-
                     if (!labelExists) {
                         // If an "Uncategorized" category for the current user does not exist, add it to the database
                         LabelClass newLabel = new LabelClass( "Unlabeled");
@@ -321,13 +312,11 @@ public class AddProductPage extends AppCompatActivity {
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    // Handle any errors here
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e(TAG, "Error", error.toException());
                 }
             });
-
         }
-
     }
 
     private void uploadFoodImage(String foodId) {

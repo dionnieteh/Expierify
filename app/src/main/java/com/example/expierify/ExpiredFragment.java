@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -50,13 +49,6 @@ public class ExpiredFragment extends Fragment {
         adapter = new ExpiredAdapter(getContext(), foodList);
         recyclerView.setAdapter(adapter);
 
-        // Create a reference to the "Food" node in the database
-        foodRef = FirebaseDatabase.getInstance().getReference("Food");
-
-
-        Date todayDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
-        String dateString = dateFormat.format(todayDate);
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("Food");
         Query foodRef = database.orderByChild("userID").equalTo(userID);
 
@@ -89,9 +81,6 @@ public class ExpiredFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 if(foodList.isEmpty()){
                     emptyfoodlist.setText("There is no expired food items.");
-                }
-                else{
-//                    Toast.makeText(getActivity(),""+String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
                 }
             }
 

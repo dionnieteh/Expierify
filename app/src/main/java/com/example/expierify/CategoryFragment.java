@@ -2,19 +2,16 @@ package com.example.expierify;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,16 +19,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
 public class CategoryFragment extends Fragment {
 
     private static final String CATEGORY_NODE = "Category";
-    private static final String USER_ID = "userID";
-
     private RecyclerView recyclerView;
     private DatabaseReference database;
     private MyAdapter myAdapter;
@@ -77,7 +70,6 @@ public class CategoryFragment extends Fragment {
                 categoryList.clear(); // clear the list before adding new items
                 for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
                     CategoryClass category = categorySnapshot.getValue(CategoryClass.class);
-
                     categoryList.add(category);
                 }
                 myAdapter.notifyDataSetChanged();

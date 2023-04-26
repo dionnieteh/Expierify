@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,17 +17,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
 
     Context context;
     ArrayList<LabelClass> labelList;
-
+    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String userID = currentUser.getUid();
     public MyAdapter2(Context context, ArrayList<LabelClass> labelList) {
         this.context = context;
         this.labelList = labelList;
@@ -42,8 +39,6 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
         return new MyViewHolder(v);
     }
 
-
-
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         LabelClass label = labelList.get(position);
@@ -52,14 +47,9 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String labelName = label.getlName();
-                String userID = label.getUserID();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-                FirebaseUser currentUser = auth.getCurrentUser();
-                String currentUserID= currentUser.getUid();
                 DatabaseReference foodRef = database.getReference("Food");
-                Query query = foodRef.orderByChild("userID").equalTo(currentUserID);
+                Query query = foodRef.orderByChild("userID").equalTo(userID);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -108,7 +98,5 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
             super(itemView);
             labelName= itemView.findViewById(R.id.labelName);
         }
-
-
     }
 }

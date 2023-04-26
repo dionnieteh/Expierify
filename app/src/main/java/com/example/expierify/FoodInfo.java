@@ -1,13 +1,11 @@
 package com.example.expierify;
 
 import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -50,8 +48,6 @@ public class FoodInfo extends AppCompatActivity{
         Spinner newLocation, newCategory;
         private DatePickerDialog picker;
 
-
-
     EditText titleEdit, descLabelEdit, expDateLabelEdit;
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private String userID = currentUser.getUid();
@@ -67,14 +63,8 @@ public class FoodInfo extends AppCompatActivity{
             Intent intent = getIntent();
 
             // Retrieve the data passed through the Intent using the getStringExtra() method
-            String foodName = intent.getStringExtra("foodName");
             String foodId = intent.getStringExtra("foodId");
-            String description = intent.getStringExtra("desc");
-            String expiry = intent.getStringExtra("expiry");
-            String category = intent.getStringExtra("category");
-            String label = intent.getStringExtra("label");
             String imageUrl = intent.getStringExtra("imageUrl");
-            int position = getIntent().getIntExtra("position", -1);
 
             // Initialize the TextView and ImageView variables
             foodTitle = findViewById(R.id.title);
@@ -269,7 +259,6 @@ public class FoodInfo extends AppCompatActivity{
                             if (!label.equals(selectedLabel)) {
                                 labels.add(label);
                             }
-
                         }
                         // Update the Spinner with the retrieved categories
                         ArrayAdapter<String> labelAdapter = new ArrayAdapter<String>(FoodInfo.this, android.R.layout.simple_spinner_item, labels);
@@ -290,7 +279,6 @@ public class FoodInfo extends AppCompatActivity{
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
     }
 
     public void categorySpinner(){
@@ -313,7 +301,6 @@ public class FoodInfo extends AppCompatActivity{
                             if (!categories.equals(selectedCategory)) {
                                 category.add(categories);
                             }
-
                         }
                         // Update the Spinner with the retrieved categories
                         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(FoodInfo.this, android.R.layout.simple_spinner_item, category);
@@ -333,8 +320,8 @@ public class FoodInfo extends AppCompatActivity{
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
     }
+
     public void showDeleteConfirmationDialog(String foodId) {
         // Define the AlertDialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -359,10 +346,8 @@ public class FoodInfo extends AppCompatActivity{
                 dialog.dismiss(); // Dismiss the dialog
             }
         });
-
         // Create the AlertDialog
         AlertDialog dialog = builder.create();
-
         // Show the AlertDialog
         dialog.show();
     }
@@ -373,7 +358,6 @@ public class FoodInfo extends AppCompatActivity{
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 if (error == null) {
-
                     Log.d(TAG, "deleteFoodRecord: Record deleted successfully.");
                 } else {
                     // Failed to delete record
@@ -382,7 +366,4 @@ public class FoodInfo extends AppCompatActivity{
             }
         });
     }
-
-
-
 }

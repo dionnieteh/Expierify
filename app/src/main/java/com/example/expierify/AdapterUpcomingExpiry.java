@@ -7,14 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +23,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AdapterUpcomingExpiry extends RecyclerView.Adapter<AdapterUpcomingExpiry.ViewHolder> {
-
     Context context;
     ArrayList<Food> foodList;
 
@@ -94,7 +90,6 @@ public class AdapterUpcomingExpiry extends RecyclerView.Adapter<AdapterUpcomingE
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         Date today = calendar.getTime();
 
-
         for (Food food : foodList) {
             if (food.getUserID().equals(currentUser.getUid())) { // Check if food userID matches current user's ID
                 try {
@@ -128,12 +123,9 @@ public class AdapterUpcomingExpiry extends RecyclerView.Adapter<AdapterUpcomingE
                 }
             }
         }
-
         foodList = sortedFoodList;
         notifyDataSetChanged();
     }
-
-
 
     @Override
     public int getItemCount() {

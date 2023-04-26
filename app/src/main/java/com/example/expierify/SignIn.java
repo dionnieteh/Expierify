@@ -1,23 +1,16 @@
 package com.example.expierify;
 
-
 import android.content.Intent;
-import android.net.Uri;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -37,7 +30,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SignIn extends AppCompatActivity {
     private static final String TAG = "Main: ";
     SignInButton signInButton;
-
     FirebaseAuth mAuth;
     private int RC_SIGN_IN = 9001;
     GoogleSignInClient mGoogleSignInClient;
@@ -60,12 +52,10 @@ public class SignIn extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setCustomView(R.layout.action_bar_custom);
         signInButton = findViewById(R.id.sign_in_button);
-
         progressBar = findViewById(R.id.progressBar);
         textViewusername = findViewById(R.id.username);
         imageViewuserprofile = findViewById(R.id.userprofileimage);
         mAuth = FirebaseAuth.getInstance();
-
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -148,6 +138,7 @@ public class SignIn extends AppCompatActivity {
                     }
                 });
     }
+
     private void updateUI(FirebaseUser user) {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (acct != null) {

@@ -6,16 +6,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,12 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class SubCategoryPage extends AppCompatActivity {
 
@@ -55,7 +47,6 @@ public class SubCategoryPage extends AppCompatActivity {
             }
         });
 
-
         ImageButton deleteBtn= (ImageButton)findViewById(R.id.deleteCategoryBtn);
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,9 +58,7 @@ public class SubCategoryPage extends AppCompatActivity {
         String category = getIntent().getStringExtra("categoryTitle");
         TextView categoryTitle= (TextView) findViewById(R.id.categoryName);
         categoryTitle.setText(category);
-
         foodIDs = getIntent().getStringArrayListExtra("foodIDs");
-
         TextView emptyfoodlist = (TextView) findViewById(R.id.emptyfoodlist);
         recyclerView = findViewById(R.id.subCategoryList);
         recyclerView.setHasFixedSize(true);
@@ -78,14 +67,11 @@ public class SubCategoryPage extends AppCompatActivity {
         adapter = new AdapterSubCategory(foodList, this, foodIDs);
         recyclerView.setAdapter(adapter);
 
-
         // Find the position of the item with the name "Uncategorized"
         if ("Uncategorized".equals(category)) {
             // Get a reference to the delete button
             deleteBtn.setVisibility(View.GONE);
         }
-
-
 
         // Create a reference to the "Food" node in the database
         foodRef = FirebaseDatabase.getInstance().getReference("Food");
@@ -94,10 +80,8 @@ public class SubCategoryPage extends AppCompatActivity {
         if (foodIDs.isEmpty()) {
             String message = "There are no food items in this category.";
             emptyfoodlist.setText(message);
-
         } else {
             Query query = foodRef.orderByChild("category").equalTo(category);
-
             // Add a listener to the query to retrieve the data
             query.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -109,10 +93,8 @@ public class SubCategoryPage extends AppCompatActivity {
                             // Retrieve the Food object
                             Food food = snapshot.getValue(Food.class);
                             foodList.add(food);
-
                             foodNames.add(food.getName());
                         }
-
                         adapter.sortExpiryDateAscending();
                         // Notify the adapter that the data has changed
                         adapter.notifyDataSetChanged();
@@ -120,7 +102,6 @@ public class SubCategoryPage extends AppCompatActivity {
                         if (foodList.isEmpty()) {
                             String message = "There are no food items in this category";
                             emptyfoodlist.setText(message);
-
                         }
 
                     } else {
@@ -129,15 +110,12 @@ public class SubCategoryPage extends AppCompatActivity {
                     }
                 }
 
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     Toast.makeText(getApplicationContext(), "Failed to get food products", Toast.LENGTH_SHORT).show();
                 }
             });
-
         }
-
     }
 
     public void openDialog() {
@@ -150,13 +128,11 @@ public class SubCategoryPage extends AppCompatActivity {
                 DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("Category").child(userID);
                 Query query = categoryRef.orderByChild("cName").equalTo(getIntent().getStringExtra("categoryTitle"));
                 DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("Food");
-
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             snapshot.getRef().removeValue()
-
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -202,11 +178,8 @@ public class SubCategoryPage extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
             }
         });
-
         builder.create().show();
     }
-
 }

@@ -3,10 +3,6 @@ package com.example.expierify;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
@@ -14,15 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 
 public class AddLabelPage extends AppCompatActivity {
 
@@ -44,8 +37,6 @@ public class AddLabelPage extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
-
-
         });
 
         labelName =(EditText)findViewById(R.id.newLabel);
@@ -73,7 +64,7 @@ public class AddLabelPage extends AppCompatActivity {
         String lName = sb.toString().trim();
         if (lName.isEmpty()){
             labelName.setError("This field cannot be empty");
-        }else{
+        }else {
             LabelClass labelClass = new LabelClass(lName);
             label.child(lName).setValue(labelClass)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -89,7 +80,5 @@ public class AddLabelPage extends AppCompatActivity {
                         }
                     });
         }
-
     }
-
 }

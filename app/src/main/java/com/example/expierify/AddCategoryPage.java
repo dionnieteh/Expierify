@@ -3,8 +3,6 @@ package com.example.expierify;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
@@ -12,15 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class AddCategoryPage extends AppCompatActivity {
 
@@ -28,7 +23,6 @@ public class AddCategoryPage extends AppCompatActivity {
     private DatabaseReference category;
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private String userID = currentUser.getUid();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +37,6 @@ public class AddCategoryPage extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
-
-
         });
 
         categoryName =(EditText)findViewById(R.id.newName);
@@ -71,7 +63,6 @@ public class AddCategoryPage extends AppCompatActivity {
         }
         String cName = sb.toString().trim();
 
-
         if (cName.isEmpty()){
             categoryName.setError("This field cannot be empty");
         }else{
@@ -90,8 +81,5 @@ public class AddCategoryPage extends AppCompatActivity {
                         }
                     });
         }
-
-        
-
     }
 }

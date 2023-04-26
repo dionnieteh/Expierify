@@ -1,31 +1,19 @@
 package com.example.expierify;
 
-
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,13 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
-
 
 public class HomeFragment extends Fragment {
 
@@ -50,27 +36,20 @@ public class HomeFragment extends Fragment {
     private ArrayList<Food> foodList2;
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private String userID = currentUser.getUid();
-
-
+    
     public HomeFragment() {
         // Required empty public constructor
-
     }
-
-
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         // Recycler view for Today's expiry
         recyclerView = view.findViewById(R.id.todayExpiryList);
         recyclerView.setHasFixedSize(true);
@@ -80,13 +59,11 @@ public class HomeFragment extends Fragment {
         myAdapter = new AdapterTodayExpiry(requireContext(), foodList);
         recyclerView.setAdapter(myAdapter);
 
-
         Date todayDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
         String dateString = dateFormat.format(todayDate);
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("Food");
         Query foodRef = database.orderByChild("userID").equalTo(userID);
-
         foodRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -109,15 +86,12 @@ public class HomeFragment extends Fragment {
                 }
             }
 
-
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getActivity(), "Failed to get food items.", Toast.LENGTH_SHORT).show();
             }
         });
-
-
+        
         // Recycler view for Upcoming's expiry
         RecyclerView recyclerView2 = view.findViewById(R.id.upcomingExpiryList);
         recyclerView2.setHasFixedSize(true);
@@ -126,7 +100,6 @@ public class HomeFragment extends Fragment {
         foodList2 = new ArrayList<>();
         AdapterUpcomingExpiry myAdapter2 = new AdapterUpcomingExpiry(requireContext(), foodList2);
         recyclerView2.setAdapter(myAdapter2);
-
         DatabaseReference database2 = FirebaseDatabase.getInstance().getReference("Food");
         Query foodRef2 = database.orderByChild("userID").equalTo(userID);
 
@@ -150,37 +123,28 @@ public class HomeFragment extends Fragment {
                 myAdapter2.notifyDataSetChanged();
             }
 
-
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getActivity(), "Failed to get food items.", Toast.LENGTH_SHORT).show();
             }
         });
-
-
         return view;
-
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         //Number of Food
         TextView foodNo = (view.findViewById((R.id.foodNo)));
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        String currentuserId = currentUser.getUid();
-        Query query = FirebaseDatabase.getInstance().getReference("Food").orderByChild("userID").equalTo(currentuserId);
+        Query query = FirebaseDatabase.getInstance().getReference("Food").orderByChild("userID").equalTo(userID);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int foodCount = (int) snapshot.getChildrenCount();
                 foodNo.setText(Integer.toString(foodCount)); // foodCount needs to be converted to a String
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 foodNo.setText("ERROR");
@@ -189,9 +153,8 @@ public class HomeFragment extends Fragment {
 
         //Number of Category
         TextView categoryNo = (view.findViewById((R.id.categoryNo)));
-        FirebaseUser currentUser1 = FirebaseAuth.getInstance().getCurrentUser();
-        String currentUserID = currentUser.getUid();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Category").child(currentUserID);
+        String userID = currentUser.getUid();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Category").child(userID);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -207,7 +170,7 @@ public class HomeFragment extends Fragment {
 
         //Number of Location
         TextView locationNo = (view.findViewById((R.id.locationNo)));
-        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Label").child(currentUserID);
+        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Label").child(userID);
         databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -221,16 +184,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
         //PRESENT DATE
         TextView presentDate = (view.findViewById(R.id.todayDate));
         // create a date format
         @SuppressLint("SimpleDateFormat") String currentDate = new SimpleDateFormat("d/M/yyy").format(new Date());
         presentDate.setText(currentDate);
         //PRESENT DATE END
-
-        //enter new activity with notification (bell) button
-
 
         //Tips button
         ImageButton tipsBtn = (ImageButton) view.findViewById(R.id.tipsBtn);
@@ -239,14 +198,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 startActivity(new Intent(HomeFragment.this.getActivity(),  TipsPage.class));
             }
-
-
         });
-
-
-
     }
-
-
-
 }

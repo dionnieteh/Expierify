@@ -8,6 +8,7 @@ public class CategoryClass {
     public CategoryClass(String cName) {
         this.cName = cName;
     }
+
     public CategoryClass() {
         // Required empty constructor for Firebase
     }

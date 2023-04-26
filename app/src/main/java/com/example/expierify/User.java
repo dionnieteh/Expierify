@@ -3,7 +3,6 @@ package com.example.expierify;
 public class User {
     public String name;
     public String email;
-
     public User() {}
 
     public User(String name, String email) {

@@ -3,12 +3,10 @@ package com.example.expierify;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-
 import java.util.ArrayList;
 
 public class TipsPage extends AppCompatActivity {
@@ -29,13 +27,10 @@ public class TipsPage extends AppCompatActivity {
                 public void onClick(View v) {
                     finish();
                 }
-
-
             });
 
             viewPager2 = findViewById(R.id.viewpager);
             int[] images = {R.drawable.tips1_5, R.drawable.tips8,R.drawable.tips9, R.drawable.tips10 };
-
             viewPagerItemArrayList = new ArrayList<>();
 
             for (int i =0; i< images.length ; i++){
@@ -44,17 +39,11 @@ public class TipsPage extends AppCompatActivity {
             }
 
             VPAdapter vpAdapter = new VPAdapter(viewPagerItemArrayList);
-
             viewPager2.setAdapter(vpAdapter);
-
             viewPager2.setClipToPadding(false);
-
             viewPager2.setClipChildren(false);
-
             viewPager2.setOffscreenPageLimit(2);
-
             viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
-
             Button nextBtn = (Button) findViewById(R.id.nextBtn);
             nextBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,5 +64,4 @@ public class TipsPage extends AppCompatActivity {
                 }
             });
         }
-
 }

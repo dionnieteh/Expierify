@@ -7,31 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -40,13 +25,11 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
     private ArrayList<Food> foodList;
     private ArrayList<String> foodIDList;
     private Context context;
-    private ArrayList<Date> expiryList;
 
     public AdapterSubCategory(ArrayList<Food> foodList, Context context, ArrayList<String> foodIDList) {
         this.foodList = foodList;
         this.context = context;
         this.foodIDList = foodIDList;
-
     }
 
     @Override
@@ -109,7 +92,6 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         Date today = calendar.getTime();
 
-
         for (Food food : foodList) {
             if (food.getUserID().equals(currentUser.getUid())) { // Check if food userID matches current user's ID
                 try {
@@ -148,18 +130,10 @@ public class AdapterSubCategory extends RecyclerView.Adapter<AdapterSubCategory.
         foodIDList = sortedFoodIDList;
     }
 
-
-    public void setFoodIDList(ArrayList<String> foodIDList) {
-        this.foodIDList = foodIDList;
-    }
-
     @Override
     public int getItemCount() {
         return foodIDList.size();
-
     }
-
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView foodNameTextView;

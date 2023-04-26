@@ -1,6 +1,5 @@
 package com.example.expierify;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,16 +29,12 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String CHANNEL_ID = "channel_id";
-    private static final int NOTIFICATION_ID = 1;
     private ExpiredAdapter adapter;
     private RecyclerView mRecyclerView;
     private ArrayList<Food> foodList;
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private String userID = currentUser.getUid();
     ActivityMainBinding binding;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment()); //Home will be open when application is on
         getExpiredCount(binding);
@@ -65,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new SortFragment());
                     break;
                 case R.id.add:
-                    //replaceFragment(new CameraFragment());
                     Intent intent = new Intent(MainActivity.this, AddProductPage.class);
                     startActivity(intent);
                     break;
@@ -76,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new ProfileFragment());
                     break;
             }
-
             return true;
         });
 
@@ -114,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     public void getExpiredCount(ActivityMainBinding binding) {
         // initialize the RecyclerView and adapter
         mRecyclerView = findViewById(R.id.expireditemlist);
@@ -129,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         String dateString = dateFormat.format(todayDate);
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("Food");
         Query foodRef = database.orderByChild("userID").equalTo(userID);
-
         foodRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -175,4 +167,5 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment); // replace frame layout when button is clicked
         fragmentTransaction.commit();
-    }}
+    }
+}
